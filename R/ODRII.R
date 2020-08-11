@@ -129,7 +129,7 @@ quan_reg3 <- function(y, x, mc = 15000, p) {
     burn <- 0.2 * mc
     iter <- burn + mc
 
-    b0 <- array(c(0, 0, 0), dim = c(1, 3))
+    b0 <- array(rep(0,k), dim = c(1, k))
     B0 <- diag(k)
     invb0 <- ginv(B0)
     invb0b0 <- invb0 %*% (t(b0))
@@ -143,7 +143,7 @@ quan_reg3 <- function(y, x, mc = 15000, p) {
     beta_draws <- array(0, dim = c(iter, k * lengthp))
     sigma_draws <- array(0, dim = c(iter, lengthp))
 
-    beta[1, ] <- array(c(0, 0, 0), dim = c(1, 3))
+    beta[1, ] <- array(rep(0,k), dim = c(1, k))
     sigma[1] <- 2
     nu[1, ] <- 5 * rep(1, n)
 

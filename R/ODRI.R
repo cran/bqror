@@ -163,7 +163,7 @@ quan_regg3 <- function(y, x, mc = 15000, p, tune = 0.1) {
     B0 <- diag(k)
     invb0 <- ginv(B0)
     invb0b0 <- invb0 %*% b0
-    d0 <- array(0, dim = c(2, 1))
+    d0 <- array(0, dim = c(J-2, 1))
     D0 <- 0.25 * diag(J - 2)
     N <- burn + mc
     beta_draws <- array (0, dim = c(k, N))
