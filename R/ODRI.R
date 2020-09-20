@@ -836,6 +836,9 @@ drawwg3 <- function(z, x, beta, tau2, theta, lambda) {
     w <- array(0, dim = c(n, 1))
     for (j in 1:n) {
         tildelambda2[j, 1] <- ( (z[j] - (x[j, ] %*% beta)) ^ 2) / (tau2)
+        if(is.na(tildelambda2[j, 1]) == TRUE){
+            tildelambda2[j, 1] <- 0.5
+        }
         w[j, 1] <- rgig(lambda = lambda,
                         chi = tildelambda2[j, 1],
                         psi = tildeeta2,
@@ -1069,6 +1072,10 @@ drawdeltag3 <- function(y, x, beta, delta0, d0, D0, tune, Dhat, p){
                           mean  = matrix(d0),
                           varcovM = D0,
                           Log = TRUE))
+    if((is.infinite(pnum) == TRUE) & (is.infinite(pden) == TRUE) & (pden < 0) & (pnum < 0)){
+        pnum = -1000000
+        pden = -1000000
+    }
     if (log(rand(n = 1)) <= (pnum - pden)) {
         deltareturn <- delta1
         accept <- 1
