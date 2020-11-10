@@ -595,7 +595,6 @@ qrnegloglikensum <- function(deltain, y, x, beta, p) {
     }
     allgammacp <- t(c(-Inf, gammacp, Inf))
     mu <- x %*% beta
-
     for (i in 1:n) {
         meanp <- mu[i]
         if (y[i] == 1) {
@@ -943,7 +942,6 @@ drawlatentg3 <- function(y, x, beta, w, theta, tau2, delta) {
         gammacp[j] <- sum(expdelta[1:(j - 1)])
     }
     gammacp <- t(c(-Inf, gammacp, Inf))
-
     for (i in 1:n) {
         meanp <- (x[i, ] %*% (beta)) + (theta * w[i])
         std <- sqrt(tau2 * w[i])
@@ -951,7 +949,11 @@ drawlatentg3 <- function(y, x, beta, w, theta, tau2, delta) {
         a <- gammacp[temp]
         b <- gammacp[temp + 1]
         z[1, i] <- rtruncnorm(n = 1, a = a, b = b,
-                              mean = meanp, sd = std)
+                                  mean = meanp, sd = std)
+        if(is.na(z[1, i]) == TRUE) {
+            z[1, i] <- rtruncnorm(n = 1, a = -a, b = b,
+                                  mean = meanp, sd = std)
+        }
     }
     return(z)
 }
