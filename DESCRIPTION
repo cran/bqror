@@ -1,7 +1,7 @@
 Package: bqror
 Type: Package
 Title: Bayesian Quantile Regression for Ordinal Models
-Version: 0.1.3
+Version: 0.1.4
 Imports: MASS, pracma, tcltk, GIGrvg, truncnorm, NPflow, invgamma
 Authors@R: c(person("Dr. Mohammad Arshad Rahman", "Developer", role = "aut",
                      email = c("arshadrahman25@gmail.com","marshad@iitk.ac.in")),
@@ -21,7 +21,7 @@ LazyData: true
 Repository: CRAN
 RoxygenNote: 6.1.1
 NeedsCompilation: no
-Packaged: 2020-11-10 08:20:14 UTC; am
+Packaged: 2021-01-24 04:03:07 UTC; am
 Author: Dr. Mohammad Arshad Rahman Developer [aut],
   Prajual Maheshwari [cre]
-Date/Publication: 2020-11-10 08:40:02 UTC
+Date/Publication: 2021-01-24 05:30:03 UTC

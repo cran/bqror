@@ -492,7 +492,6 @@ qrminfundtheorem <- function(deltain, y, x, beta, cri0, cri1,
         deltain <- deltain + stepsize * t(ddelta)
 
         if (jj == maxiter){
-            print("Maximum iterations reached")
         }
     }
     deltamin <- deltain
@@ -951,8 +950,7 @@ drawlatentg3 <- function(y, x, beta, w, theta, tau2, delta) {
         z[1, i] <- rtruncnorm(n = 1, a = a, b = b,
                                   mean = meanp, sd = std)
         if(is.na(z[1, i]) == TRUE) {
-            z[1, i] <- rtruncnorm(n = 1, a = -a, b = b,
-                                  mean = meanp, sd = std)
+            z[1, i] <- b
         }
     }
     return(z)

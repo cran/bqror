@@ -292,8 +292,7 @@ drawlatent3 <- function(y, x, beta, sigma, nu, theta, tau2, gammacp) {
         z[1, i] <- rtruncnorm(n = 1, a = a, b = b,
                               mean = meanp, sd = std)
         if(is.na(z[1, i]) == TRUE) {
-            z[1, i] <- rtruncnorm(n = 1, a = -a, b = b,
-                                  mean = meanp, sd = std)
+            z[1, i] <- b
         }
     }
     return(z)

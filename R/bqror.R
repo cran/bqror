@@ -20,7 +20,7 @@
 #' @details
 #' \deqn{Package: bqror}
 #' \deqn{Type: Package}
-#' \deqn{Version: 0.1.3}
+#' \deqn{Version: 0.1.4}
 #' \deqn{License: GPL (>=2)}
 #'
 #' Package \strong{bqror} provides the following functions:
