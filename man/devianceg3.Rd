@@ -5,8 +5,17 @@
 \title{Deviance Information Criteria for Ordinal Models
 with more than 3 outcomes}
 \usage{
-devianceg3(y, x, deltastore, burn, iter, post_mean_beta, post_mean_delta,
-  beta_draws, p)
+devianceg3(
+  y,
+  x,
+  deltastore,
+  burn,
+  iter,
+  post_mean_beta,
+  post_mean_delta,
+  beta_draws,
+  p
+)
 }
 \arguments{
 \item{y}{dependent variable i.e. ordinal outcome values.}

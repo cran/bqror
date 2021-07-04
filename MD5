@@ -1,5 +1,6 @@
-70ad22e6497876430b95ed60fcd5febc *DESCRIPTION
-baa31b542ab7bba26ec8285a74b7b9ba *NAMESPACE
+1912d923bbbfb8c28090aad3450413a3 *DESCRIPTION
+3cad49359551488a247dc03387c5e25e *NAMESPACE
+1c9eb18c35377bc693e9db076e3c6139 *R/Covariate_effect.R
 45892c265c629f7622e8b00d893410bd *R/ODRI.R
 3b4c8dd6fab1b3898848577dcc9842bc *R/ODRII.R
 64ef622847043e6593d02ad234edb0d1 *R/bqror.R
@@ -12,15 +13,16 @@ c387a07eca4b39510fae4d94117c7263 *data/data50j3.RData
 30ff1a4b3dccc099befd06b5790ce28e *data/data75j4.RData
 3e6941e9d427b12def7b1ba2f349f480 *man/alcdf.Rd
 d54c05140018fe596fd36fd656c881be *man/alcdfstdg3.Rd
-bee7006ea61fa3f8a52dc22fb2c407cb *man/bqror.Rd
+0143f0cb13cd14341c8deffe413b48e0 *man/bqror.Rd
+b73700924c35b98ef90a9b7b621310f3 *man/covariate_effect.Rd
 ff2185b678d31ad6e2e1b9ce161146ab *man/data25j3.Rd
 2a711b0385ac85faf5bd367b625310d4 *man/data25j4.Rd
 073ba92c0c17f6988df66480f6c939e4 *man/data50j3.Rd
 9e77ae1389b25cbe6533e62cbe59a295 *man/data50j4.Rd
 47be3e7bdeee915b8db29c1fe2559760 *man/data75j3.Rd
 e0977450952eee8bd37c3ae6bacf09af *man/data75j4.Rd
-6046c255856397c5689c66e428f36802 *man/deviance3.Rd
-3357205bed99d79bbef18060475077da *man/devianceg3.Rd
+e8627734656f51479782ccc408ec8c98 *man/deviance3.Rd
+b1ceb6364f3a9050b3a7bc52a90e08dd *man/devianceg3.Rd
 22b2886b3bcaa1847e096ea2aa1058dd *man/drawbeta3.Rd
 449c9d12bad7a015b9d4fc2bb8e4c726 *man/drawbetag3.Rd
 2e3e69affb7d04cdbdf0a3fccbffc7f6 *man/drawdeltag3.Rd
@@ -32,7 +34,7 @@ ca7ff4239096aa5122bfd2b2ee44895e *man/drawwg3.Rd
 9a816eaf4ef4275602863820f234be6d *man/inefficiency_factor3.Rd
 c00492bd971111fd676a1268269ea6a3 *man/inefficiency_factorg3.Rd
 00d3235c71e331546d3f0e3305a36468 *man/negLoglikelihood.Rd
-ff113934e4bdac390344aa1709f8edc7 *man/qrminfundtheorem.Rd
+1842cf7f3c0fea4df908b4e162ecc687 *man/qrminfundtheorem.Rd
 dde802e1a9748127cdeddb1f31fd6c58 *man/qrnegloglikensum.Rd
 6c30ca76a083f95463b1435a56a87268 *man/quan_reg3.Rd
 c8c7216fedfe0199762c7a5a0e19286b *man/quan_regg3.Rd

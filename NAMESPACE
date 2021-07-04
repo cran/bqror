@@ -2,6 +2,7 @@
 
 export(alcdf)
 export(alcdfstdg3)
+export(covariate_effect)
 export(deviance3)
 export(devianceg3)
 export(drawbeta3)

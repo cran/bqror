@@ -4,8 +4,20 @@
 \alias{qrminfundtheorem}
 \title{Minimize the negative of log-likelihood}
 \usage{
-qrminfundtheorem(deltain, y, x, beta, cri0, cri1, stepsize, maxiter, h, dh,
-  sw, p)
+qrminfundtheorem(
+  deltain,
+  y,
+  x,
+  beta,
+  cri0,
+  cri1,
+  stepsize,
+  maxiter,
+  h,
+  dh,
+  sw,
+  p
+)
 }
 \arguments{
 \item{deltain}{initialization of cut-points.}

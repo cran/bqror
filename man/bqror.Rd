@@ -3,7 +3,6 @@
 \docType{package}
 \name{bqror}
 \alias{bqror}
-\alias{bqror-package}
 \title{Bayesian Quantile Regression for Ordinal Models}
 \description{
 This package serves the following 3 purposes for Ordinal
@@ -25,7 +24,7 @@ performance criteria's.}
 \details{
 \deqn{Package: bqror}
 \deqn{Type: Package}
-\deqn{Version: 0.1.0}
+\deqn{Version: 0.1.4}
 \deqn{License: GPL (>=2)}
 
 Package \strong{bqror} provides the following functions:
