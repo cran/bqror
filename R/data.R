@@ -205,3 +205,93 @@ NULL
 #' @seealso \link[MASS]{mvrnorm}, Asymmetric Laplace Distribution
 #'
 NULL
+
+#' @name  Educational_Attainment
+#' @title Educational_Attainment
+#' This data-set is based on National Longitudinal Study Youth (NLSY, 1979) survey data.
+#' The data is used to analyze the study returns to schooling.
+#'
+#' @details
+#'
+#' This sub-sample from NLSY data-set here includes 3,923 individuals only. The sub-sample
+#' is based on the cohorts aged 14-17 in 1979. The dependent variable i.e. the educational
+#' degree, has four categories given as \emph{less than high school, high school degree, some
+#' college or associate's degree} and \emph{college or graduate degree}.
+#' The sample has 897 (22.87\%), 1392 (35.48\%), 876 (22.33\%) and 758 (19.32\%) observations in
+#' respectively in each category.
+#'
+#' @docType data
+#'
+#' @usage data(Educational_Attainment)
+#'
+#' @return Returns data with components
+#' \itemize{
+#' \item{\code{BG_14_female_work}: }{Indicator for working female at age of 14.}
+#' \item{\code{BG_14_urban}: }{Indicator for the youth living in urban are at age of 14.}
+#' \item{\code{BG_14_region_south}: }{Indicator for the youth living in South at age of 14.}
+#' \item{\code{BG_edu_father}: }{Individual's father education.}
+#' \item{\code{BG_edu_mother}: }{Individual's mother education.}
+#' \item{\code{BG_fam_income}: }{Family income of the household.}
+#' \item{\code{female}: }{Indicator for Individuals gender.}
+#' \item{\code{race_black}: }{Race of the individual is white.}
+#' \item{\code{age_15}: }{Indicator for age of 15.}
+#' \item{\code{age_16}: }{Indicator for age of 16.}
+#' \item{\code{age_17}: }{Indicator for age of 17.}
+#' \item{\code{dep_edu_level}: }{a matrix of ordinal outcomes.}
+#' }
+#'
+#' @references Rahman, M. A. (2016). “Bayesian
+#' Quantile Regression for Ordinal Models.”
+#' Bayesian Analysis, 11(1): 1-24.
+#'
+#' Jeliazkov, I., Graves, J., and Kutzbach, M. (2008). “Fitting and Comparison of Models
+#' for Multivariate Ordinal Outcomes.” Advances in Econometrics: Bayesian Econometrics, 23: 115–156.
+#'
+#' @keywords datasets
+#'
+#' @seealso \href{https://www.bls.gov/nls/}{NLSY}, \href{https://www.bls.gov/nls/nlsy97.htm}{Survey Process}.
+#'
+NULL
+
+#' @name  Policy_Opinion
+#' @title Policy_Opinion
+#' The data-set is based on the survey conducted by American National Election Studies (ANES) in 2010-2012.
+#' This data talks about the public opinion on the pro-growth tax policy, considered to raise the federal
+#' income taxes for couples (individuals) earning more than $250,000 ($200,000) per year.
+#'
+#' @details
+#'
+#' The ANES data-set here provides 1,164 observations. The responses from individuals were
+#' recorded as either \emph{oppose, neither favor nor oppose} or \emph{favor} the tax increase.
+#' The sample has 263 (22.59\%), 261 (22.42\%) and 640 (54.98\%) observations in respective categories.
+#'
+#' @docType data
+#'
+#' @usage data(Policy_Opinion)
+#'
+#' @return Returns data with components
+#' \itemize{
+#' \item{\code{Intercept}: }{A column of ones.}
+#' \item{\code{AgeCat}: }{Indicator for Age Category.}
+#' \item{\code{IncomeCat}: }{Indicator for household income > $75,000.}
+#' \item{\code{Bachelors}: }{Individual's highest degree in Bachelors.}
+#' \item{\code{Post.Bachelors}: }{Highest degree in Masters, Professional or Doctorate.}
+#' \item{\code{numComputers}: }{Individual or household owns a computer.}
+#' \item{\code{CellPhone}: }{Individual or household owns a cell phone.}
+#' \item{\code{White}: }{Race of the individual is white.}
+#' \item{\code{y}: }{a matrix of ordinal outcomes.}
+#' }
+#'
+#' @references Rahman, M. A. (2016). “Bayesian
+#' Quantile Regression for Ordinal Models.”
+#' Bayesian Analysis, 11(1): 1-24.
+#'
+#' Jeliazkov, I., Graves, J., and Kutzbach, M. (2008). “Fitting and Comparison of Models
+#' for Multivariate Ordinal Outcomes.” Advances in Econometrics: Bayesian Econometrics, 23: 115–156.
+#'
+#' @keywords datasets
+#'
+#' @seealso \href{https://electionstudies.org/data-center/}{ANES},  \href{https://georgewbush-whitehouse.archives.gov/cea/progrowth.html}{Tax Policy}
+#'
+NULL
+
