@@ -1,19 +1,18 @@
 #' @name  data25j3
 #' @title data25j3
-#' Data with 300 observations for \eqn{p = 0.25} with 3 outcomes
+#' Data with 500 observations for \eqn{p = 0.25} with 3 outcomes
 #'
 #' @details
 #'
-#' Generates 300 observations for the simulation study at the \eqn{25^{th}}
-#' quantile. The specifications are
-#' \eqn{\beta = (2, 2, 1)}, \eqn{X} ~ \eqn{MVN(0_{2}, \Sigma)} where
-#' \eqn{\Sigma = [1, 0.25; 0.25, 1]}, and \eqn{\epsilon} ~ AL(\eqn{0, \sigma = 1, p = 0.25}).
+#' Generates 500 observations for the simulation study at the \eqn{25^{th}}
+#' quantile. The specifications are \eqn{\beta = (-4, 6, 5)}, $X ~ Unif(0, 1)$, and
+#' \eqn{\epsilon} ~ AL(\eqn{0, \sigma = 1, p = 0.25}).
 #'
 #' The errors are generated from an asymmetric Laplace distribution
 #' by using its normal–exponential mixture formulation.
 #'
 #' The continuous value are classified into 3 categories using the
-#' cut-points (0, 4).
+#' cut-points (0, 3).
 #'
 #' @docType data
 #'
@@ -37,19 +36,18 @@ NULL
 
 #' @name  data50j3
 #' @title data50j3
-#' Data with 300 observations for \eqn{p = 0.5} with 3 outcomes
+#' Data with 500 observations for \eqn{p = 0.5} with 3 outcomes
 #'
 #' @details
-#' Generates 300 observations for the simulation study at the \eqn{50^{th}}
-#' quantile. The specifications are
-#' \eqn{\beta = (2, 2, 1)}, \eqn{X} ~ \eqn{MVN(0_{2}, \Sigma)} where
-#' \eqn{\Sigma = [1, 0.25; 0.25, 1]}, and \eqn{\epsilon} ~ AL(\eqn{0, \sigma = 1, p = 0.50}).
+#' Generates 500 observations for the simulation study at the \eqn{50^{th}}
+#' quantile. The specifications are \eqn{\beta = (-4, 6, 5)}, $X ~ Unif(0, 1)$, and
+#' \eqn{\epsilon} ~ AL(\eqn{0, \sigma = 1, p = 0.50}).
 #'
 #' The errors are generated from an asymmetric Laplace distribution
 #' by using its normal–exponential mixture formulation.
 #'
 #' The continuous value are classified into 3 categories using the
-#' cut-points (0, 4).
+#' cut-points (0, 3).
 #'
 #' @docType data
 #' @usage data(data50j3)
@@ -71,19 +69,18 @@ NULL
 
 #' @name  data75j3
 #' @title data75j3
-#' Data with 300 observations for \eqn{p = 0.75} with 3 outcomes
+#' Data with 500 observations for \eqn{p = 0.75} with 3 outcomes
 #'
 #' @details
-#' Generates 300 observations for the simulation study at the \eqn{75^{th}}
-#' quantile. The specifications are
-#' \eqn{\beta = (2, 2, 1)}, \eqn{X} ~ \eqn{MVN(0_{2}, \Sigma)} where
-#' \eqn{\Sigma = [1, 0.25; 0.25, 1]}, and \eqn{\epsilon} ~ AL(\eqn{0, \sigma = 1, p = 0.75}).
+#' Generates 500 observations for the simulation study at the \eqn{75^{th}}
+#' quantile. The specifications are \eqn{\beta = (-4, 6, 5)}, $X ~ Unif(0, 1)$,
+#' and \eqn{\epsilon} ~ AL(\eqn{0, \sigma = 1, p = 0.75}).
 #'
 #' The errors are generated from an asymmetric Laplace distribution
 #' by using its normal–exponential mixture formulation.
 #'
 #' The continuous value are classified into 3 categories using the
-#' cut-points (0, 4).
+#' cut-points (0, 3).
 #'
 #' @docType data
 #' @usage data(data75j3)
@@ -104,20 +101,19 @@ NULL
 
 #' @name  data25j4
 #' @title data25j4
-#' Data with 300 observations for \eqn{p = 0.25} with 4 outcomes
+#' Data with 500 observations for \eqn{p = 0.25} with 4 outcomes
 #'
 #' @details
 #'
-#' Generates 300 observations for the simulation study at the \eqn{25^{th}}
-#' quantile. The specifications are
-#' \eqn{\beta = (-2, 3, 4)}, \eqn{X} ~ \eqn{MVN(0_{2}, \Sigma)} where
-#' \eqn{\Sigma = [1, 0.25; 0.25, 1]}, and \eqn{\epsilon} ~ AL(\eqn{0, \sigma = 1, p = 0.25}).
+#' Generates 500 observations for the simulation study at the \eqn{25^{th}}
+#' quantile. The specifications are \eqn{\beta = (-4, 5, 6)}, $X ~ Unif(0, 1)$,
+#' and \eqn{\epsilon} ~ AL(\eqn{0, \sigma = 1, p = 0.25}).
 #'
 #' The errors are generated from an asymmetric Laplace distribution
 #' by using its normal–exponential mixture formulation.
 #'
 #' The continuous value are classified into 4 categories using the
-#' cut-points (0, 2, 3).
+#' cut-points (0, 2, 4).
 #'
 #' @docType data
 #' @usage data(data25j4)
@@ -139,19 +135,18 @@ NULL
 
 #' @name  data50j4
 #' @title data50j4
-#' Data with 300 observations for \eqn{p = 0.5} with 4 outcomes
+#' Data with 500 observations for \eqn{p = 0.5} with 4 outcomes
 #'
 #' @details
-#' Generates 300 observations for the simulation study at the \eqn{50^{th}}
-#' quantile. The specifications are
-#' \eqn{\beta = (-2, 3, 4)}, \eqn{X} ~ \eqn{MVN(0_{2}, \Sigma)} where
-#' \eqn{\Sigma = [1, 0.25; 0.25, 1]}, and \eqn{\epsilon} ~ AL(\eqn{0, \sigma = 1, p = 0.50}).
+#' Generates 500 observations for the simulation study at the \eqn{50^{th}}
+#' quantile. The specifications are \eqn{\beta = (-4, 5, 6)}, $X ~ Unif(0, 1)$,
+#' and \eqn{\epsilon} ~ AL(\eqn{0, \sigma = 1, p = 0.50}).
 #'
 #' The errors are generated from an asymmetric Laplace distribution
 #' by using its normal–exponential mixture formulation.
 #'
 #' The continuous value are classified into 4 categories using the
-#' cut-points (0, 2, 3).
+#' cut-points (0, 2, 4).
 #'
 #'
 #' @docType data
@@ -174,19 +169,18 @@ NULL
 
 #' @name  data75j4
 #' @title data75j4
-#' Data with 300 observations for \eqn{p = 0.75} with 4 outcomes
+#' Data with 500 observations for \eqn{p = 0.75} with 4 outcomes
 #'
 #' @details
-#' Generates 300 observations for the simulation study at the \eqn{75^{th}}
-#' quantile. The specifications are
-#' \eqn{\beta = (-2, 3, 4)}, \eqn{X} ~ \eqn{MVN(0_{2}, \Sigma)} where
-#' \eqn{\Sigma = [1, 0.25; 0.25, 1]}, and \eqn{\epsilon} ~ AL(\eqn{0, \sigma = 1, p = 0.75}).
+#' Generates 500 observations for the simulation study at the \eqn{75^{th}}
+#' quantile. The specifications are \eqn{\beta = (-4, 5, 6)}, $X ~ Unif(0, 1)$,
+#' and \eqn{\epsilon} ~ AL(\eqn{0, \sigma = 1, p = 0.75}).
 #'
 #' The errors are generated from an asymmetric Laplace distribution
 #' by using its normal–exponential mixture formulation.
 #'
 #' The continuous value are classified into 4 categories using the
-#' cut-points (0, 2, 3).
+#' cut-points (0, 2, 4).
 #'
 #' @docType data
 #' @usage data(data75j4)
@@ -226,17 +220,17 @@ NULL
 #'
 #' @return Returns data with components
 #' \itemize{
-#' \item{\code{BG_14_female_work}: }{Indicator for working female at age of 14.}
-#' \item{\code{BG_14_urban}: }{Indicator for the youth living in urban are at age of 14.}
-#' \item{\code{BG_14_region_south}: }{Indicator for the youth living in South at age of 14.}
-#' \item{\code{BG_edu_father}: }{Individual's father education.}
-#' \item{\code{BG_edu_mother}: }{Individual's mother education.}
-#' \item{\code{BG_fam_income}: }{Family income of the household.}
+#' \item{\code{mother_work}: }{Indicator for working female at age of 14.}
+#' \item{\code{urban}: }{Indicator for the youth living in urban are at age of 14.}
+#' \item{\code{south}: }{Indicator for the youth living in South at age of 14.}
+#' \item{\code{father_educ}: }{Individual's father education.}
+#' \item{\code{mother_educ}: }{Individual's mother education.}
+#' \item{\code{fam_income}: }{Family income of the household.}
 #' \item{\code{female}: }{Indicator for Individuals gender.}
-#' \item{\code{race_black}: }{Race of the individual is white.}
-#' \item{\code{age_15}: }{Indicator for age of 15.}
-#' \item{\code{age_16}: }{Indicator for age of 16.}
-#' \item{\code{age_17}: }{Indicator for age of 17.}
+#' \item{\code{black}: }{Race of the individual is white.}
+#' \item{\code{age_cohort_2}: }{Indicator for age of 15.}
+#' \item{\code{age_cohort_3}: }{Indicator for age of 16.}
+#' \item{\code{age_cohort_4}: }{Indicator for age of 17.}
 #' \item{\code{dep_edu_level}: }{a matrix of ordinal outcomes.}
 #' }
 #'

@@ -29,9 +29,9 @@ set.seed(101)
 sigma <- 2.503306
 p <- 0.25
 n <- 1
-ans <- rndald(sigma, p, n)
+output <- rndald(sigma, p, n)
 
-# ans
+# output
 #   1.07328
 
 }

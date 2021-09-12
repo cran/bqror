@@ -4,7 +4,7 @@
 \name{data75j3}
 \alias{data75j3}
 \title{data75j3
-Data with 300 observations for \eqn{p = 0.75} with 3 outcomes}
+Data with 500 observations for \eqn{p = 0.75} with 3 outcomes}
 \usage{
 data(data75j3)
 }
@@ -17,19 +17,18 @@ Returns a list with components
 }
 \description{
 data75j3
-Data with 300 observations for \eqn{p = 0.75} with 3 outcomes
+Data with 500 observations for \eqn{p = 0.75} with 3 outcomes
 }
 \details{
-Generates 300 observations for the simulation study at the \eqn{75^{th}}
-quantile. The specifications are
-\eqn{\beta = (2, 2, 1)}, \eqn{X} ~ \eqn{MVN(0_{2}, \Sigma)} where
-\eqn{\Sigma = [1, 0.25; 0.25, 1]}, and \eqn{\epsilon} ~ AL(\eqn{0, \sigma = 1, p = 0.75}).
+Generates 500 observations for the simulation study at the \eqn{75^{th}}
+quantile. The specifications are \eqn{\beta = (-4, 6, 5)}, $X ~ Unif(0, 1)$,
+and \eqn{\epsilon} ~ AL(\eqn{0, \sigma = 1, p = 0.75}).
 
 The errors are generated from an asymmetric Laplace distribution
 by using its normal–exponential mixture formulation.
 
 The continuous value are classified into 3 categories using the
-cut-points (0, 4).
+cut-points (0, 3).
 }
 \references{
 Kozumi, H. and Kobayashi, G. (2011). “Gibbs Sampling Methods for Bayesian Quantile Regression.”

@@ -2,18 +2,18 @@
 % Please edit documentation in R/ODRI.R
 \name{qrnegloglikensum}
 \alias{qrnegloglikensum}
-\title{Negative log-likelihood for Ordinal Models with more than 3 outcomes}
+\title{Negative log-likelihood for Ordinal Model with more than 3 outcomes}
 \usage{
-qrnegloglikensum(deltain, y, x, beta, p)
+qrnegloglikensum(deltaIn, y, x, beta, p)
 }
 \arguments{
-\item{deltain}{initialization of cut-points.}
+\item{deltaIn}{initialization of cut-points.}
 
-\item{y}{dependent variable i.e. ordinal outcome values.}
+\item{y}{observed ordinal outcomes, column vector of dimension \eqn{(n x 1)}.}
 
 \item{x}{covariate matrix of dimension \eqn{(n x k)} including a column of ones.}
 
-\item{beta}{column vector of coeffcients of dimension \eqn{(k x 1)}.}
+\item{beta}{column vector of coefficients of dimension \eqn{(k x 1)}.}
 
 \item{p}{quantile level or skewness parameter, p in (0,1).}
 }
@@ -25,38 +25,37 @@ Returns a list with components
 }
 }
 \description{
-Function for calculating negative log-likelihood for Ordinal models with
+Function for calculating negative log-likelihood for ordinal model with
 more than 3 outcomes.
 }
 \details{
-Computes the negtaive of the log-likelihood function using the
-asymmetric Laplace distribution over the iid random
-variables.
+Computes the negative of the log-likelihood function for
+ordinal quantile regression model with more than 3 outcomes.
 }
 \examples{
 set.seed(101)
-deltain <- c(-0.9026915, -2.2488833)
+deltaIn <- c(-0.002570995, 1.044481071)
 data("data25j4")
 x <- data25j4$x
 y <- data25j4$y
 p <- 0.25
-beta <- c(-1.429465, 1.135585, 2.107666)
-ans <- qrnegloglikensum(deltain, y, x, beta, p)
+beta <- c(0.3990094, 0.8168991, 2.8034963)
+output <- qrnegloglikensum(deltaIn, y, x, beta, p)
 
 # nlogl
-#   3.36678284
-#   2.66584712
-#   0.52085599
-#   0.60451039
-#   0.58008590
-#   0.18984750
-#   2.79497033
-#   1.03255169
-#   0.12144529
-#   0.55554991... soon
+#   0.7424858
+#   1.1649645
+#   2.1344390
+#   0.9881085
+#   2.7677386
+#   0.8229129
+#   0.8854911
+#   0.3534490
+#   1.8582422
+#   0.9508680 .. soon
 
 # negsumlogl
-#   283.1566
+#   716.9498
 
 }
 \references{

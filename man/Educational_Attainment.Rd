@@ -12,17 +12,17 @@ data(Educational_Attainment)
 \value{
 Returns data with components
 \itemize{
-\item{\code{BG_14_female_work}: }{Indicator for working female at age of 14.}
-\item{\code{BG_14_urban}: }{Indicator for the youth living in urban are at age of 14.}
-\item{\code{BG_14_region_south}: }{Indicator for the youth living in South at age of 14.}
-\item{\code{BG_edu_father}: }{Individual's father education.}
-\item{\code{BG_edu_mother}: }{Individual's mother education.}
-\item{\code{BG_fam_income}: }{Family income of the household.}
+\item{\code{mother_work}: }{Indicator for working female at age of 14.}
+\item{\code{urban}: }{Indicator for the youth living in urban are at age of 14.}
+\item{\code{south}: }{Indicator for the youth living in South at age of 14.}
+\item{\code{father_educ}: }{Individual's father education.}
+\item{\code{mother_educ}: }{Individual's mother education.}
+\item{\code{fam_income}: }{Family income of the household.}
 \item{\code{female}: }{Indicator for Individuals gender.}
-\item{\code{race_black}: }{Race of the individual is white.}
-\item{\code{age_15}: }{Indicator for age of 15.}
-\item{\code{age_16}: }{Indicator for age of 16.}
-\item{\code{age_17}: }{Indicator for age of 17.}
+\item{\code{black}: }{Race of the individual is white.}
+\item{\code{age_cohort_2}: }{Indicator for age of 15.}
+\item{\code{age_cohort_3}: }{Indicator for age of 16.}
+\item{\code{age_cohort_4}: }{Indicator for age of 17.}
 \item{\code{dep_edu_level}: }{a matrix of ordinal outcomes.}
 }
 }

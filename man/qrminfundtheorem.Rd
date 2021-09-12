@@ -5,7 +5,7 @@
 \title{Minimize the negative of log-likelihood}
 \usage{
 qrminfundtheorem(
-  deltain,
+  deltaIn,
   y,
   x,
   beta,
@@ -20,13 +20,13 @@ qrminfundtheorem(
 )
 }
 \arguments{
-\item{deltain}{initialization of cut-points.}
+\item{deltaIn}{initialization of cut-points.}
 
-\item{y}{dependent variable i.e. ordinal outcome values.}
+\item{y}{observed ordinal outcomes, column vector of dimension \eqn{(n x 1)}.}
 
 \item{x}{covariate matrix of dimension \eqn{(n x k)} including a column of ones.}
 
-\item{beta}{column vector of coeffcients of dimension \eqn{(k x 1)}.}
+\item{beta}{column vector of coefficients of dimension \eqn{(k x 1)}.}
 
 \item{cri0}{initial criterion, \eqn{cri0 = 1}.}
 
@@ -49,8 +49,8 @@ for second derivaties.}
 \value{
 Returns a list with components
 \itemize{
-\item{\code{dmin}: }{a vector with cutpoints that minimize the log-likelihood function.}
-\item{\code{sumlogl}: }{a scalar with sum of log-likelihood values.}
+\item{\code{deltamin}: }{a vector with cutpoints that minimize the log-likelihood function.}
+\item{\code{negsum}: }{a scalar with sum of log-likelihood values.}
 \item{\code{logl}: }{a vector with log-likelihood values.}
 \item{\code{G}: }{a gradient vector, \eqn{(n x k)} matrix with i-th row as the score
 for the i-th unit.}
@@ -85,12 +85,12 @@ f(x-dh,y-dh))/2dh}]/2dh}
 }
 \examples{
 set.seed(101)
-deltain <- c(-0.9026915, -2.2488833)
+deltaIn <- c(-0.002570995,  1.044481071)
 data("data25j4")
 x <- data25j4$x
 y <- data25j4$y
 p <- 0.25
-beta <- c(-1.429465, 1.135585, 2.107666)
+beta <- c(0.3990094, 0.8168991, 2.8034963)
 cri0     <- 1
 cri1     <- 0.001
 stepsize <- 1
@@ -98,40 +98,39 @@ maxiter  <- 10
 h        <- 0.002
 dh       <- 0.0002
 sw       <- 20
-ans <- qrminfundtheorem(deltain, y, x, beta, cri0, cri1, stepsize, maxiter, h, dh, sw, p)
+output <- qrminfundtheorem(deltaIn, y, x, beta, cri0, cri1, stepsize, maxiter, h, dh, sw, p)
 
 # deltamin
-#   0.2674061 -0.6412074
+#   0.8266967 0.3635708
 # negsum
-#   247.9525
+#   645.4911
 # logl
-#   -2.30530839
-#   -1.60437267
-#   -0.52085599
-#   -0.93506872
-#   -0.91064423
-#   -0.49535299
-#   -1.53635828
-#   -1.36311002
-#   -0.35753865
-#   -0.55554991.. soon
+#    -0.7136999
+#    -1.5340787
+#    -1.1072447
+#    -1.4423124
+#    -1.3944677
+#    -0.7941271
+#    -1.6544072
+#    -0.3246632
+#    -1.8582422
+#    -0.9220822
+#    -2.1117739 .. soon
 # G
-#   0.84555485  0.00000000
-#   0.84555485  0.00000000
-#   0.00000000  0.00000000
-#   -0.32664119 -0.13166332
-#   -0.32664119 -0.13166332
-#   -0.32664119 -0.13166332
-#   0.93042126  0.00000000
-#   -0.32664119 -0.13166332
-#   -0.32664119 -0.13166332
-#   0.00000000  0.00000000
-#   -0.32664119 -0.13166332.. soon
+#    0.803892784  0.00000000
+#   -0.420190546  0.72908381
+#   -0.421776117  0.72908341
+#   -0.421776117 -0.60184063
+#   -0.421776117 -0.60184063
+#    0.151489598  0.86175120
+#    0.296995920  0.96329114
+#   -0.421776117  0.72908341
+#   -0.340103190 -0.48530164
+#    0.000000000  0.00000000
+#   -0.421776117 -0.60184063.. soon
 # H
-#   -47.266464  -2.379509
-#   -2.379509 -13.830474
-# checkoutput
-#   0    0    0    0    0    0    0 ... soon
+#   -338.21243  -41.10775
+#   -41.10775 -106.32758
 
 }
 \references{
@@ -141,5 +140,5 @@ Bayesian Analysis, 11(1): 1-24.
 }
 \seealso{
 differential calculus, functional maximization,
-\link[MASS]{ginv}, \link[pracma]{mldivide}
+\link[pracma]{mldivide}
 }

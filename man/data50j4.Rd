@@ -4,7 +4,7 @@
 \name{data50j4}
 \alias{data50j4}
 \title{data50j4
-Data with 300 observations for \eqn{p = 0.5} with 4 outcomes}
+Data with 500 observations for \eqn{p = 0.5} with 4 outcomes}
 \usage{
 data(data50j4)
 }
@@ -17,19 +17,18 @@ Returns a list with components
 }
 \description{
 data50j4
-Data with 300 observations for \eqn{p = 0.5} with 4 outcomes
+Data with 500 observations for \eqn{p = 0.5} with 4 outcomes
 }
 \details{
-Generates 300 observations for the simulation study at the \eqn{50^{th}}
-quantile. The specifications are
-\eqn{\beta = (-2, 3, 4)}, \eqn{X} ~ \eqn{MVN(0_{2}, \Sigma)} where
-\eqn{\Sigma = [1, 0.25; 0.25, 1]}, and \eqn{\epsilon} ~ AL(\eqn{0, \sigma = 1, p = 0.50}).
+Generates 500 observations for the simulation study at the \eqn{50^{th}}
+quantile. The specifications are \eqn{\beta = (-4, 5, 6)}, $X ~ Unif(0, 1)$,
+and \eqn{\epsilon} ~ AL(\eqn{0, \sigma = 1, p = 0.50}).
 
 The errors are generated from an asymmetric Laplace distribution
 by using its normal–exponential mixture formulation.
 
 The continuous value are classified into 4 categories using the
-cut-points (0, 2, 3).
+cut-points (0, 2, 4).
 }
 \references{
 Kozumi, H. and Kobayashi, G. (2011). “Gibbs Sampling Methods for Bayesian Quantile Regression.”

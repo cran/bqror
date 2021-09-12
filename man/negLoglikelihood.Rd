@@ -2,18 +2,18 @@
 % Please edit documentation in R/ODRII.R
 \name{negLoglikelihood}
 \alias{negLoglikelihood}
-\title{NegLoglikelihood function for Ordinal Models with 3 outcomes}
+\title{NegLoglikelihood function for Ordinal Model with 3 outcomes}
 \usage{
 negLoglikelihood(y, x, gammacp, beta, sigma, p)
 }
 \arguments{
-\item{y}{dependent variable i.e. ordinal outcome values.}
+\item{y}{observed ordinal outcomes, column vector of dimension \eqn{(n x 1)}.}
 
-\item{x}{covariate matrix of dimension \eqn{(n x k)} including a column of ones.}
+\item{x}{covariate matrix of dimension \eqn{(n x k)} including a column of ones with or without column names.}
 
 \item{gammacp}{row vector of cutpoints including -Inf and Inf.}
 
-\item{beta}{column vector of coeffcients of dimension \eqn{(k x 1)}.}
+\item{beta}{column vector of coefficients of dimension \eqn{(k x 1)}.}
 
 \item{sigma}{scale factor, a scalar.}
 
@@ -25,7 +25,7 @@ Returns the negative log-likelihood value.
 \description{
 This function computes the negative of the log-likelihood for quantile
 ordinal model with 3 outcomes where the error is assumed to follow
-an Asymmetric Laplace distribution.
+an asymmetric Laplace distribution.
 }
 \details{
 Computes the negative of the log-likelihood for quantile
@@ -38,13 +38,13 @@ data("data25j3")
 x <- data25j3$x
 y <- data25j3$y
 p <- 0.25
-gammacp <- c(-Inf, 0, 4, Inf)
-beta <- c(1.7201671, 1.9562172, 0.8334668)
+gammacp <- c(-Inf, 0, 3, Inf)
+beta <- c(1.810504, 1.850332, 6.18116)
 sigma <- 0.9684741
-ans <- negLoglikelihood(y, x, gammacp, beta, sigma, p)
+output <- negLoglikelihood(y, x, gammacp, beta, sigma, p)
 
-# ans
-#   231.8096
+# output
+#   791.5215
 
 }
 \references{

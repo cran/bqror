@@ -35,9 +35,9 @@ x <- -0.5428573
 mu <- 0.5
 sigma <- 1
 p <- 0.25
-ans <- alcdf(x, mu, sigma, p)
+output <- alcdf(x, mu, sigma, p)
 
-# ans
+# output
 #   0.1143562
 
 }
@@ -48,7 +48,7 @@ Bayesian Analysis, 11(1): 1-24.
 
  Koenker, R. and Machado, J. (1999). “Goodness  of  Fit  and  Related
  Inference  Processes  for  Quantile Regression.”
- Journal of American Statistics Association, 94(3): 1296-1309.
+ Journal of the American Statistical Association, 94(3): 1296-1309.
 
  Keming, Y. and Zhang, J. (2005). “A Three-Parameter Asymmetric
  Laplace Distribution.” Communications in Statistics - Theory and Methods, 34(9):

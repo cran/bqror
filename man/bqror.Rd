@@ -24,7 +24,7 @@ performance criteria's.}
 \details{
 \deqn{Package: bqror}
 \deqn{Type: Package}
-\deqn{Version: 0.1.4}
+\deqn{Version: 1.1.0}
 \deqn{License: GPL (>=2)}
 
 Package \strong{bqror} provides the following functions:
@@ -32,21 +32,23 @@ Package \strong{bqror} provides the following functions:
 \itemize{
 \item{For an Ordinal Model with three outcomes:}
 }
-\code{\link[bqror]{quan_reg3}}, \code{\link[bqror]{drawlatent3}},
-\code{\link[bqror]{drawbeta3}}, \code{\link[bqror]{drawsigma3}},
-\code{\link[bqror]{drawnu3}}, \code{\link[bqror]{deviance3}},
+\code{\link[bqror]{quantreg_or2}}, \code{\link[bqror]{drawlatent_or2}},
+\code{\link[bqror]{drawbeta_or2}}, \code{\link[bqror]{drawsigma_or2}},
+\code{\link[bqror]{drawnu_or2}}, \code{\link[bqror]{deviance_or2}},
 \code{\link[bqror]{negLoglikelihood}}, \code{\link[bqror]{rndald}},
-\code{\link[bqror]{trace_plot3}}, \code{\link[bqror]{inefficiency_factor3}}
+\code{\link[bqror]{traceplot_or2}}, \code{\link[bqror]{infactor_or2}},
+\code{\link[bqror]{logmargLikelihood_or2}}
 
 \itemize{
 \item{For an Ordinal Model with more than three outcomes:}
 }
-\code{\link[bqror]{quan_regg3}}, \code{\link[bqror]{qrminfundtheorem}},
-\code{\link[bqror]{qrnegloglikensum}}, \code{\link[bqror]{drawbetag3}},
-\code{\link[bqror]{drawwg3}}, \code{\link[bqror]{drawlatentg3}},
-\code{\link[bqror]{drawdeltag3}}, \code{\link[bqror]{devianceg3}},
-\code{\link[bqror]{alcdfstdg3}}, \code{\link[bqror]{alcdf}},
-\code{\link[bqror]{trace_plotg3}}, \code{\link[bqror]{inefficiency_factorg3}}
+\code{\link[bqror]{quantreg_or1}}, \code{\link[bqror]{qrminfundtheorem}},
+\code{\link[bqror]{qrnegloglikensum}}, \code{\link[bqror]{drawbeta_or1}},
+\code{\link[bqror]{draww_or1}}, \code{\link[bqror]{drawlatent_or1}},
+\code{\link[bqror]{drawdelta_or1}}, \code{\link[bqror]{deviance_or1}},
+\code{\link[bqror]{alcdfstd}}, \code{\link[bqror]{alcdf}},
+\code{\link[bqror]{traceplot_or1}}, \code{\link[bqror]{infactor_or1}},
+\code{\link[bqror]{covariateEffect_or1}}, \code{\link[bqror]{logmargLikelihood_or1}}
 }
 \references{
 Rahman, M. A. (2016). “Bayesian
@@ -66,12 +68,12 @@ Cambridge University Press, Cambridge, <doi:10.1017/CBO9781139058414>.
 \link[invgamma]{rinvgamma}, \link[pracma]{mldivide},
 \link[pracma]{rand}, \link[stats]{qnorm},
 \link[stats]{rexp}, \link[stats]{rnorm},
-\link[pracma]{std}, \link[stats]{sd},
+\link[pracma]{std}, \link[stats]{sd}, \link[stats]{acf},
 \link[pracma]{Reshape}, \link[tcltk]{setTkProgressBar},
-\link[tcltk]{tkProgressBar}.
+\link[tcltk]{tkProgressBar}, \link[invgamma]{dinvgamma}
 }
 \author{
-Dr. Mohammad Arshad Rahman
+Prof. Mohammad Arshad Rahman
 
 Prajual Maheshwari <prajual1391@gmail.com>
 }
