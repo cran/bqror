@@ -1,23 +1,26 @@
-#' Bayesian Quantile Regression for Ordinal Model
+#' Bayesian quantile regression for ordinal quantile model
 #' with 3 outcomes
 #'
-#' This function estimates Bayesian quantile regression for ordinal model with
+#' This function estimates Bayesian quantile regression for ordinal quantile model with
 #' 3 outcomes and reports the posterior mean, posterior standard deviation, and 95
-#' percent credible intervals of \eqn{(\beta, \sigma)}.
+#' percent posterior credible intervals of \eqn{(\beta, \sigma)}.
+#'
+#' @usage quantreg_or2(y, x, b0, B0 , n0, d0, gamma, mcmc, p, display)
 #'
 #' @param y                 observed ordinal outcomes, column vector of dimension \eqn{(n x 1)}.
 #' @param x                 covariate matrix of dimension \eqn{(n x k)} including a column of ones with or without column names.
-#' @param b0                prior mean for normal distribution to sample \eqn{\beta}. Default is 0.
+#' @param b0                prior mean for normal distribution to sample \eqn{\beta}, default is 0.
 #' @param B0                prior variance for normal distribution to sample \eqn{\beta}
 #' @param n0                prior for shape parameter to sample \eqn{\sigma} from inverse gamma distribution, default is 5.
 #' @param d0                prior for scale parameter to sample \eqn{\sigma} from inverse gamma distribution, default is 8.
 #' @param gamma             one and only cut-point other than 0.
 #' @param mcmc              number of MCMC iterations, post burn-in.
 #' @param p                 quantile level or skewness parameter, p in (0,1).
+#' @param display           whether to print the final output or not, default is TRUE.
 #'
 #' @details
 #' Function implements the Bayesian quantile regression for
-#' ordinal model with 3 outcomes using a Gibbs sampling
+#' ordinal quantile model with 3 outcomes using a Gibbs sampling
 #' procedure.
 #'
 #' Function initializes prior and then iteratively
@@ -26,34 +29,34 @@
 #'
 #' @return Returns a list with components
 #' \itemize{
-#' \item{\code{postMeanbeta}: }{a vector with mean of sampled
+#' \item{\code{postMeanbeta}: }{vector with mean of sampled
 #'  \eqn{\beta} for each covariate.}
-#' \item{\code{postMeansigma}: }{a vector with mean of sampled
+#' \item{\code{postMeansigma}: }{vector with mean of sampled
 #'  \eqn{\sigma}.}
-#' \item{\code{postStdbeta}: }{a vector with standard deviation
+#' \item{\code{postStdbeta}: }{vector with standard deviation
 #'  of sampled \eqn{\beta} for each covariate.}
-#'  \item{\code{postStdsigma}: }{a vector with standard deviation
+#'  \item{\code{postStdsigma}: }{vector with standard deviation
 #'  of sampled \eqn{\sigma}.}
 #'  \item{\code{allQuantDIC}: }{results of the DIC criteria.}
-#'  \item{\code{logMargLikelihood}: }{a scalar value for log marginal likelihood.}
-#'  \item{\code{beta}: }{a matrix with all sampled values for \eqn{\beta}.}
-#'  \item{\code{sigma}: }{a matrix with all sampled values for \eqn{\sigma}.}
+#'  \item{\code{logMargLikelihood}: }{scalar value for log marginal likelihood.}
+#'  \item{\code{beta}: }{matrix with all sampled values for \eqn{\beta}.}
+#'  \item{\code{sigma}: }{matrix with all sampled values for \eqn{\sigma}.}
 #' }
 #'
 #' @references Rahman, M. A. (2016). “Bayesian
 #' Quantile Regression for Ordinal Models.”
-#' Bayesian Analysis, 11(1): 1-24.
+#' Bayesian Analysis, 11(1): 1-24.  DOI: 10.1214/15-BA939
 #'
-#' Yu, K. and Moyeed, R. A. (2001). “Bayesian Quantile Regression.” Statistics and
-#' Probability Letters, 54(4): 437–447.
+#' Yu, K., and Moyeed, R. A. (2001). “Bayesian Quantile Regression.” Statistics and
+#' Probability Letters, 54(4): 437–447. DOI: 10.12691/ajams-6-6-4
 #'
-#' Casella, G., George E. I. (1992). “Explaining the Gibbs Sampler."
-#' The American Statistician, 46(3): 167-174.
+#' Casella, G., and George, E. I. (1992). “Explaining the Gibbs Sampler.”
+#' The American Statistician, 46(3): 167-174. DOI: 10.1080/00031305.1992.10475878
 #'
 #' Geman, S., and Geman, D. (1984). “Stochastic Relaxation,
-#' Gibbs Distributions, and the Bayesian Restoration of Images."
+#' Gibbs Distributions, and the Bayesian Restoration of Images.”
 #' IEEE Transactions an Pattern Analysis and Machine Intelligence,
-#' 6(6): 721-741.
+#' 6(6): 721-741. DOI: 10.1109/TPAMI.1984.4767596
 #'
 #' @importFrom "tcltk" "tkProgressBar" "setTkProgressBar"
 #' @importFrom "stats" "sd"
@@ -72,19 +75,19 @@
 #'
 #' # Number of burn-in draws : 12.5
 #' # Number of retained draws : 50
-#' # Summary of estimated beta :
+#' # Summary of MCMC draws :
 #'
 #' #            Post Mean Post Std Upper Credible Lower Credible
-#' #    beta_0   -4.0802   0.6525        -3.0715        -5.4562
-#' #    beta_1    6.0618   0.7255         7.3667         5.0018
-#' #    beta_2    5.6469   0.8592         7.4881         4.3384
-#' #    sigma     1.2251   0.1796         1.7111         1.0553
+#' #    beta_0   -4.5185   0.9837        -3.1726        -6.2000
+#' #    beta_1    6.1825   0.9166         7.6179         4.8619
+#' #    beta_2    5.2984   0.9653         6.9954         4.1619
+#' #    sigma     1.0879   0.2073         1.5670         0.8436
 #'
-#' # Model Marginal Likelihood: -508.04
-#' # Model DIC: 779.46
+#' # Log of Marginal Likelihood: -404.57
+#' # DIC: 801.82
 #'
 #' @export
-quantreg_or2 <- function(y, x, b0 = 0, B0 , n0 = 5, d0 = 8, gamma = 3, mcmc = 15000, p) {
+quantreg_or2 <- function(y, x, b0 = 0, B0 , n0 = 5, d0 = 8, gamma = 3, mcmc = 15000, p, display = TRUE) {
     cols <- colnames(x)
     names(x) <- NULL
     names(y) <- NULL
@@ -104,6 +107,12 @@ quantreg_or2 <- function(y, x, b0 = 0, B0 , n0 = 5, d0 = 8, gamma = 3, mcmc = 15
     }
     if ( !is.numeric(mcmc)){
         stop("parameter mcmc must be a numeric")
+    }
+    if ( length(gamma) != 1){
+        stop("parameter gamma must be scalar")
+    }
+    if ( !is.numeric(gamma)){
+        stop("parameter gamma must be a numeric")
     }
     if ( length(p) != 1){
         stop("parameter p must be scalar")
@@ -195,7 +204,7 @@ quantreg_or2 <- function(y, x, b0 = 0, B0 , n0 = 5, d0 = 8, gamma = 3, mcmc = 15
                             postMeansigma, postStdsigma,
                             beta, sigma, burn, nsim)
 
-    logMargLikelihood <- logmargLikelihood_or2(y, x, b0, B0,
+    logMargLikelihood <- logMargLikelihood_or2(y, x, b0, B0,
                                                 n0, d0, postMeanbeta,
                                                 postMeansigma, btildeStore,
                                                 BtildeStore, gamma, p)
@@ -232,14 +241,16 @@ quantreg_or2 <- function(y, x, b0 = 0, B0 , n0 = 5, d0 = 8, gamma = 3, mcmc = 15
     }
     rownames(summary)[j] <- 'sigma'
 
-    print(noquote(paste0('Number of burn-in draws : ', burn)))
-    print(noquote(paste0('Number of retained draws : ', mcmc)))
-    print(noquote('Summary of estimated beta : '))
-    cat("\n")
-    print(round(summary, 4))
-    cat("\n")
-    print(noquote(paste0('Model Marginal Likelihood: ', round(logMargLikelihood, 2))))
-    print(noquote(paste0('Model DIC: ', round(allQuantDIC$DIC, 2))))
+    if (display) {
+        print(noquote(paste0('Number of burn-in draws : ', burn)))
+        print(noquote(paste0('Number of retained draws : ', mcmc)))
+        print(noquote('Summary of MCMC draws : '))
+        cat("\n")
+        print(round(summary, 4))
+        cat("\n")
+        print(noquote(paste0('Log of Marginal Likelihood: ', round(logMargLikelihood, 2))))
+        print(noquote(paste0('DIC: ', round(allQuantDIC$DIC, 2))))
+    }
 
     result <- list("postMeanbeta" = postMeanbeta,
                    "postStdbeta" = postStdbeta,
@@ -251,11 +262,13 @@ quantreg_or2 <- function(y, x, b0 = 0, B0 , n0 = 5, d0 = 8, gamma = 3, mcmc = 15
                    "sigma" = sigma)
     return(result)
 }
-#' Samples the latent variable z for an Ordinal Model
+#' Samples the latent variable z for ordinal quantile model
 #' with 3 outcomes
 #'
 #' This function samples the latent variable z from a truncated
-#' normal distribution for an ordinal model with 3 outcomes.
+#' normal distribution for ordinal quantile model with 3 outcomes.
+#'
+#' @usage drawlatent_or2(y, x, beta, sigma, nu, theta, tau2, gammacp)
 #'
 #' @param y         observed ordinal outcomes, column vector of dimension \eqn{(n x 1)}.
 #' @param x         covariate matrix of dimension \eqn{(n x k)} including a column of ones.
@@ -272,16 +285,20 @@ quantreg_or2 <- function(y, x, b0 = 0, B0 , n0 = 5, d0 = 8, gamma = 3, mcmc = 15
 #'
 #' @return Returns a column vector of values for latent variable z.
 #'
-#' @references Albert, J. and Chib, S. (1993). “Bayesian Analysis of Binary and Polychotomous
-#' Response Data.” Journal of the American Statistical Association, 88(422): 669–679.
+#' @references Albert, J., and Chib, S. (1993). “Bayesian Analysis of Binary and Polychotomous
+#' Response Data.” Journal of the American Statistical
+#' Association, 88(422): 669–679. DOI: 10.1080/01621459.1993.10476321
 #'
-#' Casella, G., George E. I. (1992). “Explaining the Gibbs Sampler."
-#' The American Statistician, 46(3): 167-174.
+#' Casella, G., and George, E. I. (1992). “Explaining the Gibbs Sampler.”
+#' The American Statistician, 46(3): 167-174. DOI: 10.1080/00031305.1992.10475878
 #'
 #' Geman, S., and Geman, D. (1984). “Stochastic Relaxation,
-#' Gibbs Distributions, and the Bayesian Restoration of Images."
+#' Gibbs Distributions, and the Bayesian Restoration of Images.”
 #' IEEE Transactions an Pattern Analysis and Machine Intelligence,
-#' 6(6): 721-741.
+#' 6(6): 721-741. DOI: 10.1109/TPAMI.1984.4767596
+#'
+#' Robert, C. P. (1995). “Simulation of truncated normal variables.” Statistics and
+#' Computing, 5: 121–125. DOI: 10.1007/BF00143942
 #'
 #' @seealso Gibbs sampling, truncated normal distribution,
 #' \link[truncnorm]{rtruncnorm}
@@ -349,12 +366,14 @@ drawlatent_or2 <- function(y, x, beta, sigma, nu, theta, tau2, gammacp) {
     }
     return(z)
 }
-#' Samples \eqn{\beta} for an Ordinal Model
+#' Samples \eqn{\beta} for ordinal quantile model
 #' with 3 outcomes
 #'
 #' This function samples \eqn{\beta} from its conditional
-#' posterior distribution for an ordinal model with 3
-#' outcomes.
+#' posterior distribution for ordinal quantile model with 3
+#' outcomes i.e. ORII model.
+#'
+#' @usage drawbeta_or2(z, x, sigma, nu, tau2, theta, invB0, invB0b0)
 #'
 #' @param z         dependent variable i.e. ordinal outcome values.
 #' @param x         covariate matrix of dimension \eqn{(n x k)} including a column of ones.
@@ -370,28 +389,25 @@ drawlatent_or2 <- function(y, x, beta, sigma, nu, theta, tau2, gammacp) {
 #'
 #' @return Returns a list with components
 #' \itemize{
-#' \item{\code{beta}: }{Returns a column vector of \eqn{\beta}
+#' \item{\code{beta}: }{column vector of \eqn{\beta}
 #' from a multivariate normal distribution.}
-#' \item{\code{Btilde}: }{the variance parameter for the normal
+#' \item{\code{Btilde}: }{variance parameter for the normal
 #'  distribution.}
-#' \item{\code{btilde}: }{the mean parameter for the
+#' \item{\code{btilde}: }{mean parameter for the
 #' normal distribution.}
 #' }
 #'
 #' @references Rahman, M. A. (2016). “Bayesian
 #' Quantile Regression for Ordinal Models.”
-#' Bayesian Analysis, 11(1): 1-24.
+#' Bayesian Analysis, 11(1): 1-24. DOI: 10.1214/15-BA939
 #'
-#' Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988).
-#' “The New S Language. Wadsworth & Brooks/Cole.”
-#'
-#' Casella, G., George E. I. (1992). “Explaining the Gibbs Sampler."
-#' The American Statistician, 46(3): 167-174.
+#' Casella, G., and George, E. I. (1992). “Explaining the Gibbs Sampler.”
+#' The American Statistician, 46(3): 167-174. DOI: 10.1080/00031305.1992.10475878
 #'
 #' Geman, S., and Geman, D. (1984). “Stochastic Relaxation,
-#' Gibbs Distributions, and the Bayesian Restoration of Images."
+#' Gibbs Distributions, and the Bayesian Restoration of Images.”
 #' IEEE Transactions an Pattern Analysis and Machine Intelligence,
-#' 6(6): 721-741.
+#' 6(6): 721-741. DOI: 10.1109/TPAMI.1984.4767596
 #'
 #' @importFrom "MASS" "mvrnorm"
 #' @importFrom "pracma" "inv"
@@ -482,11 +498,13 @@ drawbeta_or2 <- function(z, x, sigma, nu, tau2, theta, invB0, invB0b0) {
 
     return(betaReturns)
 }
-#' Samples the \eqn{\sigma} for an Ordinal Model
+#' Samples the \eqn{\sigma} for ordinal quantile model
 #' with 3 outcomes
 #'
 #' This function samples the \eqn{\sigma} from an inverse-gamma distribution
-#' for an ordinal model with 3 outcomes.
+#' for ordinal quantile model with 3 outcomes.
+#'
+#' @usage drawsigma_or2(z, x, beta, nu, tau2, theta, n0, d0)
 #'
 #' @param z         Gibbs draw of latent response variable, a column vector.
 #' @param x         covariate matrix of dimension \eqn{(n x k)} including a column of ones.
@@ -505,22 +523,23 @@ drawbeta_or2 <- function(z, x, sigma, nu, tau2, theta, invB0, invB0b0) {
 #' \itemize{
 #' \item{\code{sigma}: }{column vector of the \eqn{\sigma}
 #' from an inverse gamma distribution.}
-#' \item{\code{dtilde}: }{the scale parameter for the inverse
+#' \item{\code{dtilde}: }{scale parameter for the inverse
 #' gamma distribution.}
 #' }
 #'
 #' @importFrom "stats" "rgamma"
 #'
-#' @references Albert, J. and Chib, S. (1993). “Bayesian Analysis of Binary and Polychotomous
-#' Response Data.” Journal of the American Statistical Association, 88(422): 669–679.
+#' @references Albert, J., and Chib, S. (1993). “Bayesian Analysis of Binary and Polychotomous
+#' Response Data.” Journal of the American Statistical
+#' Association, 88(422): 669–679. DOI: 10.1080/01621459.1993.10476321
 #'
-#' Casella, G., George E. I. (1992). “Explaining the Gibbs Sampler."
-#' The American Statistician, 46(3): 167-174.
+#' Casella, G., and George, E. I. (1992). “Explaining the Gibbs Sampler.”
+#' The American Statistician, 46(3): 167-174. DOI: 10.1080/00031305.1992.10475878
 #'
 #' Geman, S., and Geman, D. (1984). “Stochastic Relaxation,
-#' Gibbs Distributions, and the Bayesian Restoration of Images."
+#' Gibbs Distributions, and the Bayesian Restoration of Images.”
 #' IEEE Transactions an Pattern Analysis and Machine Intelligence,
-#' 6(6): 721-741.
+#' 6(6): 721-741. DOI: 10.1109/TPAMI.1984.4767596
 #'
 #' @seealso \link[stats]{rgamma}, Gibbs sampling
 #' @examples
@@ -602,11 +621,13 @@ drawsigma_or2 <- function(z, x, beta, nu, tau2, theta, n0, d0) {
     return(sigmaReturns)
 }
 
-#' Samples the scale factor \eqn{\nu} for an Ordinal Model
+#' Samples the scale factor \eqn{\nu} for ordinal quantile model
 #' with 3 outcomes
 #'
 #' This function samples the \eqn{\nu} from a generalized inverse Gaussian (GIG)
-#' distribution for an ordinal model with 3 outcomes.
+#' distribution for ordinal quantile model with 3 outcomes.
+#'
+#' @usage drawnu_or2(z, x, beta, sigma, tau2, theta, lambda)
 #'
 #' @param z         Gibbs draw of latent response variable, a column vector.
 #' @param x         covariate matrix of dimension \eqn{(n x k)} including a column of ones.
@@ -614,7 +635,7 @@ drawsigma_or2 <- function(z, x, beta, nu, tau2, theta, n0, d0) {
 #' @param sigma     scale factor, a scalar.
 #' @param tau2      2/(p(1-p)).
 #' @param theta     (1-2p)/(p(1-p)).
-#' @param lambda    index parameter of GIG distribution which is equal to 0.5
+#' @param lambda    index parameter of GIG distribution which is equal to 0.5.
 #'
 #' @details
 #' Function samples the \eqn{\nu} from a GIG
@@ -625,10 +646,10 @@ drawsigma_or2 <- function(z, x, beta, nu, tau2, theta, n0, d0) {
 #'
 #' @references  Rahman, M. A. (2016), “Bayesian
 #' Quantile Regression for Ordinal Models.”
-#' Bayesian Analysis, 11(1), 1-24.
+#' Bayesian Analysis, 11(1), 1-24. DOI: 10.1214/15-BA939
 #'
-#' Dagpunar, J. S. (1989). "An Easily Implemented Generalised Inverse Gaussian Generator."
-#' Communication Statistics Simulation, 18: 703-710.
+#' Devroye, L. (2014). “Random variate generation for the generalized inverse Gaussian
+#' distribution.” Statistics and Computing, 24(2): 239–246. DOI: 10.1007/s11222-012-9367-z
 #'
 #' @importFrom "GIGrvg" "rgig"
 #' @seealso GIGrvg, Gibbs sampling, \link[GIGrvg]{rgig}
@@ -706,11 +727,14 @@ drawnu_or2 <- function(z, x, beta, sigma, tau2, theta, lambda) {
     return(nu)
 }
 
-#' Deviance Information Criteria for Ordinal Model
+#' Deviance Information Criteria for ordinal quantile model
 #' with 3 outcomes
 #'
-#' Function for computing the Deviance information criteria for ordinal
+#' Function for computing the Deviance information criteria for ordinal quantile
 #' model with 3 outcomes.
+#'
+#' @usage deviance_or2(y, x, gammacp, p, postMeanbeta, postStdbeta,
+#' postMeansigma, postStdsigma, beta, sigma, burn, nsim)
 #'
 #' @param y              observed ordinal outcomes, column vector of dimension \eqn{(n x 1)}.
 #' @param x              covariate matrix of dimension \eqn{(n x k)} including a column of ones with or without column names.
@@ -726,7 +750,7 @@ drawnu_or2 <- function(z, x, beta, sigma, tau2, theta, lambda) {
 #' @param nsim           total number of MCMC iterations including the burn-in.
 #'
 #' @details
-#' The deviance is -2*(log likelihood) and has an important role in
+#' Deviance is \eqn{-2*(logLikelihood)} and has an important role in
 #' statistical model comparison because of its relation with Kullback-Leibler
 #' information criteria.
 #'
@@ -737,14 +761,14 @@ drawnu_or2 <- function(z, x, beta, sigma, tau2, theta, lambda) {
 #'
 #' @references Rahman, M. A. (2016). “Bayesian
 #' Quantile Regression for Ordinal Models.”
-#' Bayesian Analysis, 11(1): 1-24.
+#' Bayesian Analysis, 11(1): 1-24. DOI: 10.1214/15-BA939
 #'
-#' Spiegelhalter, D. J., Best, N. G., Carlin B. P. and Linde A. (2002).
+#' Spiegelhalter, D. J., Best, N. G., Carlin, B. P. and Linde, A. (2002).
 #' “Bayesian Measures of Model Complexity and Fit.” Journal of the
-#' Royal Statistical Society B, Part 4: 583-639.
+#' Royal Statistical Society B, Part 4: 583-639. DOI: 10.1111/1467-9868.00353
 #'
 #' Gelman, A., Carlin, J. B., Stern, H. S., and Rubin, D. B.
-#' “Bayesian Data Analysis.” 2nd Edition, Chapman and Hall.
+#' “Bayesian Data Analysis.” 2nd Edition, Chapman and Hall. DOI: 10.1002/sim.1856
 #'
 #' @seealso  decision criteria
 #' @examples
@@ -754,7 +778,7 @@ drawnu_or2 <- function(z, x, beta, sigma, tau2, theta, lambda) {
 #' y <- data25j3$y
 #' k <- dim(x)[2]
 #' output <- quantreg_or2(y = y, x = x, B0 = 10*diag(k),
-#' mcmc = 50, p = 0.25)
+#' mcmc = 50, p = 0.25, display = FALSE)
 #' gammacp <- c(-Inf, 0, 3, Inf)
 #' postMeanbeta <- output$postMeanbeta
 #' postStdbeta <- output$postStdbeta
@@ -769,11 +793,11 @@ drawnu_or2 <- function(z, x, beta, sigma, tau2, theta, lambda) {
 #' postMeansigma, postStdsigma, beta, sigma, burn, nsim)
 #'
 #' # DIC
-#' #   779.4566
+#' #   801.8191
 #' # pd
-#' #   5.233374
+#' #   6.608594
 #' # devpostmean
-#' #   768.9898
+#' #   788.6019
 #'
 #' @export
 deviance_or2 <- function(y, x, gammacp, p, postMeanbeta, postStdbeta,
@@ -827,12 +851,12 @@ deviance_or2 <- function(y, x, gammacp, p, postMeanbeta, postStdbeta,
     devpostmean <- array(0, dim = c(1))
     DIC <- array(0, dim = c(1))
     pd <- array(0, dim = c(1))
-    devpostmean <- 2 * negLoglikelihood(y, x, gammacp, postMeanbeta, postMeansigma, p)
+    devpostmean <- 2 * qrnegLogLike_or2(y, x, gammacp, postMeanbeta, postMeansigma, p)
 
     postBurnin <- dim(beta[, (burn + 1):nsim])[2]
     Deviance <- array(0, dim = c(1, postBurnin))
     for (i in 1:postBurnin) {
-        Deviance[1, i] <- 2 * negLoglikelihood(y, x, gammacp,
+        Deviance[1, i] <- 2 * qrnegLogLike_or2(y, x, gammacp,
                                                    beta[ ,(burn + i)],
                                                    sigma[ ,(burn + i)],
                                                    p)
@@ -845,11 +869,10 @@ deviance_or2 <- function(y, x, gammacp, p, postMeanbeta, postStdbeta,
                    "devpostmean" = devpostmean)
     return(result)
 }
-#' NegLoglikelihood function for Ordinal Model with 3 outcomes
+#' Negative log-likelihood for ordinal quantile model with 3 outcomes
 #'
-#' This function computes the negative of the log-likelihood for quantile
-#' ordinal model with 3 outcomes where the error is assumed to follow
-#' an asymmetric Laplace distribution.
+#' This function computes the negative of the log-likelihood for ordinal quantile
+#' model with 3 outcomes.
 #'
 #' @param y         observed ordinal outcomes, column vector of dimension \eqn{(n x 1)}.
 #' @param x         covariate matrix of dimension \eqn{(n x k)} including a column of ones with or without column names.
@@ -859,15 +882,15 @@ deviance_or2 <- function(y, x, gammacp, p, postMeanbeta, postStdbeta,
 #' @param p         quantile level or skewness parameter, p in (0,1).
 #'
 #' @details
-#' Computes the negative of the log-likelihood for quantile
-#' ordinal model with 3 outcomes where the error is assumed to follow
+#' Computes the negative of the log-likelihood for
+#' ordinal quantile model with 3 outcomes where the error is assumed to follow
 #' an asymmetric Laplace distribution.
 #'
 #' @return Returns the negative log-likelihood value.
 #'
 #' @references Rahman, M. A. (2016). “Bayesian
 #' Quantile Regression for Ordinal Models.”
-#' Bayesian Analysis, 11(1): 1-24.
+#' Bayesian Analysis, 11(1): 1-24. DOI: 10.1214/15-BA939
 #'
 #' @seealso likelihood maximization
 #' @examples
@@ -879,13 +902,13 @@ deviance_or2 <- function(y, x, gammacp, p, postMeanbeta, postStdbeta,
 #' gammacp <- c(-Inf, 0, 3, Inf)
 #' beta <- c(1.810504, 1.850332, 6.18116)
 #' sigma <- 0.9684741
-#' output <- negLoglikelihood(y, x, gammacp, beta, sigma, p)
+#' output <- qrnegLogLike_or2(y, x, gammacp, beta, sigma, p)
 #'
 #' # output
-#' #   791.5215
+#' #   902.4045
 #'
 #' @export
-negLoglikelihood <- function(y, x, gammacp, beta, sigma, p) {
+qrnegLogLike_or2 <- function(y, x, gammacp, beta, sigma, p) {
     cols <- colnames(x)
     names(x) <- NULL
     names(y) <- NULL
@@ -930,10 +953,12 @@ negLoglikelihood <- function(y, x, gammacp, beta, sigma, p) {
     negsuminpdf <- -sum(lnpdf)
     return(negsuminpdf)
 }
-#' Generates random numbers from an Asymmetric Laplace Distribution
+#' Generates random numbers from an asymmetric Laplace distribution
 #'
 #' This function generates a vector of random numbers from an asymmetric
 #' Laplace distribution with quantile p.
+#'
+#' @usage rndald(sigma, p, n)
 #'
 #' @param sigma  scale factor, a scalar.
 #' @param p      quantile or skewness parameter, p in (0,1).
@@ -946,15 +971,11 @@ negLoglikelihood <- function(y, x, gammacp, beta, sigma, p) {
 #' @return Returns a vector \eqn{(n x 1)} of random numbers using an AL(0, \eqn{\sigma}, p)
 #'
 #' @references
-#'  Kozumi, H. and Kobayashi, G. (2011). “Gibbs Sampling Methods for Bayesian Quantile Regression.”
-#'  Journal of Statistical Computation and Simulation, 81(11): 1565–1578.
+#' Kozumi, H., and Kobayashi, G. (2011). “Gibbs Sampling Methods for Bayesian Quantile Regression.”
+#' Journal of Statistical Computation and Simulation, 81(11): 1565–1578. DOI: 10.1080/00949655.2010.496117
 #'
-#'  Koenker, R. and Machado, J. (1999). “Goodness of Fit and Related
-#'  Inference Processes for Quantile Regression.”, Journal of
-#'   American Statistics Association, 94(3): 1296-1309.
-#'
-#'  Keming Yu and Jin Zhang (2005). “A Three-Parameter Asymmetric
-#'  Laplace Distribution.” Communications in Statistics - Theory and Methods: 1867-1879.
+#' Yu, K., and Zhang, J. (2005). “A Three-Parameter Asymmetric
+#' Laplace Distribution.” Communications in Statistics - Theory and Methods, 34(9-10), 1867-1879. DOI: 10.1080/03610920500199018
 #'
 #' @importFrom "stats" "rnorm" "rexp"
 #' @seealso asymmetric Laplace distribution
@@ -987,18 +1008,20 @@ rndald <- function(sigma, p, n){
     return(eps)
 }
 
-#' Trace Plots for Ordinal Model with 3 outcomes
+#' Trace plots for ordinal quantile model with 3 outcomes
 #'
 #' This function generates trace plots of
 #' MCMC samples for \eqn{(\beta ,\sigma)} in the quantile
 #' regression model with 3 outcomes.
+#'
+#' @usage traceplot_or2(beta, sigma, burn)
 #'
 #' @param beta      Gibbs draw of \eqn{\beta} vector of dimension \eqn{(k x nsim)}.
 #' @param sigma     Gibbs draw of scale parameter, \eqn{\sigma}.
 #' @param burn      number of discarded MCMC iterations.
 #'
 #' @details
-#' Trace plot is a visual depiction of the values generated from the Markov chain
+#' Trace plot is a visual depiction of the values generated from the markov chain
 #' versus the iteration number.
 #'
 #' @return Returns trace plots for each element of \eqn{\beta} and \eqn{\sigma}.
@@ -1006,9 +1029,9 @@ rndald <- function(sigma, p, n){
 #' @importFrom "graphics" "plot"
 #' @references Rahman, M. A. (2016). “Bayesian
 #' Quantile Regression for Ordinal Models.”
-#' Bayesian Analysis, 11(1): 1-24.
+#' Bayesian Analysis, 11(1): 1-24. DOI: 10.1214/15-BA939
 #'
-#' @seealso traces in MCMC simulations
+#' @seealso MCMC simulations
 #' @examples
 #' set.seed(101)
 #' data("data25j3")
@@ -1016,7 +1039,7 @@ rndald <- function(sigma, p, n){
 #' y <- data25j3$y
 #' k <- dim(x)[2]
 #' output <- quantreg_or2(y = y,x = x, B0 = 10*diag(k),
-#' mcmc = 50, p = 0.25)
+#' mcmc = 50, p = 0.25, display = FALSE)
 #' mcmc <- 50
 #' beta <- output$beta
 #' sigma <- output$sigma
@@ -1038,17 +1061,19 @@ traceplot_or2 <- function(beta, sigma, burn) {
     }
     plot(sigma[, (burn + 1):nsim], xlab = '', ylab = '', type = "l", cex.main = 1.5, main = expression(paste(Trace~plot~sigma)))
 }
-#' Inefficiency Factor for Ordinal Model
+#' Inefficiency factor for ordinal quantile model
 #' with 3 outcomes
 #'
 #' This function calculates the inefficiency factor from the MCMC draws
-#' of \eqn{(\beta, \sigma)} for an ordinal model with 3 outcomes. The
+#' of \eqn{(\beta, \sigma)} for ordinal quantile model with 3 outcomes. The
 #' inefficiency factor is calculated using the batch-means method.
+#'
+#' @usage infactor_or2(x, beta, sigma, autocorrelationCutoff)
 #'
 #' @param x                         covariate matrix of dimension \eqn{(n x k)} including a column of ones with or without column names.
 #' @param beta                      Gibbs draw of coefficients of dimension \eqn{(k x nsim)}.
 #' @param sigma                     Gibbs draw of scale factor.
-#' @param autocorrelationCutoff     Cut-off to identify the number of lags.
+#' @param autocorrelationCutoff     cut-off to identify the number of lags.
 #'
 #' @details
 #' Calculates the inefficiency factor of \eqn{(\beta, \sigma)} using the batch-means
@@ -1056,15 +1081,15 @@ traceplot_or2 <- function(beta, sigma, burn) {
 #'
 #' @return Returns a list with components
 #' \itemize{
-#' \item{\code{inefficiencyBeta}: }{a vector with inefficiency factor for each \eqn{\beta}.}
-#' \item{\code{inefficiencySigma}: }{a vector with inefficiency factor for each \eqn{\sigma}.}
+#' \item{\code{inefficiencyBeta}: }{vector with inefficiency factor for each \eqn{\beta}.}
+#' \item{\code{inefficiencySigma}: }{vector with inefficiency factor for each \eqn{\sigma}.}
 #' }
 #'
 #' @importFrom "pracma" "Reshape" "std"
 #' @importFrom "stats" "acf"
 #'
 #' @references Greenberg, E. (2012). “Introduction to Bayesian Econometrics.”
-#'  Cambridge University Press, Cambridge.
+#'  Cambridge University Press, Cambridge. DOI: 10.1017/CBO9780511808920
 #'
 #' @seealso pracma, \link[stats]{acf}
 #' @examples
@@ -1074,7 +1099,7 @@ traceplot_or2 <- function(beta, sigma, burn) {
 #' y <- data25j3$y
 #' k <- dim(x)[2]
 #' output <- quantreg_or2(y = y, x = x, B0 = 10*diag(k),
-#' mcmc = 50, p = 0.25)
+#' mcmc = 50, p = 0.25, display = FALSE)
 #' beta <- output$beta
 #' sigma <- output$sigma
 #'
@@ -1082,10 +1107,10 @@ traceplot_or2 <- function(beta, sigma, burn) {
 #'
 #' # Summary of Inefficiency Factor:
 #' #            Inefficiency
-#' # beta_0       1.0977
-#' # beta_1       1.5840
-#' # beta_2       1.5383
-#' # sigma        2.8946
+#' # beta_0       2.0011
+#' # beta_1       1.6946
+#' # beta_2       1.4633
+#' # sigma        2.6590
 #'
 #' @export
 infactor_or2 <- function(x, beta, sigma, autocorrelationCutoff = 0.05) {
@@ -1158,11 +1183,170 @@ infactor_or2 <- function(x, beta, sigma, autocorrelationCutoff = 0.05) {
 
     return(result)
 }
-#' Marginal Likelihood for Ordinal Model
+#' Covariate effect for Bayesian quantile regression for ordinal quantile model
 #' with 3 outcomes
 #'
-#' This function estimates the marginal likelihood for ordinal model with
-#' 3 outcomes
+#' This function computes the average covariate effect for different
+#' outcomes of the ORII model at the specified quantiles. The covariate
+#' effects are calculated marginally of the parameters and the remaining covariates.
+#'
+#' @usage covariateEffect_or2(model, y, x, modX, gamma, p)
+#'
+#' @param model     outcome of the ORII (quantreg_or2) model.
+#' @param y         observed ordinal outcomes, column vector of dimension \eqn{(n x 1)}.
+#' @param x         covariate matrix of dimension \eqn{(n x k)} including a column of ones with or without column names.
+#'                  If the covariate of interest is continuous, then the column for the covariate of interest remains unchanged.
+#'                  If it is an indicator variable then replace the column for the covariate of interest with a
+#'                  column of zeros.
+#' @param modX      matrix x with suitable modification to an independent variable including a column of ones with
+#'                  or without column names. If the covariate of interest is continuous, then add the incremental change
+#'                  to each observation in the column for the covariate of interest. If the covariate is an indicator variable,
+#'                  then replace the column for the covariate of interest with a column of ones.
+#' @param gamma     one and only cut-point other than 0.
+#' @param p         quantile level or skewness parameter, p in (0,1).
+#'
+#' @details
+#' This function computes the average covariate effect for different
+#' outcomes of the ORII model at the specified quantiles. The covariate
+#' effects are calculated marginally of the parameters and the remaining covariates. The computation of covariate effects utilizes
+#' the MCMC outputs from estimation.
+#'
+#' @return Returns a list with components:
+#' \itemize{
+#' \item{\code{avgDiffProb}: }{vector with change in predicted
+#' probabilities for each outcome category.}
+#' }
+#'
+#' @references Rahman, M. A. (2016). “Bayesian
+#' Quantile Regression for Ordinal Models.”
+#' Bayesian Analysis, 11(1): 1-24. DOI: 10.1214/15-BA939
+#'
+#' Jeliazkov, I., Graves, J., and Kutzbach, M. (2008). “Fitting and Comparison of Models
+#' for Multivariate Ordinal Outcomes.” Advances in Econometrics: Bayesian Econometrics,
+#' 23: 115–156. DOI: 10.1016/S0731-9053(08)23004-5
+#'
+#' Jeliazkov, I., and Rahman, M. A. (2012). “Binary and Ordinal Data Analysis
+#' in Economics: Modeling and Estimation” in Mathematical Modeling with Multidisciplinary
+#' Applications, edited by X.S. Yang, 123-150. John Wiley & Sons Inc, Hoboken, New Jersey. DOI: 10.1002/9781118462706.ch6
+#'
+#' @importFrom "stats" "sd"
+#' @examples
+#' set.seed(101)
+#' data("data25j3")
+#' x <- data25j3$x
+#' y <- data25j3$y
+#' k <- dim(x)[2]
+#' output <- quantreg_or2(y, x, b0 = 0, B0 = 10*diag(k), n0 = 5, d0 = 8, gamma = 3,
+#' mcmc = 50, p = 0.25, display = FALSE)
+#' modX <- x
+#' modX[,3] <- modX[,3] + 0.02
+#' res <- covariateEffect_or2(output, y, x, modX, gamma = 3, p = 0.25)
+#'
+#' # Summary of Covariate Effect:
+#'
+#' #               Covariate Effect
+#' # Category_1          -0.0074
+#' # Category_2          -0.0029
+#' # Category_3           0.0104
+#'
+#' @export
+covariateEffect_or2 <- function(model, y, x, modX, gamma, p) {
+    cols <- colnames(x)
+    cols1 <- colnames(modX)
+    names(modX) <- NULL
+    names(y) <- NULL
+    names(x) <- NULL
+    x <- as.matrix(x)
+    modX <- as.matrix(modX)
+    y <- as.matrix(y)
+    J <- dim(as.array(unique(y)))[1]
+    if ( J > 3 ){
+        stop("This function is only available for models with 3 outcome
+                variables.")
+    }
+    if (dim(y)[2] != 1){
+        stop("input y should be a column vector")
+    }
+    if ( any(!all(y == floor(y)))){
+        stop("each entry of y must be an integer")
+    }
+    if ( !all(is.numeric(x))){
+        stop("each entry in x must be numeric")
+    }
+    if ( !all(is.numeric(modX))){
+        stop("each entry in modX must be numeric")
+    }
+    if ( length(p) != 1){
+        stop("parameter p must be scalar")
+    }
+    if ( length(gamma) != 1){
+        stop("parameter gamma must be scalar")
+    }
+    if ( !is.numeric(gamma)){
+        stop("parameter gamma must be a numeric")
+    }
+    if (any(p < 0 | p > 1)){
+        stop("parameter p must be between 0 to 1")
+    }
+    N <- dim(model$beta)[2]
+    m <- (N)/(1.25)
+    burn <- 0.25 * m
+    n <- dim(x)[1]
+    k <- dim(x)[2]
+    betaBurnt <- model$beta[, (burn + 1):N]
+    sigmaBurnt <- model$sigma[(burn + 1):N]
+    mu <- 0
+    gammacp <- array(c(-Inf, 0, gamma, Inf), dim = c(1, J))
+    oldProb <- array(0, dim = c(n, m, J))
+    newProb <- array(0, dim = c(n, m, J))
+    oldComp <- array(0, dim = c(n, m, (J-1)))
+    newComp <- array(0, dim = c(n, m, (J-1)))
+    for (j in 1:(J-1)) {
+        for (b in 1:m) {
+            for (i in 1:n) {
+                oldComp[i, b, j] <- alcdf((gammacp[j+1] - (x[i, ] %*% betaBurnt[, b])), mu, sigmaBurnt[b], p)
+                newComp[i, b, j] <- alcdf((gammacp[j+1] - (modX[i, ] %*% betaBurnt[, b])), mu, sigmaBurnt[b], p)
+            }
+            if (j == 1) {
+                oldProb[, b, j] <- oldComp[, b, j]
+                newProb[, b, j] <- newComp[, b, j]
+            }
+            else {
+                oldProb[, b, j] <- oldComp[, b, j] - oldComp[, b, (j-1)]
+                newProb[, b, j] <- newComp[, b, j] - newComp[, b, (j-1)]
+            }
+        }
+    }
+    oldProb[, , J] = 1 - oldComp[, , (J-1)]
+    newProb[, , J] = 1 - newComp[, , (J-1)]
+    diffProb <- newProb - oldProb
+    avgDiffProb <- array((colMeans(diffProb, dims = 2)), dim = c(J, 1))
+    name <- list('Covariate Effect')
+    dimnames(avgDiffProb)[[2]] <- name
+    dimnames(avgDiffProb)[[1]] <- letters[1:(J)]
+    ordOutput <- as.array(unique(y))
+    j <- 1
+    for (i in paste0("Category_",1:J)) {
+        rownames(avgDiffProb)[j] = i
+        j = j + 1
+    }
+    print(noquote('Summary of Covariate Effect: '))
+    cat("\n")
+    print(round(avgDiffProb, 4))
+
+    result <- list("avgDiffProb" = avgDiffProb)
+
+    return(result)
+}
+#' Marginal likelihood for ordinal quantile model
+#' with 3 outcomes
+#'
+#' This function computes the logarithm of marginal likelihood for ordinal
+#' quantile model with 3 outcomes using Gibbs output from the
+#' complete and reduced runs.
+#'
+#' @usage logMargLikelihood_or2(y, x, b0, B0, n0, d0, postMeanbeta, postMeansigma,
+#' btildeStore, BtildeStore, gamma, p)
 #'
 #' @param y                 observed ordinal outcomes, column vector of dimension \eqn{(n x 1)}.
 #' @param x                 covariate matrix of dimension \eqn{(n x k)} including a column of ones with or without column names.
@@ -1170,7 +1354,7 @@ infactor_or2 <- function(x, beta, sigma, autocorrelationCutoff = 0.05) {
 #' @param B0                prior variance for normal distribution to sample \eqn{\beta}
 #' @param n0                prior for shape parameter to sample \eqn{\sigma} from inverse gamma distribution.
 #' @param d0                prior for scale parameter to sample \eqn{\sigma} from inverse gamma distribution.
-#' @param postMeanbeta      a vector with mean of sampled \eqn{\beta} for each covariate..
+#' @param postMeanbeta      a vector with mean of sampled \eqn{\beta} for each covariate.
 #' @param postMeansigma     a vector with mean of sampled \eqn{\sigma}.
 #' @param btildeStore       a storage matrix for posterior mean of \eqn{\beta}.
 #' @param BtildeStore       a storage matrix for posterior variance of \eqn{\beta}.
@@ -1178,15 +1362,21 @@ infactor_or2 <- function(x, beta, sigma, autocorrelationCutoff = 0.05) {
 #' @param p                 quantile level or skewness parameter, p in (0,1).
 #'
 #' @details
-#' Function implements the marginal likelihood for
+#' Function computes the logarithm of marginal likelihood for
 #' ordinal model with 3 outcomes using a Gibbs sampling
 #' procedure.
 #'
-#' @return Returns a scalar for marginal likelihood
+#' @return Returns a scalar for logarithm of marginal likelihood
 #'
 #' @references Rahman, M. A. (2016). “Bayesian
 #' Quantile Regression for Ordinal Models.”
-#' Bayesian Analysis, 11(1): 1-24.
+#' Bayesian Analysis, 11(1): 1-24. DOI: 10.1214/15-BA939
+#'
+#' Chib, S. (1995). “Marginal likelihood from the Gibbs output.” Journal of the American
+#' Statistical Association, 90(432):1313–1321, 1995. DOI: 10.1080/01621459.1995.10476635
+#'
+#' Greenberg, E. (2012). “Introduction to Bayesian Econometrics.” Cambridge University
+#' Press, Cambridge. DOI: 10.1017/CBO9780511808920
 #'
 #' @importFrom "stats" "sd" "dnorm"
 #' @importFrom "invgamma" "dinvgamma"
@@ -1201,12 +1391,12 @@ infactor_or2 <- function(x, beta, sigma, autocorrelationCutoff = 0.05) {
 #' y <- data25j3$y
 #' k <- dim(x)[2]
 #' output <- quantreg_or2(y = y, x = x, B0 = 10*diag(k),
-#' mcmc = 50, p = 0.25)
+#' mcmc = 50, p = 0.25, display = FALSE)
 #' # output$logMargLikelihood
-#' #   -508.0386
+#' #   -404.57
 #'
 #' @export
-logmargLikelihood_or2 <- function(y, x, b0, B0, n0, d0, postMeanbeta, postMeansigma, btildeStore, BtildeStore, gamma, p) {
+logMargLikelihood_or2 <- function(y, x, b0, B0, n0, d0, postMeanbeta, postMeansigma, btildeStore, BtildeStore, gamma, p) {
     cols <- colnames(x)
     names(x) <- NULL
     names(y) <- NULL
@@ -1296,7 +1486,7 @@ logmargLikelihood_or2 <- function(y, x, b0, B0, n0, d0, postMeanbeta, postMeansi
     priorContbeta <- mvnpdf(matrix(postMeanbeta), mean = b0, varcovM = B0, Log = FALSE)
     priorContsigma <- dinvgamma(postMeansigma, shape = (n0 / 2), scale = (2 / d0))
 
-    logLikeCont <- -1 * negLoglikelihood(y, x, gammacp, postMeanbeta, postMeansigma, p)
+    logLikeCont <- -1 * qrnegLogLike_or2(y, x, gammacp, postMeanbeta, postMeansigma, p)
     logPriorCont <- log(priorContbeta*priorContsigma)
     logPosteriorCont <- log(postOrdbeta*postOrdsigma)
 
