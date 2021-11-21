@@ -750,7 +750,7 @@ drawnu_or2 <- function(z, x, beta, sigma, tau2, theta, lambda) {
 #' @param nsim           total number of MCMC iterations including the burn-in.
 #'
 #' @details
-#' Deviance is \eqn{-2*(logLikelihood)} and has an important role in
+#' Deviance is -2*(log likelihood) and has an important role in
 #' statistical model comparison because of its relation with Kullback-Leibler
 #' information criteria.
 #'

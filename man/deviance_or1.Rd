@@ -37,7 +37,7 @@ Function for computing the Deviance information criteria for ordinal quantile
 model with more than 3 outcomes.
 }
 \details{
-Deviance is \eqn{-2*(logLikelihood)} and has an important role in
+Deviance is -2*(log likelihood) and has an important role in
 statistical model comparison because of its relation with Kullback-Leibler
 information criteria.
 }
@@ -50,8 +50,8 @@ k <- dim(x)[2]
 J <- dim(as.array(unique(y)))[1]
 D0 <- 0.25*diag(J - 2)
 output <- quantreg_or1(y = y,x = x, B0 = 10*diag(k), D0 = D0,
-mcmc = 50, p = 0.25, tune = 1, display = FALSE)
-mcmc <- 50
+mcmc = 40, p = 0.25, tune = 1, display = FALSE)
+mcmc <- 40
 deltastore <- output$delta
 burn <- 0.25*mcmc
 nsim <- burn + mcmc
@@ -62,11 +62,11 @@ deviance <- deviance_or1(y, x, deltastore, burn, nsim,
 postMeanbeta, postMeandelta, beta, p = 0.25)
 
 # DIC
-#   1300.315
+#   1375.329
 # pd
-#   105.0351
+#   139.1751
 # devpostmean
-#   1090.245
+#   1096.979
 
 }
 \references{

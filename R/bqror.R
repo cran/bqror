@@ -15,7 +15,7 @@
 #' @details
 #' \deqn{Package: bqror}
 #' \deqn{Type: Package}
-#' \deqn{Version: 1.2.0}
+#' \deqn{Version: 1.3.0}
 #' \deqn{License: GPL (>=2)}
 #'
 #' Package \strong{bqror} provides the following functions:

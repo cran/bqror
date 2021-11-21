@@ -57,6 +57,6 @@ in Economics: Modeling and Estimation” in Mathematical Modeling with Multidisc
 Applications, edited by X.S. Yang, 123-150. John Wiley & Sons Inc, Hoboken, New Jersey. DOI: 10.1002/9781118462706.ch6
 }
 \seealso{
-\href{https://www.bls.gov/nls/}{NLSY}, \href{https://www.bls.gov/nls/nlsy97.htm}{Survey Process}.
+\href{https://www.bls.gov/nls/nlsy97.htm}{Survey Process}.
 }
 \keyword{datasets}

@@ -22,7 +22,7 @@ ordinal model with 4 outcomes and \eqn{p = 0.25} (i.e., 25th quantile)
 \details{
 This data contains 500 observations generated from the quantile
 ordinal model with more than 3 outcomes at the 25th quantile (i.e., \eqn{p = 0.25}).
-The model specifications for generating the data are as follows: \eqn{\beta = (-4, 5, 6)}, X ~ Unif(0, 1), and
+The model specifications for generating the data are as follows: \eqn{\beta = (-4, 5, 6)}, $X ~ Unif(0, 1)$, and
 \eqn{\epsilon} ~ AL(\eqn{0, \sigma = 1, p = 0.25}).
 
 The errors are generated from the asymmetric Laplace distribution

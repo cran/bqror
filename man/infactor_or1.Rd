@@ -41,7 +41,7 @@ k <- dim(x)[2]
 J <- dim(as.array(unique(y)))[1]
 D0 <- 0.25*diag(J - 2)
 output <- quantreg_or1(y = y,x = x, B0 = 10*diag(k), D0 = D0,
-mcmc = 50, p = 0.25, tune = 1, display = FALSE)
+mcmc = 40, p = 0.25, tune = 1, display = FALSE)
 beta <- output$beta
 delta <- output$delta
 inefficiency <- infactor_or1(x, beta, delta, 0.5)
@@ -49,11 +49,11 @@ inefficiency <- infactor_or1(x, beta, delta, 0.5)
 # Summary of Inefficiency Factor:
 
 #             Inefficiency
-# beta_0        0.9162
-# beta_1        3.3121
-# beta_2        3.1145
-# delta_1       3.9862
-# delta_2       3.1477
+# beta_0        1.1008
+# beta_1        3.0024
+# beta_2        2.8543
+# delta_1       3.6507
+# delta_2       3.1784
 
 }
 \references{

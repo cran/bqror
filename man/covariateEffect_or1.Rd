@@ -51,7 +51,7 @@ k <- dim(x)[2]
 J <- dim(as.array(unique(y)))[1]
 D0 <- 0.25*diag(J - 2)
 output <- quantreg_or1(y = y,x = x, B0 = 10*diag(k), D0 = D0,
-mcmc = 50, p = 0.25, tune = 1, display = FALSE)
+mcmc = 30, p = 0.25, tune = 1, display = FALSE)
 modX <- x
 modX[,3] <- modX[,3] + 0.02
 res <- covariateEffect_or1(output, y, x, modX, p = 0.25)
@@ -59,10 +59,10 @@ res <- covariateEffect_or1(output, y, x, modX, p = 0.25)
 # Summary of Covariate Effect:
 
 #               Covariate Effect
-# Category_1          -0.0073
-# Category_2          -0.0015
+# Category_1          -0.0076
+# Category_2          -0.0014
 # Category_3          -0.0010
-# Category_4           0.0098
+# Category_4           0.0100
 
 }
 \references{

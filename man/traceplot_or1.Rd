@@ -35,8 +35,8 @@ k <- dim(x)[2]
 J <- dim(as.array(unique(y)))[1]
 D0 <- 0.25*diag(J - 2)
 output <- quantreg_or1(y = y,x = x, B0 = 10*diag(k), D0 = D0,
-mcmc = 50, p = 0.25, tune = 1, display = FALSE)
-mcmc <- 50
+mcmc = 40, p = 0.25, tune = 1, display = FALSE)
+mcmc <- 40
 beta <- output$beta
 delta <- output$delta
 traceplot_or1(beta, delta, round(0.25*mcmc))

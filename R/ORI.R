@@ -84,24 +84,24 @@
 #'  J <- dim(as.array(unique(y)))[1]
 #'  D0 <- 0.25*diag(J - 2)
 #'  output <- quantreg_or1(y = y,x = x, B0 = 10*diag(k), D0 = D0,
-#'  mcmc = 50, p = 0.25, tune = 1)
+#'  mcmc = 40, p = 0.25, tune = 1)
 #'
 #'
-#'  # Number of burn-in draws: 12.5
-#'  # Number of retained draws: 50
+#'  # Number of burn-in draws: 10
+#'  # Number of retained draws: 40
 #'  # Summary of MCMC draws:
 #'
 #'
 #'  #             Post Mean  Post Std   Upper Credible Lower Credible
-#'  # beta_0       -2.6851   0.3427        -2.0229        -3.2861
-#'  # beta_1        3.4947   0.5927         4.4195         2.3914
-#'  # beta_2        4.1840   0.8009         5.5109         2.8934
-#'  # delta_1       0.2870   0.3163         0.6512        -0.3379
-#'  # delta_2       0.4889   0.2324         0.7524        -0.0214
+#'  # beta_0       -2.6202   0.3588        -2.0560        -3.3243
+#'  # beta_1        3.1670   0.5894         4.1713         2.1423
+#'  # beta_2        4.2800   0.9141         5.7142         2.8625
+#'  # delta_1       0.2188   0.4043         0.6541        -0.4384
+#'  # delta_2       0.4567   0.3055         0.7518        -0.2234
 #'
 #'  # MH acceptance rate: 36
-#'  # Log of Marginal Likelihood: -551.42
-#'  # DIC: 1300.32
+#'  # Log of Marginal Likelihood: -554.61
+#'  # DIC: 1375.33
 #'
 #' @export
 quantreg_or1 <- function(y, x, b0 = 0, B0, d0 = 0, D0, mcmc = 15000, p, tune = 0.1, display = TRUE) {
@@ -1183,7 +1183,7 @@ drawdelta_or1 <- function(y, x, beta, delta0, d0, D0, tune, Dhat, p){
 #' @param nsim             total number of samples, including the burn-in.
 #'
 #' @details
-#' Deviance is \eqn{-2*(logLikelihood)} and has an important role in
+#' Deviance is -2*(log likelihood) and has an important role in
 #' statistical model comparison because of its relation with Kullback-Leibler
 #' information criteria.
 #'
@@ -1213,8 +1213,8 @@ drawdelta_or1 <- function(y, x, beta, delta0, d0, D0, tune, Dhat, p){
 #' J <- dim(as.array(unique(y)))[1]
 #' D0 <- 0.25*diag(J - 2)
 #' output <- quantreg_or1(y = y,x = x, B0 = 10*diag(k), D0 = D0,
-#' mcmc = 50, p = 0.25, tune = 1, display = FALSE)
-#' mcmc <- 50
+#' mcmc = 40, p = 0.25, tune = 1, display = FALSE)
+#' mcmc <- 40
 #' deltastore <- output$delta
 #' burn <- 0.25*mcmc
 #' nsim <- burn + mcmc
@@ -1225,11 +1225,11 @@ drawdelta_or1 <- function(y, x, beta, delta0, d0, D0, tune, Dhat, p){
 #' postMeanbeta, postMeandelta, beta, p = 0.25)
 #'
 #' # DIC
-#' #   1300.315
+#' #   1375.329
 #' # pd
-#' #   105.0351
+#' #   139.1751
 #' # devpostmean
-#' #   1090.245
+#' #   1096.979
 #'
 #' @export
 deviance_or1 <- function(y, x, deltastore, burn,
@@ -1441,8 +1441,8 @@ alcdf <- function(x, mu, sigma, p){
 #' J <- dim(as.array(unique(y)))[1]
 #' D0 <- 0.25*diag(J - 2)
 #' output <- quantreg_or1(y = y,x = x, B0 = 10*diag(k), D0 = D0,
-#' mcmc = 50, p = 0.25, tune = 1, display = FALSE)
-#' mcmc <- 50
+#' mcmc = 40, p = 0.25, tune = 1, display = FALSE)
+#' mcmc <- 40
 #' beta <- output$beta
 #' delta <- output$delta
 #' traceplot_or1(beta, delta, round(0.25*mcmc))
@@ -1504,7 +1504,7 @@ traceplot_or1 <- function(beta, delta, burn) {
 #' J <- dim(as.array(unique(y)))[1]
 #' D0 <- 0.25*diag(J - 2)
 #' output <- quantreg_or1(y = y,x = x, B0 = 10*diag(k), D0 = D0,
-#' mcmc = 50, p = 0.25, tune = 1, display = FALSE)
+#' mcmc = 40, p = 0.25, tune = 1, display = FALSE)
 #' beta <- output$beta
 #' delta <- output$delta
 #' inefficiency <- infactor_or1(x, beta, delta, 0.5)
@@ -1512,11 +1512,11 @@ traceplot_or1 <- function(beta, delta, burn) {
 #' # Summary of Inefficiency Factor:
 #'
 #' #             Inefficiency
-#' # beta_0        0.9162
-#' # beta_1        3.3121
-#' # beta_2        3.1145
-#' # delta_1       3.9862
-#' # delta_2       3.1477
+#' # beta_0        1.1008
+#' # beta_1        3.0024
+#' # beta_2        2.8543
+#' # delta_1       3.6507
+#' # delta_2       3.1784
 #'
 #' @export
 infactor_or1 <- function(x, beta, delta, autocorrelationCutoff = 0.05) {
@@ -1650,7 +1650,7 @@ infactor_or1 <- function(x, beta, delta, autocorrelationCutoff = 0.05) {
 #' J <- dim(as.array(unique(y)))[1]
 #' D0 <- 0.25*diag(J - 2)
 #' output <- quantreg_or1(y = y,x = x, B0 = 10*diag(k), D0 = D0,
-#' mcmc = 50, p = 0.25, tune = 1, display = FALSE)
+#' mcmc = 30, p = 0.25, tune = 1, display = FALSE)
 #' modX <- x
 #' modX[,3] <- modX[,3] + 0.02
 #' res <- covariateEffect_or1(output, y, x, modX, p = 0.25)
@@ -1658,10 +1658,10 @@ infactor_or1 <- function(x, beta, delta, autocorrelationCutoff = 0.05) {
 #' # Summary of Covariate Effect:
 #'
 #' #               Covariate Effect
-#' # Category_1          -0.0073
-#' # Category_2          -0.0015
+#' # Category_1          -0.0076
+#' # Category_2          -0.0014
 #' # Category_3          -0.0010
-#' # Category_4           0.0098
+#' # Category_4           0.0100
 #'
 #' @export
 covariateEffect_or1 <- function(model, y, x, modX, p) {
@@ -1812,9 +1812,9 @@ covariateEffect_or1 <- function(model, y, x, modX, p) {
 #' J <- dim(as.array(unique(y)))[1]
 #' D0 <- 0.25*diag(J - 2)
 #' output <- quantreg_or1(y = y,x = x, B0 = 10*diag(k), D0 = D0,
-#' mcmc = 50, p = 0.25, tune = 1, display = FALSE)
+#' mcmc = 40, p = 0.25, tune = 1, display = FALSE)
 #' # output$logMargLikelihood
-#' #   -551.42
+#' #   -554.61
 #'
 #' @export
 logMargLikelihood_or1 <- function(y, x, b0, B0, d0, D0, postMeanbeta, postMeandelta, beta, delta, tune, Dhat, p) {

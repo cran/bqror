@@ -73,24 +73,24 @@ Burn-in is taken as \eqn{0.25*mcmc} and \eqn{nsim = burn}-\eqn{in + mcmc}.
  J <- dim(as.array(unique(y)))[1]
  D0 <- 0.25*diag(J - 2)
  output <- quantreg_or1(y = y,x = x, B0 = 10*diag(k), D0 = D0,
- mcmc = 50, p = 0.25, tune = 1)
+ mcmc = 40, p = 0.25, tune = 1)
 
 
- # Number of burn-in draws: 12.5
- # Number of retained draws: 50
+ # Number of burn-in draws: 10
+ # Number of retained draws: 40
  # Summary of MCMC draws:
 
 
  #             Post Mean  Post Std   Upper Credible Lower Credible
- # beta_0       -2.6851   0.3427        -2.0229        -3.2861
- # beta_1        3.4947   0.5927         4.4195         2.3914
- # beta_2        4.1840   0.8009         5.5109         2.8934
- # delta_1       0.2870   0.3163         0.6512        -0.3379
- # delta_2       0.4889   0.2324         0.7524        -0.0214
+ # beta_0       -2.6202   0.3588        -2.0560        -3.3243
+ # beta_1        3.1670   0.5894         4.1713         2.1423
+ # beta_2        4.2800   0.9141         5.7142         2.8625
+ # delta_1       0.2188   0.4043         0.6541        -0.4384
+ # delta_2       0.4567   0.3055         0.7518        -0.2234
 
  # MH acceptance rate: 36
- # Log of Marginal Likelihood: -551.42
- # DIC: 1300.32
+ # Log of Marginal Likelihood: -554.61
+ # DIC: 1375.33
 
 }
 \references{

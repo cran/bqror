@@ -44,7 +44,7 @@ Function for computing the Deviance information criteria for ordinal quantile
 model with 3 outcomes.
 }
 \details{
-Deviance is \eqn{-2*(logLikelihood)} and has an important role in
+Deviance is -2*(log likelihood) and has an important role in
 statistical model comparison because of its relation with Kullback-Leibler
 information criteria.
 }
