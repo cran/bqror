@@ -2,7 +2,7 @@
 % Please edit documentation in R/ORII.R
 \name{drawsigmaOR2}
 \alias{drawsigmaOR2}
-\title{Samples \eqn{\sigma} for OR2 model}
+\title{Samples \eqn{\sigma} in the OR2 model}
 \usage{
 drawsigmaOR2(z, x, beta, nu, tau2, theta, n0, d0)
 }
@@ -26,14 +26,14 @@ drawsigmaOR2(z, x, beta, nu, tau2, theta, n0, d0)
 \value{
 Returns a list with components
 \itemize{
-\item{\code{sigma}: }{column vector of \eqn{\sigma}
+\item{\code{sigma}: }{\eqn{\sigma}, a scalar, sampled
 from an inverse gamma distribution.}
-\item{\code{dtilde}: }{scale parameter for inverse-gamma distribution.}
+\item{\code{dtilde}: }{scale parameter of the inverse-gamma distribution.}
 }
 }
 \description{
 This function samples \eqn{\sigma} from an inverse-gamma distribution
-for OR2 model (ordinal quantile model with exactly 3 outcomes).
+in the OR2 model (ordinal quantile model with exactly 3 outcomes).
 }
 \details{
 This function samples \eqn{\sigma} from an inverse-gamma distribution.
@@ -68,17 +68,12 @@ output <- drawsigmaOR2(z, x, beta, nu, tau2, theta, n0, d0)
 
 }
 \references{
-Albert, J., and Chib, S. (1993). “Bayesian Analysis of Binary and Polychotomous
-Response Data.” Journal of the American Statistical
-Association, 88(422): 669–679. DOI: 10.1080/01621459.1993.10476321
+Rahman, M. A. (2016). “Bayesian
+Quantile Regression for Ordinal Models.”
+Bayesian Analysis, 11(1): 1-24.  DOI: 10.1214/15-BA939
 
-Casella, G., and George, E. I. (1992). “Explaining the Gibbs Sampler.”
-The American Statistician, 46(3): 167-174. DOI: 10.1080/00031305.1992.10475878
-
-Geman, S., and Geman, D. (1984). “Stochastic Relaxation,
-Gibbs Distributions, and the Bayesian Restoration of Images.”
-IEEE Transactions an Pattern Analysis and Machine Intelligence,
-6(6): 721-741. DOI: 10.1109/TPAMI.1984.4767596
+Devroye, L. (2014). “Random variate generation for the generalized inverse Gaussian
+distribution.” Statistics and Computing, 24(2): 239–246. DOI: 10.1007/s11222-012-9367-z
 }
 \seealso{
 \link[stats]{rgamma}, Gibbs sampling

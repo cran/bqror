@@ -10,9 +10,9 @@ test_that("Testing for quantregOR1", {
     d0 <- array(0, dim = c(J-2, 1))
     D0 <- 0.25*diag(J - 2)
     output <- quantregOR1(y = y, x = xMat, b0, B0, d0, D0,
-    burn = 10, mcmc = 40, p = 0.25, tune = 1, verbose = FALSE)
+    burn = 10, mcmc = 40, p = 0.25, tune = 1, accutoff = 0.5, verbose = FALSE)
     expect_equal(round(output$acceptancerate), 50)
-    expect_equal(round(output$allQuantDIC$DIC, 2), 1375.33)
+    expect_equal(round(output$dicQuant$DIC, 2), 1375.33)
     expect_equal(round(output$logMargLike, 2), -554.61)
 })
 
@@ -28,27 +28,10 @@ test_that("Testing for quantregOR1 with J=3", {
   d0 <- array(0, dim = c(J-2, 1))
   D0 <- 0.25*diag(J - 2)
   output <- quantregOR1(y = y, x = xMat, b0, B0, d0, D0,
-                        burn = 10, mcmc = 40, p = 0.25, tune = 1, verbose = FALSE)
+                        burn = 10, mcmc = 40, p = 0.25, tune = 1, accutoff = 0.5, verbose = FALSE)
   expect_equal(round(output$acceptancerate), 45)
-  expect_equal(round(output$allQuantDIC$DIC, 1), 889.4)
+  expect_equal(round(output$dicQuant$DIC, 1), 889.4)
   expect_equal(round(output$logMargLike), -413)
-})
-
-test_that("Testing for logLik.bqrorOR1", {
-    set.seed(101)
-    data("data25j4")
-    y <- data25j4$y
-    xMat <- data25j4$x
-    k <- dim(xMat)[2]
-    J <- dim(as.array(unique(y)))[1]
-    b0 <- array(rep(0, k), dim = c(k, 1))
-    B0 <- 10*diag(k)
-    d0 <- array(0, dim = c(J-2, 1))
-    D0 <- 0.25*diag(J - 2)
-    output <- quantregOR1(y = y, x = xMat, b0, B0, d0, D0,
-    burn = 10, mcmc = 40, p = 0.25, tune = 1, verbose = FALSE)
-    expect_s3_class(round(logLik.bqrorOR1(output, y, xMat, b0, B0 = 10*diag(k), d0,
-    D0 = D0, tune = 1, p = 0.25, REML = FALSE)), 'logLik', exact = FALSE)
 })
 
 test_that("Testing for qrminfundtheorem", {
@@ -101,7 +84,7 @@ test_that("Testing for drawdeltaOR1", {
   expect_equal(round(output$accept), 1)
 })
 
-test_that("Testing for devianceORI", {
+test_that("Testing for dicORI", {
   set.seed(101)
   data("data25j4")
   y <- data25j4$y
@@ -113,7 +96,7 @@ test_that("Testing for devianceORI", {
   d0 <- array(0, dim = c(J-2, 1))
   D0 <- 0.25*diag(J - 2)
   output <- quantregOR1(y = y, x = xMat, b0, B0, d0, D0,
-  burn = 10, mcmc = 40, p = 0.25, tune = 1, verbose = FALSE)
+  burn = 10, mcmc = 40, p = 0.25, tune = 1, accutoff = 0.5, verbose = FALSE)
   mcmc <- 40
   deltadraws <- output$deltadraws
   betadraws <- output$betadraws
@@ -121,11 +104,11 @@ test_that("Testing for devianceORI", {
   nsim <- burn + mcmc
   postMeanbeta <- output$postMeanbeta
   postMeandelta <- output$postMeandelta
-  deviance <- devianceOR1(y, xMat, betadraws, deltadraws,
+  dic <- dicOR1(y, xMat, betadraws, deltadraws,
   postMeanbeta, postMeandelta, burn, mcmc, p = 0.25)
-  expect_equal(round(deviance$DIC,2),1375.33)
-  expect_equal(round(deviance$pd,2),139.18)
-  expect_equal(round(deviance$devpostmean,2),1096.98)
+  expect_equal(round(dic$DIC,2),1375.33)
+  expect_equal(round(dic$pd,2),139.18)
+  expect_equal(round(dic$dev,2),1096.98)
 })
 
 test_that("Testing for alcdfstd", {

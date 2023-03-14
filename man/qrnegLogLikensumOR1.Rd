@@ -2,7 +2,7 @@
 % Please edit documentation in R/ORI.R
 \name{qrnegLogLikensumOR1}
 \alias{qrnegLogLikensumOR1}
-\title{Negative log-likelihood for OR1 model}
+\title{Negative log-likelihood in the OR1 model}
 \usage{
 qrnegLogLikensumOR1(y, x, betaOne, deltaOne, p)
 }
@@ -13,7 +13,7 @@ qrnegLogLikensumOR1(y, x, betaOne, deltaOne, p)
 
 \item{betaOne}{a sample draw of \eqn{\beta} of size \eqn{(k x 1)}.}
 
-\item{deltaOne}{a sample draw of \eqn{\delta}.}
+\item{deltaOne}{a sample draw of \eqn{\delta} of size \eqn{((J-2) x 1)}.}
 
 \item{p}{quantile level or skewness parameter, p in (0,1).}
 }
@@ -26,14 +26,14 @@ Returns a list with components
 }
 \description{
 This function computes the negative of log-likelihood for each individual and
-negative sum of log-likelihood for OR1 model.
+negative sum of log-likelihood in the OR1 model.
 }
 \details{
 This function computes the negative of log-likelihood for each individual and
-negative sum of log-likelihood for OR1 model.
+negative sum of log-likelihood in the OR1 model.
 
 The latter when evaluated at postMeanbeta and postMeandelta is used to calculate the DIC
-and may also be utilized to calculate the Akaike information criterion (AIC) and Bayesian information
+and may also be utilized to calculate the Akaike information criterion (AIC) and the Bayesian information
 criterion (BIC).
 }
 \examples{

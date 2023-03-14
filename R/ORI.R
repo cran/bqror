@@ -1,26 +1,27 @@
-#' Bayesian quantile regression for OR1 model
+#' Bayesian quantile regression for the OR1 model
 #'
-#' This function estimates Bayesian quantile regression for OR1 model (ordinal quantile model with 3
-#' or more outcomes) and reports the posterior mean, posterior standard deviation, and 95
-#' percent posterior credible intervals of \eqn{(\beta, \delta)}. The output also displays the log of
-#' marginal likelihood and DIC.
+#' This function estimates Bayesian quantile regression for the OR1 model (ordinal quantile model with 3
+#' or more outcomes) and reports the posterior mean, posterior standard deviation, 95
+#' percent posterior credible intervals, and inefficiency factor of \eqn{(\beta, \delta)}. The output
+#' also displays the log of marginal likelihood and the DIC.
 #'
-#' @usage quantregOR1(y, x, b0, B0, d0, D0, burn, mcmc, p, tune, verbose)
+#' @usage quantregOR1(y, x, b0, B0, d0, D0, burn, mcmc, p, tune, accutoff, verbose)
 #'
-#' @param y                 observed ordinal outcomes, column vector of size \eqn{(n x 1)}.
-#' @param x                 covariate matrix of size \eqn{(n x k)} including a column of ones with or without column names.
-#' @param b0                prior mean for \eqn{\beta}.
-#' @param B0                prior covariance matrix for \eqn{\beta}.
-#' @param d0                prior mean for \eqn{\delta}.
-#' @param D0                prior covariance matrix for \eqn{\delta}.
-#' @param burn              number of burn-in MCMC iterations.
-#' @param mcmc              number of MCMC iterations, post burn-in.
-#' @param p                 quantile level or skewness parameter, p in (0,1).
-#' @param tune              tuning parameter to adjust MH acceptance rate, default is 0.1.
-#' @param verbose           whether to print the final output and provide additional information or not, default is TRUE.
+#' @param y         observed ordinal outcomes, column vector of size \eqn{(n x 1)}.
+#' @param x         covariate matrix of size \eqn{(n x k)} including a column of ones with or without column names.
+#' @param b0        prior mean for \eqn{\beta}.
+#' @param B0        prior covariance matrix for \eqn{\beta}.
+#' @param d0        prior mean for \eqn{\delta}.
+#' @param D0        prior covariance matrix for \eqn{\delta}.
+#' @param burn      number of burn-in MCMC iterations.
+#' @param mcmc      number of MCMC iterations, post burn-in.
+#' @param p         quantile level or skewness parameter, p in (0,1).
+#' @param tune      tuning parameter to adjust MH acceptance rate, default is 0.1.
+#' @param accutoff  autocorrelation cut-off to identify the number of lags and form batches to compute the inefficiency factor, default is 0.05.
+#' @param verbose   whether to print the final output and provide additional information or not, default is TRUE.
 #'
 #' @details
-#' This function estimates Bayesian quantile regression for
+#' This function estimates Bayesian quantile regression for the
 #' OR1 model using a combination of Gibbs sampling
 #' and Metropolis-Hastings algorithm. The function takes the prior distributions and
 #' other information as inputs and then iteratively samples \eqn{\beta}, latent weight w,
@@ -39,35 +40,19 @@
 #'  \item{\code{postMeandelta}: }{posterior mean of \eqn{\delta} from the complete MCMC run.}
 #'  \item{\code{postStdbeta}: }{posterior standard deviation of \eqn{\beta} from the complete MCMC run.}
 #'  \item{\code{postStddelta}: }{posterior standard deviation of \eqn{\delta} from the complete MCMC run.}
-#'  \item{\code{gamma}: }{vector of cut points including (Inf, -Inf).}
-#'  \item{\code{catt}}
-#'  \item{\code{acceptancerate}: }{Acceptance rate of the proposed draws of \eqn{\delta}.}
-#'  \item{\code{allQuantDIC}: }{All quantities of DIC.}
-#'  \item{\code{logMargLike}: }{An estimate of log marginal likelihood.}
-#'  \item{\code{betadraws}: }{\eqn{\beta} draws from the complete MCMC run, size is \eqn{(k x nsim)}.}
-#'  \item{\code{deltadraws}: }{\eqn{\delta} draws from the complete MCMC run, size is \eqn{((J-2) x nsim)}.}
+#'  \item{\code{gammacp}: }{vector of cut points including (Inf, -Inf).}
+#'  \item{\code{catprob}: }{probability for each category, calculated at the posterior mean and the mean of x.}
+#'  \item{\code{acceptancerate}: }{acceptance rate of the proposed draws of \eqn{\delta}.}
+#'  \item{\code{dicQuant}: }{all quantities of DIC.}
+#'  \item{\code{logMargLike}: }{an estimate of the log marginal likelihood.}
+#'  \item{\code{ineffactor}: }{inefficiency factor for each component of \eqn{\beta} and \eqn{\delta}.}
+#'  \item{\code{betadraws}: }{dataframe of the \eqn{\beta} draws from the complete MCMC run, size is \eqn{(k x nsim)}.}
+#'  \item{\code{deltadraws}: }{dataframe of the \eqn{\delta} draws from the complete MCMC run, size is \eqn{((J-2) x nsim)}.}
 #' }
 #'
 #' @references Rahman, M. A. (2016). “Bayesian
 #' Quantile Regression for Ordinal Models.”
 #' Bayesian Analysis, 11(1): 1-24. DOI: 10.1214/15-BA939
-#'
-#' Yu, K., and Moyeed, R. A. (2001). “Bayesian Quantile Regression.” Statistics and
-#' Probability Letters, 54(4): 437–447. DOI: 10.12691/ajams-6-6-4
-#'
-#' Casella, G., and George, E. I. (1992). “Explaining the Gibbs Sampler.”
-#' The American Statistician, 46(3): 167-174. DOI: 10.1080/00031305.1992.10475878
-#'
-#' Geman, S., and Geman, D. (1984). “Stochastic Relaxation,
-#' Gibbs Distributions, and the Bayesian Restoration of Images.”
-#' IEEE Transactions an Pattern Analysis and Machine Intelligence,
-#' 6(6): 721-741. DOI:10.1109/TPAMI.1984.4767596
-#'
-#' Chib, S., and Greenberg, E. (1995). “Understanding the Metropolis-Hastings
-#' Algorithm.” The American Statistician, 49(4): 327-335. DOI: 10.2307/2684568
-#'
-#' Hastings, W. K. (1970). “Monte Carlo Sampling Methods Using
-#' Markov Chains and Their Applications.” Biometrika, 57: 1317-1340. DOI: 10.2307/1390766
 #'
 #' @importFrom "stats" "sd"
 #' @importFrom "stats" "rnorm" "qnorm"
@@ -87,27 +72,24 @@
 #'  d0 <- array(0, dim = c(J-2, 1))
 #'  D0 <- 0.25*diag(J - 2)
 #'  output <- quantregOR1(y = y, x = xMat, b0 ,B0, d0, D0,
-#'  burn = 10, mcmc = 40, p = 0.25, tune = 1, verbose = TRUE)
+#'  burn = 10, mcmc = 40, p = 0.25, tune = 1, accutoff = 0.5, verbose = TRUE)
 #'
-#'
-#'  # Number of burn-in draws: 10
-#'  # Number of retained draws: 40
 #'  # Summary of MCMC draws:
 #'
 #'
-#'  #             Post Mean  Post Std   Upper Credible Lower Credible
-#'  # beta_1       -2.6202   0.3588        -2.0560        -3.3243
-#'  # beta_2        3.1670   0.5894         4.1713         2.1423
-#'  # beta_3        4.2800   0.9141         5.7142         2.8625
-#'  # delta_1       0.2188   0.4043         0.6541        -0.4384
-#'  # delta_2       0.4567   0.3055         0.7518        -0.2234
+#'  #             Post Mean  Post Std   Upper Credible Lower Credible Inef Factor
+#'  # beta_1       -2.6202   0.3588        -2.0560        -3.3243       1.1008
+#'  # beta_2        3.1670   0.5894         4.1713         2.1423       3.0024
+#'  # beta_3        4.2800   0.9141         5.7142         2.8625       2.8534
+#'  # delta_1       0.2188   0.4043         0.6541        -0.4384       3.6507
+#'  # delta_2       0.4567   0.3055         0.7518        -0.2234       3.1784
 #'
 #'  # MH acceptance rate: 36%
 #'  # Log of Marginal Likelihood: -554.61
 #'  # DIC: 1375.33
 #'
 #' @export
-quantregOR1 <- function(y, x, b0, B0, d0, D0, burn, mcmc, p, tune = 0.1, verbose = TRUE) {
+quantregOR1 <- function(y, x, b0, B0, d0, D0, burn, mcmc, p, tune = 0.1, accutoff = 0.05, verbose = TRUE) {
     cols <- colnames(x)
     names(x) <- NULL
     names(y) <- NULL
@@ -255,21 +237,23 @@ quantregOR1 <- function(y, x, b0, B0, d0, D0, burn, mcmc, p, tune = 0.1, verbose
     acceptrate <- (mhacc / mcmc) * 100
 
     xbar <- colMeans(x)
-    catt <- array(0, dim = c(J))
-    catt[1] <- alcdfstd( (0 - xbar %*% postMeanbeta), p)
+    catprob <- array(0, dim = c(J))
+    catprob[1] <- alcdfstd( (0 - xbar %*% postMeanbeta), p)
     for (j in 2:(J - 1)) {
-        catt[j] <- alcdfstd( (gammacp[j] - xbar %*% postMeanbeta), p) -
+        catprob[j] <- alcdfstd( (gammacp[j] - xbar %*% postMeanbeta), p) -
                         alcdfstd( (gammacp[(j - 1)] - xbar %*% postMeanbeta), p)
     }
-    catt[J] <- 1 - alcdfstd( (gammacp[(J - 1)] - xbar %*% postMeanbeta), p)
+    catprob[J] <- 1 - alcdfstd( (gammacp[(J - 1)] - xbar %*% postMeanbeta), p)
 
-    allQuantDIC <- devianceOR1(y, x, beta, delta,
+    dicQuant <- dicOR1(y, x, beta, delta,
                              postMeanbeta, postMeandelta, burn, mcmc, p)
 
     logMargLike <- logMargLikeOR1(y, x, b0, B0,
                                                d0, D0, postMeanbeta,
                                                postMeandelta, beta, delta,
                                                tune, Dhat, p, verbose)
+
+    ineffactor <- ineffactorOR1(x, beta, delta, accutoff, FALSE)
 
     postMeanbeta <- array(postMeanbeta, dim = c(k, 1))
     postStdbeta <- array(postStdbeta, dim = c(k, 1))
@@ -288,23 +272,30 @@ quantregOR1 <- function(y, x, b0, B0, d0, D0, burn, mcmc, p, tune = 0.1, verbose
         lowerCredibledelta <- array(apply(delta[, (burn + 1):nsim], 1, quantile, c(0.025)), dim = c(J-2, 1))
     }
 
-    allQuantbeta <- cbind(postMeanbeta, postStdbeta, upperCrediblebeta, lowerCrediblebeta)
-    allQuantdelta <- cbind(postMeandelta, postStddelta, upperCredibledelta, lowerCredibledelta)
+    inefficiencyBeta <- array(ineffactor[1:k], dim = c(k,1))
+    inefficiencyDelta <- array(ineffactor[k+1:(k+J-2)], dim = c(J-2,1))
+
+    allQuantbeta <- cbind(postMeanbeta, postStdbeta, upperCrediblebeta, lowerCrediblebeta, inefficiencyBeta)
+    allQuantdelta <- cbind(postMeandelta, postStddelta, upperCredibledelta, lowerCredibledelta, inefficiencyDelta)
     summary <- rbind(allQuantbeta, allQuantdelta)
-    name <- list('Post Mean', 'Post Std', 'Upper Credible', 'Lower Credible')
+    name <- list('Post Mean', 'Post Std', 'Upper Credible', 'Lower Credible', 'Inef Factor')
     dimnames(summary)[[2]] <- name
     dimnames(summary)[[1]] <- letters[1:(k+J-2)]
+    dimnames(beta)[[1]] <- letters[1:k]
+    dimnames(delta)[[1]] <- letters[1:(J-2)]
     j <- 1
     if (is.null(cols)) {
         rownames(summary)[j] <- c('Intercept')
         for (i in paste0("beta_",1:(k))) {
             rownames(summary)[j] = i
+            rownames(beta)[j] = i
             j = j + 1
         }
     }
     else {
         for (i in cols) {
             rownames(summary)[j] = i
+            rownames(beta)[j] = i
             j = j + 1
         }
     }
@@ -312,37 +303,44 @@ quantregOR1 <- function(y, x, b0, B0, d0, D0, burn, mcmc, p, tune = 0.1, verbose
         rownames(summary)[j] = i
         j = j + 1
     }
+    j <- 1
+    for (i in paste0("delta_",1:(J-2))) {
+        rownames(delta)[j] = i
+        j = j + 1
+    }
     if (verbose) {
-        print(noquote(paste0("Number of burn-in draws: ", burn)))
-        print(noquote(paste0("Number of retained draws: ", mcmc)))
         print(noquote("Summary of MCMC draws: "))
         cat("\n")
         print(round(summary, 4))
         cat("\n")
         print(noquote(paste0("MH acceptance rate: ", round(acceptrate, 2), "%")))   ## Add a % here
         print(noquote(paste0('Log of Marginal Likelihood: ', round(logMargLike, 2))))
-        print(noquote(paste0("DIC: ", round(allQuantDIC$DIC, 2))))
+        print(noquote(paste0("DIC: ", round(dicQuant$DIC, 2))))
     }
 
-    result <- list("summary" = round(summary, 4),
+    beta <- data.frame(beta)
+    delta <- data.frame(delta)
+
+    result <- list("summary" = summary,
                    "postMeanbeta" = postMeanbeta,
                    "postMeandelta" = postMeandelta,
                    "postStdbeta" = postStdbeta,
                    "postStddelta" = postStddelta,
-                   "gamma" = gammacp,
-                   "catt" = catt,
+                   "gammacp" = gammacp,
+                   "catprob" = catprob,
                    "acceptancerate" = acceptrate,
-                   "allQuantDIC" = allQuantDIC,
+                   "dicQuant" = dicQuant,
                    "logMargLike" = logMargLike,
+                   "ineffactor" = ineffactor,
                    "betadraws" = beta,
                    "deltadraws" = delta)
     class(result) <- "bqrorOR1"
     return(result)
 }
-#' Minimizes the negative of log-likelihood for OR1 model
+#' Minimizes the negative of log-likelihood in the OR1 model
 #'
-#' This function minimizes the negative of log-likelihood for OR1 model
-#' with respect to cut-points \eqn{\delta} using the
+#' This function minimizes the negative of log-likelihood in the OR1 model
+#' with respect to the cut-points \eqn{\delta} using the
 #' fundamental theorem of calculus.
 #'
 #' @usage qrminfundtheorem(deltaIn, y, x, beta, cri0, cri1, stepsize, maxiter, h, dh, sw, p)
@@ -390,10 +388,6 @@ quantregOR1 <- function(y, x, b0, B0, d0, D0, burn, mcmc, p, tune = 0.1, verbose
 #' }
 #'
 #' @importFrom "pracma" "mldivide"
-#' @references Rahman, M. A. (2016). “Bayesian
-#' Quantile Regression for Ordinal Models.”
-#' Bayesian Analysis, 11(1): 1-24. DOI: 10.1214/15-BA939
-#'
 #'
 #' @seealso differential calculus, functional maximization,
 #' \link[pracma]{mldivide}
@@ -590,25 +584,25 @@ qrminfundtheorem <- function(deltaIn, y, x, beta, cri0, cri1,
     return(rt)
 }
 
-#' Negative log-likelihood for OR1 model
+#' Negative log-likelihood in the OR1 model
 #'
 #' This function computes the negative of log-likelihood for each individual and
-#' negative sum of log-likelihood for OR1 model.
+#' negative sum of log-likelihood in the OR1 model.
 #'
 #' @usage qrnegLogLikensumOR1(y, x, betaOne, deltaOne, p)
 #'
 #' @param y         observed ordinal outcomes, column vector of size \eqn{(n x 1)}.
 #' @param x         covariate matrix of size \eqn{(n x k)} including a column of ones with or without column names.
 #' @param betaOne   a sample draw of \eqn{\beta} of size \eqn{(k x 1)}.
-#' @param deltaOne  a sample draw of \eqn{\delta}.
+#' @param deltaOne  a sample draw of \eqn{\delta} of size \eqn{((J-2) x 1)}.
 #' @param p         quantile level or skewness parameter, p in (0,1).
 #'
 #' @details
 #' This function computes the negative of log-likelihood for each individual and
-#' negative sum of log-likelihood for OR1 model.
+#' negative sum of log-likelihood in the OR1 model.
 #'
 #' The latter when evaluated at postMeanbeta and postMeandelta is used to calculate the DIC
-#' and may also be utilized to calculate the Akaike information criterion (AIC) and Bayesian information
+#' and may also be utilized to calculate the Akaike information criterion (AIC) and the Bayesian information
 #' criterion (BIC).
 #'
 #' @return Returns a list with components
@@ -698,10 +692,10 @@ qrnegLogLikensumOR1 <- function(y, x, betaOne, deltaOne, p) {
                    "negsumlogl" = negsumlogl)
     return(respon)
 }
-#' Samples \eqn{\beta} for OR1 model
+#' Samples \eqn{\beta} in the OR1 model
 #'
 #' This function samples \eqn{\beta} from its conditional
-#' posterior distribution for OR1 model (ordinal quantile model with 3 or more
+#' posterior distribution in the OR1 model (ordinal quantile model with 3 or more
 #' outcomes).
 #'
 #' @usage drawbetaOR1(z, x, w, tau2, theta, invB0, invB0b0)
@@ -715,13 +709,13 @@ qrnegLogLikensumOR1 <- function(y, x, betaOne, deltaOne, p) {
 #' @param invB0b0   prior mean pre-multiplied by invB0.
 #'
 #' @details
-#' This function samples a vector of \eqn{\beta} from posterior multivariate
-#' normal distribution.
+#' This function samples \eqn{\beta}, a vector, from its conditional posterior distribution
+#' which is an updated multivariate normal distribution.
 #'
 #' @return Returns a list with components
 #' \itemize{
-#' \item{\code{beta}: }{column vector of \eqn{\beta}
-#' from the posterior multivariate normal distribution.}
+#' \item{\code{beta}: }{\eqn{\beta}, a column vector of size \eqn{(k x 1)}, sampled from its
+#' condtional posterior distribution.}
 #' \item{\code{Btilde}: }{variance parameter for the posterior multivariate normal
 #'  distribution.}
 #' \item{\code{btilde}: }{mean parameter for the
@@ -731,14 +725,6 @@ qrnegLogLikensumOR1 <- function(y, x, betaOne, deltaOne, p) {
 #' @references Rahman, M. A. (2016). “Bayesian
 #' Quantile Regression for Ordinal Models.”
 #' Bayesian Analysis, 11(1): 1-24. DOI: 10.1214/15-BA939
-#'
-#' Casella, G., and George, E. I. (1992). “Explaining the Gibbs Sampler.”
-#' The American Statistician, 46(3): 167-174. DOI: 10.1080/00031305.1992.10475878
-#'
-#' Geman, S., and Geman, D. (1984). “Stochastic Relaxation,
-#' Gibbs Distributions, and the Bayesian Restoration of Images.”
-#' IEEE Transactions an Pattern Analysis and Machine Intelligence,
-#' 6(6): 721-741. DOI: 10.1109/TPAMI.1984.4767596
 #'
 #' @importFrom "MASS" "mvrnorm"
 #' @importFrom "pracma" "inv"
@@ -816,10 +802,10 @@ drawbetaOR1 <- function(z, x, w, tau2, theta, invB0, invB0b0) {
                         "btilde" = btilde)
     return(betaReturns)
 }
-#' Samples latent weight w for OR1 model
+#' Samples latent weight w in the OR1 model
 #'
 #' This function samples latent weight w from a generalized
-#' inverse-Gaussian distribution (GIG) for OR1 model (ordinal quantile model with 3 or more
+#' inverse-Gaussian distribution (GIG) in the OR1 model (ordinal quantile model with 3 or more
 #' outcomes).
 #'
 #' @usage drawwOR1(z, x, beta, tau2, theta, lambda)
@@ -834,19 +820,14 @@ drawbetaOR1 <- function(z, x, w, tau2, theta, invB0, invB0b0) {
 #' @details
 #' This function samples a vector of latent weight w from a GIG distribution.
 #'
-#' @return column vector of w from a GIG distribution.
+#' @return w, a column vector of size \eqn{(n x 1)}, sampled from a GIG distribution.
 #'
-#' @references Albert, J., and Chib, S. (1993). “Bayesian Analysis of Binary and Polychotomous
-#' Response Data.” Journal of the American Statistical
-#' Association, 88(422): 669–679. DOI: 10.1080/01621459.1993.10476321
+#' @references Rahman, M. A. (2016). “Bayesian
+#' Quantile Regression for Ordinal Models.”
+#' Bayesian Analysis, 11(1): 1-24.  DOI: 10.1214/15-BA939
 #'
-#' Casella, G., and George, E. I. (1992). “Explaining the Gibbs Sampler.”
-#' The American Statistician, 46(3): 167-174. DOI: 10.1080/00031305.1992.10475878
-#'
-#' Geman, S., and Geman, D. (1984). “Stochastic Relaxation,
-#' Gibbs Distributions, and the Bayesian Restoration of Images.”
-#' IEEE Transactions an Pattern Analysis and Machine Intelligence,
-#' 6(6): 721-741. DOI: 10.1109/TPAMI.1984.4767596
+#' Devroye, L. (2014). “Random variate generation for the generalized inverse Gaussian
+#' distribution.” Statistics and Computing, 24(2): 239–246. DOI: 10.1007/s11222-012-9367-z
 #'
 #' @importFrom "GIGrvg" "rgig"
 #' @seealso GIGrvg, Gibbs sampling, \link[GIGrvg]{rgig}
@@ -935,38 +916,30 @@ drawwOR1 <- function(z, x, beta, tau2, theta, lambda) {
     }
     return(w)
 }
-#' Samples latent variable z for OR1 model
+#' Samples latent variable z in the OR1 model
 #'
 #' This function samples the latent variable z from a univariate truncated
-#' normal distribution for OR1 model (ordinal quantile model with 3 or more outcomes).
+#' normal distribution in the OR1 model (ordinal quantile model with 3 or more outcomes).
 #'
 #' @usage drawlatentOR1(y, x, beta, w, theta, tau2, delta)
 #'
 #' @param y         observed ordinal outcomes, column vector of size \eqn{(n x 1)}.
 #' @param x         covariate matrix of size \eqn{(n x k)} including a column of ones with or without column names.
 #' @param beta      Gibbs draw of \eqn{\beta}, a column vector of size \eqn{(k x 1)}.
-#' @param w         latent weights, column vector of size size \eqn{(n x 1)}.
+#' @param w         latent weights, column vector of size \eqn{(n x 1)}.
 #' @param theta     (1-2p)/(p(1-p)).
 #' @param tau2      2/(p(1-p)).
-#' @param delta     row vector of cutpoints including (-Inf, Inf).
+#' @param delta     column vector of cutpoints including (-Inf, Inf).
 #'
 #' @details
 #' This function samples the latent variable z from a univariate truncated normal
 #' distribution.
 #'
-#' @return column vector of latent variable z from a univariate truncated distribution.
+#' @return latent variable z of size \eqn{(n x 1)} sampled from a univariate truncated distribution.
 #'
 #' @references Albert, J., and Chib, S. (1993). “Bayesian Analysis of Binary and Polychotomous
 #' Response Data.” Journal of the American Statistical
 #' Association, 88(422): 669–679. DOI: 10.1080/01621459.1993.10476321
-#'
-#' Casella, G., and George, E. I. (1992). “Explaining the Gibbs Sampler.”
-#' The American Statistician, 46(3): 167-174. DOI: 10.1080/00031305.1992.10475878
-#'
-#' Geman, S., and Geman, D. (1984). “Stochastic Relaxation,
-#' Gibbs Distributions, and the Bayesian Restoration of Images.”
-#' IEEE Transactions an Pattern Analysis and Machine Intelligence,
-#' 6(6): 721-741. DOI: 10.1109/TPAMI.1984.4767596
 #'
 #' Robert, C. P. (1995). “Simulation of truncated normal variables.” Statistics and
 #' Computing, 5: 121–125. DOI: 10.1007/BF00143942
@@ -1047,10 +1020,10 @@ drawlatentOR1 <- function(y, x, beta, w, theta, tau2, delta) {
     }
     return(z)
 }
-#' Samples \eqn{\delta} for OR1 model
+#' Samples \eqn{\delta} in the OR1 model
 #'
 #' This function samples the cut-point vector \eqn{\delta} using a
-#' random-walk Metropolis-Hastings algorithm for OR1 model (ordinal
+#' random-walk Metropolis-Hastings algorithm in the OR1 model (ordinal
 #' quantile model with 3 or more outcomes).
 #'
 #' @usage drawdeltaOR1(y, x, beta, delta0, d0, D0, tune, Dhat, p)
@@ -1066,12 +1039,12 @@ drawlatentOR1 <- function(y, x, beta, w, theta, tau2, delta) {
 #' @param p         quantile level or skewness parameter, p in (0,1).
 #'
 #' @details
-#' Samples the \eqn{\delta} using a random-walk Metropolis-Hastings algorithm.
+#' Samples the cut-point vector \eqn{\delta} using a random-walk Metropolis-Hastings algorithm.
 #'
 #' @return Returns a list with components
 #' \itemize{
-#'  \item{\code{deltaReturn}: }{\eqn{\delta} values from MH algorithm, a row vector.}
-#'   \item{\code{accept}: }{indicator for acceptance of proposed value of \eqn{\delta}.}
+#'  \item{\code{deltaReturn}: }{\eqn{\delta}, a column vector of size \eqn{((J-2) x 1)}, sampled using MH algorithm.}
+#'   \item{\code{accept}: }{indicator for acceptance of the proposed value of \eqn{\delta}.}
 #' }
 #'
 #' @references Rahman, M. A. (2016). “Bayesian
@@ -1080,13 +1053,6 @@ drawlatentOR1 <- function(y, x, beta, w, theta, tau2, delta) {
 #'
 #' Chib, S., and Greenberg, E. (1995). “Understanding the Metropolis-Hastings
 #' Algorithm.” The American Statistician, 49(4): 327-335. DOI: 10.2307/2684568
-#'
-#' Hastings, W. K. (1970). “Monte Carlo Sampling Methods Using
-#' Markov Chains and Their Applications.” Biometrika, 57: 1317-1340. DOI: 10.2307/1390766
-#'
-#' Jeliazkov, I., Graves, J., and Kutzbach, M. (2008). “Fitting and Comparison of Models
-#' for Multivariate Ordinal Outcomes.” Advances in Econometrics: Bayesian Econometrics,
-#' 23: 115–156. DOI: 10.1016/S0731-9053(08)23004-5
 #'
 #' Jeliazkov, I., and Rahman, M. A. (2012). “Binary and Ordinal Data Analysis
 #' in Economics: Modeling and Estimation” in Mathematical Modeling with Multidisciplinary
@@ -1182,17 +1148,17 @@ drawdeltaOR1 <- function(y, x, beta, delta0, d0, D0, tune, Dhat, p){
                  "accept" = accept)
     return(resp)
 }
-#' Deviance Information Criterion for OR1 model
+#' Deviance Information Criterion in the OR1 model
 #'
-#' Function for computing the Deviance Information Criterion (DIC) for OR1 model (ordinal quantile
+#' Function for computing the Deviance Information Criterion (DIC) in the OR1 model (ordinal quantile
 #' model with 3 or more outcomes).
 #'
-#' @usage devianceOR1(y, x, betadraws, deltadraws, postMeanbeta, postMeandelta, burn, mcmc, p)
+#' @usage dicOR1(y, x, betadraws, deltadraws, postMeanbeta, postMeandelta, burn, mcmc, p)
 #'
 #' @param y                observed ordinal outcomes, column vector of size \eqn{(n x 1)}.
 #' @param x                covariate matrix of size \eqn{(n x k)} including a column of ones with or without column names.
-#' @param betadraws        MCMC draws of \eqn{\beta}, size is \eqn{(k x nsim)}.
-#' @param deltadraws       MCMC draws of \eqn{\delta}, size is \eqn{((J-2) x nsim)}.
+#' @param betadraws        dataframe of the MCMC draws of \eqn{\beta}, size is \eqn{(k x nsim)}.
+#' @param deltadraws       dataframe of the MCMC draws of \eqn{\delta}, size is \eqn{((J-2) x nsim)}.
 #' @param postMeanbeta     posterior mean of the MCMC draws of \eqn{\beta}.
 #' @param postMeandelta    posterior mean of the MCMC draws of \eqn{\delta}.
 #' @param burn             number of burn-in MCMC iterations.
@@ -1208,15 +1174,11 @@ drawdeltaOR1 <- function(y, x, beta, delta0, d0, D0, tune, Dhat, p){
 #' same quantile. The model with a lower DIC provides a better fit.
 #'
 #' @return Returns a list with components
-#' \deqn{DIC = 2*avgdDeviance - devpostmean}
-#' \deqn{pd = avgdDeviance - devpostmean}
-#' \deqn{devpostmean = -2*(logLikelihood)}.
+#' \deqn{DIC = 2*avgdDeviance - dev}
+#' \deqn{pd = avgdDeviance - dev}
+#' \deqn{dev = -2*(logLikelihood)}.
 #'
-#' @references Rahman, M. A. (2016). “Bayesian
-#' Quantile Regression for Ordinal Models.”
-#' Bayesian Analysis, 11(1): 1-24. DOI: 10.1214/15-BA939
-#'
-#' Spiegelhalter, D. J., Best, N. G., Carlin, B. P. and Linde, A. (2002).
+#' @references Spiegelhalter, D. J., Best, N. G., Carlin, B. P. and Linde, A. (2002).
 #' “Bayesian Measures of Model Complexity and Fit.” Journal of the
 #' Royal Statistical Society B, Part 4: 583-639. DOI: 10.1111/1467-9868.00353
 #'
@@ -1236,7 +1198,7 @@ drawdeltaOR1 <- function(y, x, beta, delta0, d0, D0, tune, Dhat, p){
 #' d0 <- array(0, dim = c(J-2, 1))
 #' D0 <- 0.25*diag(J - 2)
 #' output <- quantregOR1(y = y, x = xMat, b0, B0, d0, D0,
-#' burn = 10, mcmc = 40, p = 0.25, tune = 1, verbose = FALSE)
+#' burn = 10, mcmc = 40, p = 0.25, tune = 1, accutoff = 0.5, verbose = FALSE)
 #' mcmc <- 40
 #' deltadraws <- output$deltadraws
 #' betadraws <- output$betadraws
@@ -1244,24 +1206,26 @@ drawdeltaOR1 <- function(y, x, beta, delta0, d0, D0, tune, Dhat, p){
 #' nsim <- burn + mcmc
 #' postMeanbeta <- output$postMeanbeta
 #' postMeandelta <- output$postMeandelta
-#' deviance <- devianceOR1(y, xMat, betadraws, deltadraws,
+#' dic <- dicOR1(y, xMat, betadraws, deltadraws,
 #' postMeanbeta, postMeandelta, burn, mcmc, p = 0.25)
 #'
 #' # DIC
 #' #   1375.329
 #' # pd
 #' #   139.1751
-#' # devpostmean
+#' # dev
 #' #   1096.979
 #'
 #' @export
-devianceOR1 <- function(y, x, betadraws, deltadraws, postMeanbeta,
+dicOR1 <- function(y, x, betadraws, deltadraws, postMeanbeta,
                         postMeandelta, burn, mcmc, p){
     cols <- colnames(x)
     names(x) <- NULL
     names(y) <- NULL
     x <- as.matrix(x)
     y <- as.matrix(y)
+    betadraws <- as.matrix(betadraws)
+    deltadraws <- as.matrix(deltadraws)
     if (dim(y)[2] != 1){
         stop("input y should be a column vector")
     }
@@ -1294,12 +1258,12 @@ devianceOR1 <- function(y, x, betadraws, deltadraws, postMeanbeta,
     }
     nsim <- burn + mcmc
     delta <- deltadraws
-    devpostmean <- array(0, dim = c(1))
+    dev <- array(0, dim = c(1))
     DIC <- array(0, dim = c(1))
     pd <- array(0, dim = c(1))
     ans <- qrnegLogLikensumOR1(y, x,
                             postMeanbeta, postMeandelta, p)
-    devpostmean <- 2 * ans$negsumlogl
+    dev <- 2 * ans$negsumlogl
     nsim <- dim(betadraws[, (burn + 1):nsim])[1]
     Deviance <- array(0, dim = c(nsim, 1))
     for (i in 1:nsim) {
@@ -1308,11 +1272,11 @@ devianceOR1 <- function(y, x, betadraws, deltadraws, postMeanbeta,
         Deviance[i, 1] <- 2 * temp$negsumlogl
     }
     avgdDeviance <- mean(Deviance)
-    DIC <- 2 * avgdDeviance - devpostmean
-    pd <- avgdDeviance - devpostmean
+    DIC <- 2 * avgdDeviance - dev
+    pd <- avgdDeviance - dev
     result <- list("DIC" = DIC,
                    "pd" = pd,
-                   "devpostmean" = devpostmean)
+                   "dev" = dev)
     return(result)
 }
 #' cdf of a standard asymmetric Laplace distribution
@@ -1374,8 +1338,8 @@ alcdfstd <- function(x, p) {
 #' @usage alcdf(x, mu, sigma, p)
 #'
 #' @param x     scalar value.
-#' @param mu    location parameter of AL distribution.
-#' @param sigma scale parameter of AL distribution.
+#' @param mu    location parameter of an AL distribution.
+#' @param sigma scale parameter of an AL distribution.
 #' @param p     quantile or skewness parameter, p in (0,1).
 #'
 #' @details
@@ -1432,35 +1396,35 @@ alcdf <- function(x, mu, sigma, p){
     return(z)
 }
 
-#' Inefficiency factor for OR1 model
+#' Inefficiency factor in the OR1 model
 #'
 #' This function calculates the inefficiency factor from the MCMC draws
-#' of \eqn{(\beta, \delta)} for OR1 model (ordinal quantile model with 3 or more outcomes). The
+#' of \eqn{(\beta, \delta)} in the OR1 model (ordinal quantile model with 3 or more outcomes). The
 #' inefficiency factor is calculated using the batch-means method.
 #'
-#' @usage infactorOR1(x, betadraws, deltadraws, autocorrelationCutoff, verbose)
+#' @usage ineffactorOR1(x, betadraws, deltadraws, accutoff, verbose)
 #'
 #' @param x                         covariate matrix of size \eqn{(n x k)} including a column of ones with or without column names.
-#'                                  This input is used to extract column names, if available, and not used in calculation.
-#' @param betadraws                 MCMC draws of \eqn{\beta} of size \eqn{(k x nsim)}.
-#' @param deltadraws                MCMC draws of \eqn{\delta} of size \eqn{((J-2) x nsim)}.
-#' @param autocorrelationCutoff     cut-off to identify the number of lags and form batches, default is 0.05.
+#'                                  This input is used to extract column names, if available, but not used in calculation.
+#' @param betadraws                 dataframe of the MCMC draws of \eqn{\beta}, size \eqn{(k x nsim)}.
+#' @param deltadraws                dataframe of the MCMC draws of \eqn{\delta}, size \eqn{((J-2) x nsim)}.
+#' @param accutoff                  cut-off to identify the number of lags and form batches, default is 0.05.
 #' @param verbose                   whether to print the final output and provide additional information or not, default is TRUE.
 #'
 #' @details
 #' Calculates the inefficiency factor of \eqn{(\beta, \delta)} using the batch-means
 #' method based on MCMC draws. Inefficiency factor can be interpreted as the cost of
 #' working with correlated draws. A low inefficiency factor indicates better mixing
-#' and efficient algorithm.
+#' and an efficient algorithm.
 #'
-#' @return Returns a list with components
-#' \itemize{
-#' \item{\code{inefficiencyDelta}: }{It is a vector with inefficiency factor for each \eqn{\delta}.}
-#' \item{\code{inefficiencyBeta}: }{It is a vector with inefficiency factor for each \eqn{\beta}.}
-#' }
+#' @return Returns a column vector of inefficiency factors for each component of \eqn{\beta} and \eqn{\delta}.
 #'
 #' @references Greenberg, E. (2012). “Introduction to Bayesian Econometrics.” Cambridge University
 #' Press, Cambridge. DOI: 10.1017/CBO9780511808920
+#'
+#' Chib, S. (2012), "Introduction to simulation and MCMC methods." In Geweke J., Koop G., and Dijk, H.V.,
+#' editors, "The Oxford Handbook of Bayesian Econometrics", pages 183--218. Oxford University Press,
+#' Oxford. DOI: 10.1093/oxfordhb/9780199559084.013.0006
 #'
 #' @importFrom "pracma" "Reshape" "std"
 #' @importFrom "stats" "acf"
@@ -1477,14 +1441,14 @@ alcdf <- function(x, mu, sigma, p){
 #' d0 <- array(0, dim = c(J-2, 1))
 #' D0 <- 0.25*diag(J - 2)
 #' output <- quantregOR1(y = y, x = xMat, b0, B0, d0, D0,
-#' burn = 10, mcmc = 40, p = 0.25, tune = 1, verbose = FALSE)
+#' burn = 10, mcmc = 40, p = 0.25, tune = 1, accutoff = 0.5, verbose = FALSE)
 #' betadraws <- output$betadraws
 #' deltadraws <- output$deltadraws
-#' inefficiency <- infactorOR1(xMat, betadraws, deltadraws, 0.5, TRUE)
+#' inefficiency <- ineffactorOR1(xMat, betadraws, deltadraws, 0.5, TRUE)
 #'
 #' # Summary of Inefficiency Factor:
 #'
-#' #             Inefficiency
+#' #             Inef Factor
 #' # beta_1        1.1008
 #' # beta_2        3.0024
 #' # beta_3        2.8543
@@ -1492,10 +1456,12 @@ alcdf <- function(x, mu, sigma, p){
 #' # delta_2       3.1784
 #'
 #' @export
-infactorOR1 <- function(x, betadraws, deltadraws, autocorrelationCutoff = 0.05, verbose = TRUE) {
+ineffactorOR1 <- function(x, betadraws, deltadraws, accutoff = 0.05, verbose = TRUE) {
     cols <- colnames(x)
     names(x) <- NULL
     x <- as.matrix(x)
+    betadraws <- as.matrix(betadraws)
+    deltadraws <- as.matrix(deltadraws)
     if ( !all(is.numeric(betadraws))){
         stop("each entry in betadraws must be numeric")
     }
@@ -1507,7 +1473,7 @@ infactorOR1 <- function(x, betadraws, deltadraws, autocorrelationCutoff = 0.05, 
     inefficiencyBeta <- array(0, dim = c(k, 1))
     for (i in 1:k) {
         autocorrelation <- acf(betadraws[i,], plot = FALSE)
-        nlags <- min(which(autocorrelation$acf <= autocorrelationCutoff))
+        nlags <- min(which(autocorrelation$acf <= accutoff))
         nbatch <- floor(n / nlags)
         nuse <- nbatch * nlags
         b <- betadraws[i, 1:nuse]
@@ -1523,7 +1489,7 @@ infactorOR1 <- function(x, betadraws, deltadraws, autocorrelationCutoff = 0.05, 
     inefficiencyDelta <- array(0, dim = c(k2, 1))
     for (i in 1:k2) {
         autocorrelation <- acf(deltadraws[i,], plot = FALSE)
-        nlags <- min(which(autocorrelation$acf <= autocorrelationCutoff))
+        nlags <- min(which(autocorrelation$acf <= accutoff))
         nbatch2 <- floor(n / nlags)
         nuse2 <- nbatch2 * nlags
         d <- deltadraws[i, 1:nuse2]
@@ -1537,7 +1503,7 @@ infactorOR1 <- function(x, betadraws, deltadraws, autocorrelationCutoff = 0.05, 
     }
 
     inefficiencyRes <- rbind(inefficiencyBeta, inefficiencyDelta)
-    name <- list('Inefficiency')
+    name <- list('Inef Factor')
     dimnames(inefficiencyRes)[[2]] <- name
     dimnames(inefficiencyRes)[[1]] <- letters[1:(k+k2)]
     j <- 1
@@ -1564,12 +1530,9 @@ infactorOR1 <- function(x, betadraws, deltadraws, autocorrelationCutoff = 0.05, 
     print(round(inefficiencyRes, 4))
     }
 
-    result <- list("inefficiencyDelta" = inefficiencyDelta,
-                   "inefficiencyBeta" = inefficiencyBeta)
-
-    return(result)
+    return(inefficiencyRes)
 }
-#' Covariate effect for OR1 model
+#' Covariate effect in the OR1 model
 #'
 #' This function computes the average covariate effect for different
 #' outcomes of the OR1 model at a specified quantile. The covariate
@@ -1583,7 +1546,7 @@ infactorOR1 <- function(x, betadraws, deltadraws, autocorrelationCutoff = 0.05, 
 #'                  If the covariate of interest is continuous, then the column for the covariate of interest remains unchanged (xMat1 = x).
 #'                  If it is an indicator variable then replace the column for the covariate of interest with a
 #'                  column of zeros.
-#' @param xMat2     matrix x with suitable modification to an independent variable including a column of ones with
+#' @param xMat2     covariate matrix x with suitable modification to an independent variable including a column of ones with
 #'                  or without column names. If the covariate of interest is continuous, then add the incremental change
 #'                  to each observation in the column for the covariate of interest. If the covariate is an indicator variable,
 #'                  then replace the column for the covariate of interest with a column of ones.
@@ -1593,13 +1556,13 @@ infactorOR1 <- function(x, betadraws, deltadraws, autocorrelationCutoff = 0.05, 
 #' @details
 #' This function computes the average covariate effect for different
 #' outcomes of the OR1 model at a specified quantile. The covariate
-#' effects are computed marginally of the parameters and the remaining covariates,
-#' and utilizes draws from MCMC sampling.
+#' effects are computed, using the MCMC draws, marginally of the parameters
+#' and the remaining covariates.
 #'
 #' @return Returns a list with components:
 #' \itemize{
 #' \item{\code{avgDiffProb}: }{vector with change in predicted
-#' probabilities for each outcome category.}
+#' probability for each outcome category.}
 #' }
 #'
 #' @references Rahman, M. A. (2016). “Bayesian
@@ -1627,7 +1590,7 @@ infactorOR1 <- function(x, betadraws, deltadraws, autocorrelationCutoff = 0.05, 
 #' d0 <- array(0, dim = c(J-2, 1))
 #' D0 <- 0.25*diag(J - 2)
 #' modelOR1 <- quantregOR1(y = y, x = xMat1, b0, B0, d0, D0,
-#' burn = 10, mcmc = 40, p = 0.25, tune = 1, verbose = FALSE)
+#' burn = 10, mcmc = 40, p = 0.25, tune = 1, accutoff = 0.5, verbose = FALSE)
 #' xMat2 <- xMat1
 #' xMat2[,3] <- xMat2[,3] + 0.02
 #' res <- covEffectOR1(modelOR1, y, xMat1, xMat2, p = 0.25, verbose = TRUE)
@@ -1635,10 +1598,10 @@ infactorOR1 <- function(x, betadraws, deltadraws, autocorrelationCutoff = 0.05, 
 #' # Summary of Covariate Effect:
 #'
 #' #               Covariate Effect
-#' # Category_1          -0.0076
-#' # Category_2          -0.0014
-#' # Category_3          -0.0010
-#' # Category_4           0.0100
+#' # Category_1          -0.0072
+#' # Category_2          -0.0012
+#' # Category_3          -0.0009
+#' # Category_4           0.0093
 #'
 #' @export
 covEffectOR1 <- function(modelOR1, y, xMat1, xMat2, p, verbose = TRUE) {
@@ -1680,6 +1643,8 @@ covEffectOR1 <- function(modelOR1, y, xMat1, xMat2, p, verbose = TRUE) {
     k <- dim(xMat1)[2]
     betaBurnt <- modelOR1$betadraws[, (burn + 1):N]
     deltaBurnt <- modelOR1$deltadraws[, (burn + 1):N]
+    betaBurnt <- as.matrix(betaBurnt)
+    deltaBurnt <- as.matrix(deltaBurnt)
     expdeltaBurnt <- exp(deltaBurnt)
     gammacpCov <- array(0, dim = c(J-1, m))
     for (j in 2:(J-1)) {
@@ -1730,10 +1695,10 @@ covEffectOR1 <- function(modelOR1, y, xMat1, xMat2, p, verbose = TRUE) {
 
     return(result)
 }
-#' Logarithm marginal likelihood for OR1 model
+#' Marginal likelihood in the OR1 model
 #'
-#' This function computes the logarithm of marginal likelihood for OR1 model (ordinal
-#' quantile model with 3 or more outcomes) using MCMC output from the
+#' This function computes the logarithm of marginal likelihood in the OR1 model (ordinal
+#' quantile model with 3 or more outcomes) using the MCMC outputs from the
 #' complete and reduced runs.
 #'
 #' @usage logMargLikeOR1(y, x, b0, B0, d0, D0, postMeanbeta,
@@ -1747,34 +1712,24 @@ covEffectOR1 <- function(modelOR1, y, xMat1, xMat2, p, verbose = TRUE) {
 #' @param D0                prior covariance matrix for \eqn{\delta}.
 #' @param postMeanbeta      posterior mean of \eqn{\beta} from the complete MCMC run.
 #' @param postMeandelta     posterior mean of \eqn{\delta} from the complete MCMC run.
-#' @param betadraws         a storage matrix with all sampled values for \eqn{\beta} from the complete MCMC run.
-#' @param deltadraws        a storage matrix with all sampled values for \eqn{\delta} from the complete MCMC run.
-#' @param tune              tuning parameter to adjust MH acceptance rate.
+#' @param betadraws         a dataframe with all the sampled values for \eqn{\beta} from the complete MCMC run.
+#' @param deltadraws        a dataframe with all the sampled values for \eqn{\delta} from the complete MCMC run.
+#' @param tune              tuning parameter to adjust the MH acceptance rate.
 #' @param Dhat              negative inverse Hessian from the maximization of log-likelihood.
 #' @param p                 quantile level or skewness parameter, p in (0,1).
 #' @param verbose           whether to print the final output and provide additional information or not, default is TRUE.
 #'
 #' @details
-#' This function computes the logarithm of marginal likelihood for OR1 model using MCMC outputs from complete and
+#' This function computes the logarithm of marginal likelihood in the OR1 model using the MCMC outputs from complete and
 #' reduced runs.
 #'
 #' @return Returns an estimate of log marginal likelihood
 #'
-#' @references Rahman, M. A. (2016). “Bayesian
-#' Quantile Regression for Ordinal Models.”
-#' Bayesian Analysis, 11(1): 1-24. DOI: 10.1214/15-BA939
-#'
-#' Chib, S., and Greenberg, E. (1995). “Understanding the Metropolis-Hastings
-#' Algorithm.” The American Statistician, 49(4): 327-335. DOI: 10.2307/2684568
-#'
-#' Chib, S. (1995). “Marginal likelihood from the Gibbs output.” Journal of the American
+#' @references Chib, S. (1995). “Marginal likelihood from the Gibbs output.” Journal of the American
 #' Statistical Association, 90(432):1313–1321, 1995. DOI: 10.1080/01621459.1995.10476635
 #'
 #' Chib, S., and Jeliazkov, I. (2001). “Marginal likelihood from the Metropolis-Hastings output.” Journal of the
 #' American Statistical Association, 96(453):270–281, 2001. DOI: 10.1198/016214501750332848
-#'
-#' Greenberg, E. (2012). “Introduction to Bayesian Econometrics.” Cambridge University
-#' Press, Cambridge. DOI: 10.1017/CBO9780511808920
 #'
 #' @importFrom "stats" "sd" "dnorm"
 #' @importFrom "pracma" "inv"
@@ -1795,7 +1750,7 @@ covEffectOR1 <- function(modelOR1, y, xMat1, xMat2, p, verbose = TRUE) {
 #' d0 <- array(0, dim = c(J-2, 1))
 #' D0 <- 0.25*diag(J - 2)
 #' output <- quantregOR1(y = y, x = xMat, b0, B0, d0, D0,
-#' burn = 10, mcmc = 40, p = 0.25, tune = 1, verbose = FALSE)
+#' burn = 10, mcmc = 40, p = 0.25, tune = 1, accutoff = 0.5, verbose = FALSE)
 #' # output$logMargLike
 #' #   -554.61
 #'
@@ -1806,6 +1761,8 @@ logMargLikeOR1 <- function(y, x, b0, B0, d0, D0, postMeanbeta, postMeandelta, be
     names(y) <- NULL
     x <- as.matrix(x)
     y <- as.matrix(y)
+    betadraws <- as.matrix(betadraws)
+    deltadraws <- as.matrix(deltadraws)
     if ( dim(y)[2] != 1){
         stop("input y should be a column vector")
     }
@@ -1951,56 +1908,21 @@ logMargLikeOR1 <- function(y, x, b0, B0, d0, D0, postMeanbeta, postMeandelta, be
     logMargLike <- logLikeCont + logPriorCont - logPosteriorCont
     return(logMargLike)
 }
-#' Extractor function for log marginal likelihood for OR1 model
+#' Extractor function for summary
 #'
-#' This function extracts the logarithm of marginal likelihood for OR1 model (ordinal
-#' quantile model with 3 or more outcomes) using bqrorOR1 object from
-#' quantregOR1 modeling.
+#' This function extracts the summary from the bqrorOR1 object
 #'
-#' @usage \method{logLik}{bqrorOR1}(object, y, x, b0, B0, d0, D0, tune, p, REML,...)
-#' @aliases logLik logLik.bqrorOR1
+#' @usage \method{summary}{bqrorOR1}(object, digits, ...)
 #'
-#' @param object            bqrorOR1 object from which a log-likelihood value, or a contribution to a log-likelihood value, is extracted.
-#' @param y                 observed ordinal outcomes, column vector of size \eqn{(n x 1)}.
-#' @param x                 covariate matrix of size \eqn{(n x k)} including a column of ones with or without column names.
-#' @param b0                prior mean for \eqn{\beta}.
-#' @param B0                prior covariance matrix for \eqn{\beta}
-#' @param d0                prior mean for \eqn{\delta}.
-#' @param D0                prior covariance matrix for \eqn{\delta}.
-#' @param tune              tuning parameter to adjust MH acceptance rate.
-#' @param p                 quantile level or skewness parameter, p in (0,1).
-#' @param REML              an optional logical value. If TRUE the restricted log-likelihood is returned, else, if FALSE, the log-likelihood is returned. Defaults to FALSE.
-#' @param ...               ignored
+#' @param object    bqrorOR1 object from which the summary is extracted.
+#' @param digits    controls the number of digits after the decimal.
+#' @param ...       extra arguments
 #'
 #' @details
-#' This function is an extractor function for logarithm of marginal likelihood of OR1 model
-#' from the bqrorOR1 object.
+#' This function is an extractor function for the summary
 #'
-#' @return Returns an object of class logLik for logarithm of marginal likelihood
+#' @return the summarized information object
 #'
-#' @references Rahman, M. A. (2016). “Bayesian
-#' Quantile Regression for Ordinal Models.”
-#' Bayesian Analysis, 11(1): 1-24. DOI: 10.1214/15-BA939
-#'
-#' Chib, S., and Greenberg, E. (1995). “Understanding the Metropolis-Hastings
-#' Algorithm.” The American Statistician, 49(4): 327-335. DOI: 10.2307/2684568
-#'
-#' Chib, S. (1995). “Marginal likelihood from the Gibbs output.” Journal of the American
-#' Statistical Association, 90(432):1313–1321, 1995. DOI: 10.1080/01621459.1995.10476635
-#'
-#' Chib, S., and Jeliazkov, I. (2001). “Marginal likelihood from the Metropolis-Hastings output.” Journal of the
-#' American Statistical Association, 96(453):270–281, 2001. DOI: 10.1198/016214501750332848
-#'
-#' Greenberg, E. (2012). “Introduction to Bayesian Econometrics.” Cambridge University
-#' Press, Cambridge. DOI: 10.1017/CBO9780511808920
-#'
-#' @importFrom "stats" "sd" "dnorm"
-#' @importFrom "pracma" "inv"
-#' @importFrom "NPflow" "mvnpdf"
-#' @importFrom "progress" "progress_bar"
-#'
-#' @seealso \link[NPflow]{mvnpdf}, \link[stats]{dnorm}, \link[stats]{logLik}
-#' Gibbs sampling, Metropolis-Hastings algorithm
 #' @examples
 #' set.seed(101)
 #' data("data25j4")
@@ -2013,93 +1935,18 @@ logMargLikeOR1 <- function(y, x, b0, B0, d0, D0, postMeanbeta, postMeandelta, be
 #' d0 <- array(0, dim = c(J-2, 1))
 #' D0 <- 0.25*diag(J - 2)
 #' output <- quantregOR1(y = y, x = xMat, b0, B0, d0, D0,
-#' burn = 10, mcmc = 40, p = 0.25, tune = 1, verbose = FALSE)
-#' loglik <- logLik(output, y, xMat, b0, B0 = 10*diag(k), d0,
-#' D0 = D0, tune = 1, p = 0.25, REML = FALSE)
-#' # loglik
-#' #   -554.61
+#' burn = 10, mcmc = 40, p = 0.25, tune = 1, accutoff = 0.5, verbose = FALSE)
+#' summary(output, 4)
 #'
-#' @exportS3Method logLik bqrorOR1
-logLik.bqrorOR1 <- function(object, y, x, b0, B0, d0, D0, tune = 0.1, p, REML = FALSE, ...)
+#'  #            Post Mean  Post Std   Upper Credible Lower Credible Inef Factor
+#'  # beta_1       -2.6202   0.3588        -2.0560        -3.3243       1.1008
+#'  # beta_2        3.1670   0.5894         4.1713         2.1423       3.0024
+#'  # beta_3        4.2800   0.9141         5.7142         2.8625       2.8534
+#'  # delta_1       0.2188   0.4043         0.6541        -0.4384       3.6507
+#'  # delta_2       0.4567   0.3055         0.7518        -0.2234       3.1784
+#'
+#' @exportS3Method summary bqrorOR1
+summary.bqrorOR1 <- function(object, digits = 4,...)
 {
-    if (REML)
-        stop("cannot calculate REML log-likelihood for \"bqror\" objects")
-    names(x) <- NULL
-    names(y) <- NULL
-    x <- as.matrix(x)
-    y <- as.matrix(y)
-    if (dim(y)[2] != 1){
-        stop("input y should be a column vector")
-    }
-    if ( any(!all(y == floor(y)))){
-        stop("each entry of y must be an integer")
-    }
-    if ( !all(is.numeric(x))){
-        stop("each entry in x must be numeric")
-    }
-    if ( !all(is.numeric(B0))){
-        stop("each entry in B0 must be numeric")
-    }
-    if ( !all(is.numeric(D0))){
-        stop("each entry in D0 must be numeric")
-    }
-    if (length(tune) != 1 ){
-            stop("parameter tune must be scalar")
-    }
-    if ( length(p) != 1){
-        stop("parameter p must be scalar")
-    }
-    if (any(p < 0 | p > 1)){
-        stop("parameter p must be between 0 to 1")
-    }
-    if (!is.numeric(tune)){
-        stop("parameter tune must be numeric")
-    }
-    if (any(tune < 0)){
-        stop("parameter tune must be greater than 0")
-    }
-    J <- dim(as.array(unique(y)))[1]
-    n <- dim(x)[1]
-    k <- dim(x)[2]
-    if ((dim(D0)[1] != (J-2)) | (dim(D0)[2] != (J-2))){
-        stop("D0 is the prior variance to sample delta
-             must have size (J-2)x(J-2)")
-    }
-    if ((dim(B0)[1] != (k)) | (dim(B0)[2] != (k))){
-        stop("B0 is the prior variance to sample beta
-             must have size kxk")
-    }
-    nsim <- dim(object$betadraws)[2]
-    beta <- array (0, dim = c(k, nsim))
-    yprob <- array(0, dim = c(n, J))
-    for (i in 1:n) {
-        yprob[i, y[i]] <- 1
-    }
-    yprob <- colSums(yprob) / n
-    gam <- qnorm(cumsum(yprob[1:(J - 1)]))
-    deltaIn <- t(log(gam[2:(J - 1)] - gam[1:(J - 2)]))
-
-    invB0 <- inv(B0)
-    invB0b0 <- invB0 %*% b0
-
-    ytemp <- y - 1.5
-    beta[, 1] <- mldivide( (t(x) %*% (x)), (t(x) %*% ytemp))
-
-    cri0     <- 1;
-    cri1     <- 0.001;
-    stepsize <- 1;
-    maxiter  <- 10;
-    h        <- 0.002;
-    dh       <- 0.0002;
-    sw       <- 20;
-    minimize <- qrminfundtheorem(deltaIn, y, x,
-                                 beta[, 1], cri0, cri1,
-                                 stepsize, maxiter, h, dh, sw, p)
-
-    Dhat <- -inv(minimize$H) * 3
-
-    val <- logMargLikeOR1(y, x, b0, B0, d0, D0, object$postMeanbeta, t(object$postMeandelta), object$betadraws, object$deltadraws, tune, Dhat, p, FALSE)
-
-    class(val) <- "logLik"
-    return(val)
+    print(round(object$summary, digits))
 }

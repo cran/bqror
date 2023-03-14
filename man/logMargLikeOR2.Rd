@@ -2,7 +2,7 @@
 % Please edit documentation in R/ORII.R
 \name{logMargLikeOR2}
 \alias{logMargLikeOR2}
-\title{Marginal likelihood for OR2 model}
+\title{Marginal likelihood in the OR2 model}
 \usage{
 logMargLikeOR2(y, x, b0, B0, n0, d0, postMeanbeta, postMeansigma,
 btildeStore, BtildeStore, gamma2, p, verbose)
@@ -38,12 +38,12 @@ btildeStore, BtildeStore, gamma2, p, verbose)
 Returns an estimate of log marginal likelihood
 }
 \description{
-This function computes the logarithm of marginal likelihood for OR2 model (ordinal
-quantile model with exactly 3 outcomes) using Gibbs output from the
+This function computes the logarithm of marginal likelihood in the OR2 model (ordinal
+quantile model with exactly 3 outcomes) using the Gibbs output from the
 complete and reduced runs.
 }
 \details{
-This function computes the logarithm of marginal likelihood for OR2 model using Gibbs output from complete
+This function computes the logarithm of marginal likelihood in the OR2 model using the Gibbs output from the complete
 and reduced runs.
 }
 \examples{
@@ -57,21 +57,14 @@ B0 <- 10*diag(k)
 n0 <- 5
 d0 <- 8
 output <- quantregOR2(y = y, x = xMat, b0, B0, n0, d0, gamma2 = 3,
-burn = 10, mcmc = 40, p = 0.25, verbose = FALSE)
+burn = 10, mcmc = 40, p = 0.25, accutoff = 0.5, verbose = FALSE)
 # output$logMargLike
 #   -404.57
 
 }
 \references{
-Rahman, M. A. (2016). “Bayesian
-Quantile Regression for Ordinal Models.”
-Bayesian Analysis, 11(1): 1-24. DOI: 10.1214/15-BA939
-
 Chib, S. (1995). “Marginal likelihood from the Gibbs output.” Journal of the American
 Statistical Association, 90(432):1313–1321, 1995. DOI: 10.1080/01621459.1995.10476635
-
-Greenberg, E. (2012). “Introduction to Bayesian Econometrics.” Cambridge University
-Press, Cambridge. DOI: 10.1017/CBO9780511808920
 }
 \seealso{
 \link[invgamma]{dinvgamma}, \link[NPflow]{mvnpdf}, \link[stats]{dnorm},

@@ -2,7 +2,7 @@
 % Please edit documentation in R/ORI.R
 \name{covEffectOR1}
 \alias{covEffectOR1}
-\title{Covariate effect for OR1 model}
+\title{Covariate effect in the OR1 model}
 \usage{
 covEffectOR1(modelOR1, y, xMat1, xMat2, p, verbose)
 }
@@ -16,7 +16,7 @@ If the covariate of interest is continuous, then the column for the covariate of
 If it is an indicator variable then replace the column for the covariate of interest with a
 column of zeros.}
 
-\item{xMat2}{matrix x with suitable modification to an independent variable including a column of ones with
+\item{xMat2}{covariate matrix x with suitable modification to an independent variable including a column of ones with
 or without column names. If the covariate of interest is continuous, then add the incremental change
 to each observation in the column for the covariate of interest. If the covariate is an indicator variable,
 then replace the column for the covariate of interest with a column of ones.}
@@ -29,7 +29,7 @@ then replace the column for the covariate of interest with a column of ones.}
 Returns a list with components:
 \itemize{
 \item{\code{avgDiffProb}: }{vector with change in predicted
-probabilities for each outcome category.}
+probability for each outcome category.}
 }
 }
 \description{
@@ -40,8 +40,8 @@ effects are calculated marginally of the parameters and the remaining covariates
 \details{
 This function computes the average covariate effect for different
 outcomes of the OR1 model at a specified quantile. The covariate
-effects are computed marginally of the parameters and the remaining covariates,
-and utilizes draws from MCMC sampling.
+effects are computed, using the MCMC draws, marginally of the parameters
+and the remaining covariates.
 }
 \examples{
 set.seed(101)
@@ -55,7 +55,7 @@ B0 <- 10*diag(k)
 d0 <- array(0, dim = c(J-2, 1))
 D0 <- 0.25*diag(J - 2)
 modelOR1 <- quantregOR1(y = y, x = xMat1, b0, B0, d0, D0,
-burn = 10, mcmc = 40, p = 0.25, tune = 1, verbose = FALSE)
+burn = 10, mcmc = 40, p = 0.25, tune = 1, accutoff = 0.5, verbose = FALSE)
 xMat2 <- xMat1
 xMat2[,3] <- xMat2[,3] + 0.02
 res <- covEffectOR1(modelOR1, y, xMat1, xMat2, p = 0.25, verbose = TRUE)
@@ -63,10 +63,10 @@ res <- covEffectOR1(modelOR1, y, xMat1, xMat2, p = 0.25, verbose = TRUE)
 # Summary of Covariate Effect:
 
 #               Covariate Effect
-# Category_1          -0.0076
-# Category_2          -0.0014
-# Category_3          -0.0010
-# Category_4           0.0100
+# Category_1          -0.0072
+# Category_2          -0.0012
+# Category_3          -0.0009
+# Category_4           0.0093
 
 }
 \references{

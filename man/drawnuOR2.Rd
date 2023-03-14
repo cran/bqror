@@ -2,12 +2,12 @@
 % Please edit documentation in R/ORII.R
 \name{drawnuOR2}
 \alias{drawnuOR2}
-\title{Samples scale factor \eqn{\nu} for OR2 model}
+\title{Samples scale factor \eqn{\nu} in the OR2 model}
 \usage{
 drawnuOR2(z, x, beta, sigma, tau2, theta, lambda)
 }
 \arguments{
-\item{z}{Gibbs draw of continuous latent values, a column vector.}
+\item{z}{Gibbs draw of continuous latent values, a column vector of size \eqn{(n x 1)}.}
 
 \item{x}{covariate matrix of size \eqn{(n x k)} including a column of ones.}
 
@@ -19,14 +19,14 @@ drawnuOR2(z, x, beta, sigma, tau2, theta, lambda)
 
 \item{theta}{(1-2p)/(p(1-p)).}
 
-\item{lambda}{index parameter of GIG distribution which is equal to 0.5.}
+\item{lambda}{index parameter of the GIG distribution which is equal to 0.5.}
 }
 \value{
-column vector of \eqn{\nu} from a GIG distribution.
+\eqn{\nu}, a column vector of size \eqn{(n x 1)}, sampled from a GIG distribution.
 }
 \description{
 This function samples \eqn{\nu} from a generalized inverse Gaussian (GIG)
-distribution for OR2 model (ordinal quantile model with exactly 3 outcomes).
+distribution in the OR2 model (ordinal quantile model with exactly 3 outcomes).
 }
 \details{
 This function samples \eqn{\nu} from a GIG

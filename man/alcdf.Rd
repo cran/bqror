@@ -9,9 +9,9 @@ alcdf(x, mu, sigma, p)
 \arguments{
 \item{x}{scalar value.}
 
-\item{mu}{location parameter of AL distribution.}
+\item{mu}{location parameter of an AL distribution.}
 
-\item{sigma}{scale parameter of AL distribution.}
+\item{sigma}{scale parameter of an AL distribution.}
 
 \item{p}{quantile or skewness parameter, p in (0,1).}
 }

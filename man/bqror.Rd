@@ -5,20 +5,20 @@
 \alias{bqror}
 \title{Bayesian quantile regression for ordinal models}
 \description{
-Package provides functions for estimating Bayesian quantile regression with ordinal outcomes,
-computing the covariate effects, model comparison measures, and inefficiency factor. The generic
-ordinal model with 3 or more outcomes (labeled OR1 model) is estimated by a combination of Gibbs
-sampling and Metropolis-Hastings algorithm. Whereas an ordinal model with exactly 3 outcomes
-(labeled OR2 model) is estimated using Gibbs sampling only. For each model framework, there is a
-specific function for estimation. The summary output produces estimates for regression quantiles
-and two measures of model comparison — log of marginal likelihood and Deviance Information Criterion
-(DIC). The package also has specific functions for computing the covariate effects and other functions
-that aids either the estimation or inference in quantile ordinal models
+Package provides functions for estimation and inference in Bayesian quantile regression with
+ordinal outcomes. An ordinal model with 3 or more outcomes (labeled OR1 model) is estimated by
+a combination of Gibbs sampling and Metropolis-Hastings (MH) algorithm. Whereas an ordinal model
+with exactly 3 outcomes (labeled OR2 model) is estimated using a Gibbs sampling algorithm.
+The summary output presents the posterior mean, posterior standard deviation, 95\% credible
+intervals, and the inefficiency factors along with the two model comparison measures – logarithm of
+marginal likelihood and the deviance information criterion (DIC). The package also provides
+functions for computing the covariate effects and other functions that aids either the estimation
+or inference in quantile ordinal models.
 }
 \details{
 \deqn{Package: bqror}
 \deqn{Type: Package}
-\deqn{Version: 1.4.0}
+\deqn{Version: 1.5.0}
 \deqn{License: GPL (>=2)}
 
 Package \strong{bqror} provides the following functions:
@@ -27,22 +27,27 @@ Package \strong{bqror} provides the following functions:
 \item{For an ordinal model with three or more outcomes:}
 }
 \code{\link[bqror]{quantregOR1}}, \code{\link[bqror]{covEffectOR1}},
-\code{\link[bqror]{logMargLikeOR1}}, \code{\link[bqror]{devianceOR1}},
-\code{\link[bqror]{qrnegLogLikensumOR1}}, \code{\link[bqror]{infactorOR1}},
+\code{\link[bqror]{logMargLikeOR1}}, \code{\link[bqror]{dicOR1}},
+\code{\link[bqror]{qrnegLogLikensumOR1}}, \code{\link[bqror]{ineffactorOR1}},
 \code{\link[bqror]{qrminfundtheorem}}, \code{\link[bqror]{drawbetaOR1}},
 \code{\link[bqror]{drawwOR1}}, \code{\link[bqror]{drawlatentOR1}},
 \code{\link[bqror]{drawdeltaOR1}}, \code{\link[bqror]{alcdfstd}},
-\code{\link[bqror]{alcdf}}, \code{\link[bqror]{logLik.bqrorOR1}}
+\code{\link[bqror]{alcdf}}
 
 \itemize{
 \item{For an ordinal model with three outcomes:}
 }
 \code{\link[bqror]{quantregOR2}}, \code{\link[bqror]{covEffectOR2}},
-\code{\link[bqror]{logMargLikeOR2}}, \code{\link[bqror]{devianceOR2}},
-\code{\link[bqror]{qrnegLogLikeOR2}}, \code{\link[bqror]{infactorOR2}},
+\code{\link[bqror]{logMargLikeOR2}}, \code{\link[bqror]{dicOR2}},
+\code{\link[bqror]{qrnegLogLikeOR2}}, \code{\link[bqror]{ineffactorOR2}},
 \code{\link[bqror]{drawlatentOR2}}, \code{\link[bqror]{drawbetaOR2}},
 \code{\link[bqror]{drawsigmaOR2}}, \code{\link[bqror]{drawnuOR2}},
 \code{\link[bqror]{rndald}}
+
+\itemize{
+\item{Extractor Functions:}
+}
+\code{\link[bqror]{summary.bqrorOR1}}, \code{\link[bqror]{summary.bqrorOR2}}
 }
 \references{
 Rahman, M. A. (2016). “Bayesian

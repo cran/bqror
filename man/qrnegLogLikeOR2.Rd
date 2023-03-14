@@ -2,16 +2,16 @@
 % Please edit documentation in R/ORII.R
 \name{qrnegLogLikeOR2}
 \alias{qrnegLogLikeOR2}
-\title{Negative sum of log-likelihood for OR2 model}
+\title{Negative sum of log-likelihood in the OR2 model}
 \usage{
-qrnegLogLikeOR2(y, x, gammaCp, betaOne, sigmaOne, p)
+qrnegLogLikeOR2(y, x, gammacp, betaOne, sigmaOne, p)
 }
 \arguments{
 \item{y}{observed ordinal outcomes, column vector of size \eqn{(n x 1)}.}
 
 \item{x}{covariate matrix of size \eqn{(n x k)} including a column of ones with or without column names.}
 
-\item{gammaCp}{row vector of cutpoints including (-Inf, Inf).}
+\item{gammacp}{a row vector of cutpoints including (-Inf, Inf).}
 
 \item{betaOne}{a sample draw of \eqn{\beta} of size \eqn{(k x 1)}.}
 
@@ -23,11 +23,11 @@ qrnegLogLikeOR2(y, x, gammaCp, betaOne, sigmaOne, p)
 Returns the negative sum of log-likelihood.
 }
 \description{
-This function computes the negative sum of log-likelihood for OR2 model (ordinal quantile
+This function computes the negative sum of log-likelihood in the OR2 model (ordinal quantile
 model with exactly 3 outcomes).
 }
 \details{
-This function computes the negative sum of log-likelihood for OR2 model where the error is assumed to follow
+This function computes the negative sum of log-likelihood in the OR2 model where the error is assumed to follow
 an AL distribution.
 }
 \examples{
@@ -36,10 +36,10 @@ data("data25j3")
 y <- data25j3$y
 xMat <- data25j3$x
 p <- 0.25
-gammaCp <- c(-Inf, 0, 3, Inf)
+gammacp <- c(-Inf, 0, 3, Inf)
 betaOne <- c(1.810504, 1.850332, 6.18116)
 sigmaOne <- 0.9684741
-output <- qrnegLogLikeOR2(y, xMat, gammaCp, betaOne, sigmaOne, p)
+output <- qrnegLogLikeOR2(y, xMat, gammacp, betaOne, sigmaOne, p)
 
 # output
 #   902.4045

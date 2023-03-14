@@ -2,9 +2,9 @@
 % Please edit documentation in R/ORII.R
 \name{quantregOR2}
 \alias{quantregOR2}
-\title{Bayesian quantile regression for OR2 model}
+\title{Bayesian quantile regression for the OR2 model}
 \usage{
-quantregOR2(y, x, b0, B0 , n0, d0, gamma2, burn, mcmc, p, verbose)
+quantregOR2(y, x, b0, B0 , n0, d0, gamma2, burn, mcmc, p, accutoff, verbose)
 }
 \arguments{
 \item{y}{observed ordinal outcomes, column vector of size \eqn{(n x 1)}.}
@@ -15,9 +15,9 @@ quantregOR2(y, x, b0, B0 , n0, d0, gamma2, burn, mcmc, p, verbose)
 
 \item{B0}{prior covariance matrix for \eqn{\beta}.}
 
-\item{n0}{prior shape parameter of inverse-gamma distribution for \eqn{\sigma}, default is 5.}
+\item{n0}{prior shape parameter of the inverse-gamma distribution for \eqn{\sigma}, default is 5.}
 
-\item{d0}{prior scale parameter of inverse-gamma distribution for \eqn{\sigma}, default is 8.}
+\item{d0}{prior scale parameter of the inverse-gamma distribution for \eqn{\sigma}, default is 8.}
 
 \item{gamma2}{one and only cut-point other than 0, default is 3.}
 
@@ -26,6 +26,8 @@ quantregOR2(y, x, b0, B0 , n0, d0, gamma2, burn, mcmc, p, verbose)
 \item{mcmc}{number of MCMC iterations, post burn-in.}
 
 \item{p}{quantile level or skewness parameter, p in (0,1).}
+
+\item{accutoff}{autocorrelation cut-off to identify the number of lags and form batches to compute the inefficiency factor, default is 0.05.}
 
 \item{verbose}{whether to print the final output and provide additional information or not, default is TRUE.}
 }
@@ -37,23 +39,24 @@ Returns a bqrorOR2 object with components
 \item{\code{postMeansigma}: }{posterior mean of \eqn{\sigma} from the complete Gibbs run.}
 \item{\code{postStdbeta}: }{posterior standard deviation of \eqn{\beta} from the complete Gibbs run.}
  \item{\code{postStdsigma}: }{posterior standard deviation of \eqn{\sigma} from the complete Gibbs run.}
- \item{\code{allQuantDIC}: }{All quantities of DIC.}
- \item{\code{logMargLikelihood}: }{An estimate of log marginal likelihood.}
- \item{\code{betadraws}: }{\eqn{\beta} draws from the complete Gibbs run, size is \eqn{(k x nsim)}.}
- \item{\code{sigmadraws}: }{\eqn{\sigma} draws from the complete Gibbs run, size is \eqn{(1 x nsim)}.}
+ \item{\code{dicQuant}: }{all quantities of DIC.}
+ \item{\code{logMargLikelihood}: }{an estimate of log marginal likelihood.}
+ \item{\code{ineffactor}: }{inefficiency factor for each component of \eqn{\beta} and \eqn{\sigma}.}
+ \item{\code{betadraws}: }{dataframe of the \eqn{\beta} draws from the complete Gibbs run, size is \eqn{(k x nsim)}.}
+ \item{\code{sigmadraws}: }{dataframe of the \eqn{\sigma} draws from the complete Gibbs run, size is \eqn{(1 x nsim)}.}
 }
 }
 \description{
-This function estimates Bayesian quantile regression for OR2 model (ordinal quantile model with
-exactly 3 outcomes) and reports the posterior mean, posterior standard deviation, and 95
-percent posterior credible intervals of \eqn{(\beta, \sigma)}. The output also displays the log of
-marginal likelihood and DIC.
+This function estimates Bayesian quantile regression for the OR2 model (ordinal quantile model with
+exactly 3 outcomes) and reports the posterior mean, posterior standard deviation, 95
+percent posterior credible intervals and inefficiency factor of \eqn{(\beta, \sigma)}. The output also displays the log of
+marginal likelihood and the DIC.
 }
 \details{
-This function estimates Bayesian quantile regression for
+This function estimates Bayesian quantile regression for the
 OR2 model using a Gibbs sampling procedure. The function takes the prior distributions
 and other information as inputs and then iteratively samples \eqn{\beta}, \eqn{\sigma},
-latent weight nu, and latent variable z from their respective
+latent weight \eqn{\nu}, and latent variable z from their respective
 conditional distributions.
 
 The function also provides the logarithm of marginal likelihood and the DIC. These
@@ -72,17 +75,15 @@ B0 <- 10*diag(k)
 n0 <- 5
 d0 <- 8
 output <- quantregOR2(y = y, x = xMat, b0, B0, n0, d0, gamma2 = 3,
-burn = 10, mcmc = 40, p = 0.25, verbose = TRUE)
+burn = 10, mcmc = 40, p = 0.25, accutoff = 0.5, verbose = TRUE)
 
-# Number of burn-in draws : 10
-# Number of retained draws : 40
 # Summary of MCMC draws :
 
-#            Post Mean Post Std Upper Credible Lower Credible
-#    beta_1   -4.5185   0.9837        -3.1726        -6.2000
-#    beta_2    6.1825   0.9166         7.6179         4.8619
-#    beta_3    5.2984   0.9653         6.9954         4.1619
-#    sigma     1.0879   0.2073         1.5670         0.8436
+#            Post Mean Post Std Upper Credible Lower Credible Inef Factor
+#    beta_1   -4.5185   0.9837        -3.1726        -6.2000     1.5686
+#    beta_2    6.1825   0.9166         7.6179         4.8619     1.5240
+#    beta_3    5.2984   0.9653         6.9954         4.1619     1.4807
+#    sigma     1.0879   0.2073         1.5670         0.8436     2.4228
 
 # Log of Marginal Likelihood: -404.57
 # DIC: 801.82
@@ -92,17 +93,6 @@ burn = 10, mcmc = 40, p = 0.25, verbose = TRUE)
 Rahman, M. A. (2016). “Bayesian
 Quantile Regression for Ordinal Models.”
 Bayesian Analysis, 11(1): 1-24.  DOI: 10.1214/15-BA939
-
-Yu, K., and Moyeed, R. A. (2001). “Bayesian Quantile Regression.” Statistics and
-Probability Letters, 54(4): 437–447. DOI: 10.12691/ajams-6-6-4
-
-Casella, G., and George, E. I. (1992). “Explaining the Gibbs Sampler.”
-The American Statistician, 46(3): 167-174. DOI: 10.1080/00031305.1992.10475878
-
-Geman, S., and Geman, D. (1984). “Stochastic Relaxation,
-Gibbs Distributions, and the Bayesian Restoration of Images.”
-IEEE Transactions an Pattern Analysis and Machine Intelligence,
-6(6): 721-741. DOI: 10.1109/TPAMI.1984.4767596
 }
 \seealso{
 \link[stats]{rnorm}, \link[stats]{qnorm},

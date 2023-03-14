@@ -2,9 +2,9 @@
 % Please edit documentation in R/ORII.R
 \name{drawlatentOR2}
 \alias{drawlatentOR2}
-\title{Samples latent variable z for OR2 model}
+\title{Samples latent variable z in the OR2 model}
 \usage{
-drawlatentOR2(y, x, beta, sigma, nu, theta, tau2, gammaCp)
+drawlatentOR2(y, x, beta, sigma, nu, theta, tau2, gammacp)
 }
 \arguments{
 \item{y}{observed ordinal outcomes, column vector of size \eqn{(n x 1)}.}
@@ -21,14 +21,14 @@ drawlatentOR2(y, x, beta, sigma, nu, theta, tau2, gammaCp)
 
 \item{tau2}{2/(p(1-p)).}
 
-\item{gammaCp}{row vector of cut-points including -Inf and Inf.}
+\item{gammacp}{row vector of cut-points including -Inf and Inf.}
 }
 \value{
-column vector of latent variable z from a univariate truncated distribution.
+latent variable z of size \eqn{(n x 1)} from a univariate truncated distribution.
 }
 \description{
 This function samples the latent variable z from a univariate truncated
-normal distribution for OR2 model (ordinal quantile model with exactly 3 outcomes).
+normal distribution in the OR2 model (ordinal quantile model with exactly 3 outcomes).
 }
 \details{
 This function samples the latent variable z from a univariate truncated normal
@@ -45,9 +45,9 @@ n <- dim(xMat)[1]
 nu <- array(5 * rep(1,n), dim = c(n, 1))
 theta <- 2.6667
 tau2 <- 10.6667
-gammaCp <- c(-Inf, 0, 3, Inf)
+gammacp <- c(-Inf, 0, 3, Inf)
 output <- drawlatentOR2(y, xMat, beta, sigma, nu,
-theta, tau2, gammaCp)
+theta, tau2, gammacp)
 
 # output
 #   1.257096 10.46297 4.138694
@@ -60,16 +60,8 @@ Albert, J., and Chib, S. (1993). “Bayesian Analysis of Binary and Polychotomou
 Response Data.” Journal of the American Statistical
 Association, 88(422): 669–679. DOI: 10.1080/01621459.1993.10476321
 
-Casella, G., and George, E. I. (1992). “Explaining the Gibbs Sampler.”
-The American Statistician, 46(3): 167-174. DOI: 10.1080/00031305.1992.10475878
-
-Geman, S., and Geman, D. (1984). “Stochastic Relaxation,
-Gibbs Distributions, and the Bayesian Restoration of Images.”
-IEEE Transactions an Pattern Analysis and Machine Intelligence,
-6(6): 721-741. DOI: 10.1109/TPAMI.1984.4767596
-
-Robert, C. P. (1995). “Simulation of truncated normal variables.” Statistics and
-Computing, 5: 121–125. DOI: 10.1007/BF00143942
+Devroye, L. (2014). “Random variate generation for the generalized inverse Gaussian
+distribution.” Statistics and Computing, 24(2): 239–246. DOI: 10.1007/s11222-012-9367-z
 }
 \seealso{
 Gibbs sampling, truncated normal distribution,

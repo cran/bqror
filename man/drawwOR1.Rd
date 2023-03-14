@@ -2,7 +2,7 @@
 % Please edit documentation in R/ORI.R
 \name{drawwOR1}
 \alias{drawwOR1}
-\title{Samples latent weight w for OR1 model}
+\title{Samples latent weight w in the OR1 model}
 \usage{
 drawwOR1(z, x, beta, tau2, theta, lambda)
 }
@@ -20,11 +20,11 @@ drawwOR1(z, x, beta, tau2, theta, lambda)
 \item{lambda}{index parameter of GIG distribution which is equal to 0.5}
 }
 \value{
-column vector of w from a GIG distribution.
+w, a column vector of size \eqn{(n x 1)}, sampled from a GIG distribution.
 }
 \description{
 This function samples latent weight w from a generalized
-inverse-Gaussian distribution (GIG) for OR1 model (ordinal quantile model with 3 or more
+inverse-Gaussian distribution (GIG) in the OR1 model (ordinal quantile model with 3 or more
 outcomes).
 }
 \details{
@@ -76,17 +76,12 @@ output <- drawwOR1(z, x, beta, tau2, theta, lambda)
 
 }
 \references{
-Albert, J., and Chib, S. (1993). “Bayesian Analysis of Binary and Polychotomous
-Response Data.” Journal of the American Statistical
-Association, 88(422): 669–679. DOI: 10.1080/01621459.1993.10476321
+Rahman, M. A. (2016). “Bayesian
+Quantile Regression for Ordinal Models.”
+Bayesian Analysis, 11(1): 1-24.  DOI: 10.1214/15-BA939
 
-Casella, G., and George, E. I. (1992). “Explaining the Gibbs Sampler.”
-The American Statistician, 46(3): 167-174. DOI: 10.1080/00031305.1992.10475878
-
-Geman, S., and Geman, D. (1984). “Stochastic Relaxation,
-Gibbs Distributions, and the Bayesian Restoration of Images.”
-IEEE Transactions an Pattern Analysis and Machine Intelligence,
-6(6): 721-741. DOI: 10.1109/TPAMI.1984.4767596
+Devroye, L. (2014). “Random variate generation for the generalized inverse Gaussian
+distribution.” Statistics and Computing, 24(2): 239–246. DOI: 10.1007/s11222-012-9367-z
 }
 \seealso{
 GIGrvg, Gibbs sampling, \link[GIGrvg]{rgig}

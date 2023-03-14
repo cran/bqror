@@ -22,7 +22,7 @@ distribution at quantile p.
 }
 \details{
 Generates a vector of random numbers from an AL distribution
-as a mixture of normal–exponential distribution.
+as a mixture of normal–exponential distributions.
 }
 \examples{
 set.seed(101)

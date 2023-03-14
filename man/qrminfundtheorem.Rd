@@ -2,7 +2,7 @@
 % Please edit documentation in R/ORI.R
 \name{qrminfundtheorem}
 \alias{qrminfundtheorem}
-\title{Minimizes the negative of log-likelihood for OR1 model}
+\title{Minimizes the negative of log-likelihood in the OR1 model}
 \usage{
 qrminfundtheorem(deltaIn, y, x, beta, cri0, cri1, stepsize, maxiter, h, dh, sw, p)
 }
@@ -45,8 +45,8 @@ for the i-th unit.}
 }
 }
 \description{
-This function minimizes the negative of log-likelihood for OR1 model
-with respect to cut-points \eqn{\delta} using the
+This function minimizes the negative of log-likelihood in the OR1 model
+with respect to the cut-points \eqn{\delta} using the
 fundamental theorem of calculus.
 }
 \details{
@@ -115,11 +115,6 @@ output <- qrminfundtheorem(deltaIn, y, xMat, beta, cri0, cri1, stepsize, maxiter
 #   -338.21243  -41.10775
 #   -41.10775 -106.32758
 
-}
-\references{
-Rahman, M. A. (2016). “Bayesian
-Quantile Regression for Ordinal Models.”
-Bayesian Analysis, 11(1): 1-24. DOI: 10.1214/15-BA939
 }
 \seealso{
 differential calculus, functional maximization,

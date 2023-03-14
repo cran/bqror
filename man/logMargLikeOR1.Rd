@@ -2,7 +2,7 @@
 % Please edit documentation in R/ORI.R
 \name{logMargLikeOR1}
 \alias{logMargLikeOR1}
-\title{Logarithm marginal likelihood for OR1 model}
+\title{Marginal likelihood in the OR1 model}
 \usage{
 logMargLikeOR1(y, x, b0, B0, d0, D0, postMeanbeta,
 postMeandelta, betadraws, deltadraws, tune, Dhat, p, verbose)
@@ -24,11 +24,11 @@ postMeandelta, betadraws, deltadraws, tune, Dhat, p, verbose)
 
 \item{postMeandelta}{posterior mean of \eqn{\delta} from the complete MCMC run.}
 
-\item{betadraws}{a storage matrix with all sampled values for \eqn{\beta} from the complete MCMC run.}
+\item{betadraws}{a dataframe with all the sampled values for \eqn{\beta} from the complete MCMC run.}
 
-\item{deltadraws}{a storage matrix with all sampled values for \eqn{\delta} from the complete MCMC run.}
+\item{deltadraws}{a dataframe with all the sampled values for \eqn{\delta} from the complete MCMC run.}
 
-\item{tune}{tuning parameter to adjust MH acceptance rate.}
+\item{tune}{tuning parameter to adjust the MH acceptance rate.}
 
 \item{Dhat}{negative inverse Hessian from the maximization of log-likelihood.}
 
@@ -40,12 +40,12 @@ postMeandelta, betadraws, deltadraws, tune, Dhat, p, verbose)
 Returns an estimate of log marginal likelihood
 }
 \description{
-This function computes the logarithm of marginal likelihood for OR1 model (ordinal
-quantile model with 3 or more outcomes) using MCMC output from the
+This function computes the logarithm of marginal likelihood in the OR1 model (ordinal
+quantile model with 3 or more outcomes) using the MCMC outputs from the
 complete and reduced runs.
 }
 \details{
-This function computes the logarithm of marginal likelihood for OR1 model using MCMC outputs from complete and
+This function computes the logarithm of marginal likelihood in the OR1 model using the MCMC outputs from complete and
 reduced runs.
 }
 \examples{
@@ -60,27 +60,17 @@ B0 <- 10*diag(k)
 d0 <- array(0, dim = c(J-2, 1))
 D0 <- 0.25*diag(J - 2)
 output <- quantregOR1(y = y, x = xMat, b0, B0, d0, D0,
-burn = 10, mcmc = 40, p = 0.25, tune = 1, verbose = FALSE)
+burn = 10, mcmc = 40, p = 0.25, tune = 1, accutoff = 0.5, verbose = FALSE)
 # output$logMargLike
 #   -554.61
 
 }
 \references{
-Rahman, M. A. (2016). “Bayesian
-Quantile Regression for Ordinal Models.”
-Bayesian Analysis, 11(1): 1-24. DOI: 10.1214/15-BA939
-
-Chib, S., and Greenberg, E. (1995). “Understanding the Metropolis-Hastings
-Algorithm.” The American Statistician, 49(4): 327-335. DOI: 10.2307/2684568
-
 Chib, S. (1995). “Marginal likelihood from the Gibbs output.” Journal of the American
 Statistical Association, 90(432):1313–1321, 1995. DOI: 10.1080/01621459.1995.10476635
 
 Chib, S., and Jeliazkov, I. (2001). “Marginal likelihood from the Metropolis-Hastings output.” Journal of the
 American Statistical Association, 96(453):270–281, 2001. DOI: 10.1198/016214501750332848
-
-Greenberg, E. (2012). “Introduction to Bayesian Econometrics.” Cambridge University
-Press, Cambridge. DOI: 10.1017/CBO9780511808920
 }
 \seealso{
 \link[NPflow]{mvnpdf}, \link[stats]{dnorm},

@@ -3,7 +3,7 @@
 \docType{data}
 \name{data50j3}
 \alias{data50j3}
-\title{Simulated data from OR2 model for \eqn{p = 0.5} (i.e., 50th quantile)}
+\title{Simulated data from the OR2 model for \eqn{p = 0.5} (i.e., 50th quantile)}
 \usage{
 data(data50j3)
 }
@@ -15,18 +15,18 @@ Returns a list with components
 }
 }
 \description{
-Simulated data from OR2 model for \eqn{p = 0.5} (i.e., 50th quantile)
+Simulated data from the OR2 model for \eqn{p = 0.5} (i.e., 50th quantile)
 }
 \details{
 This data contains 500 observations generated from a quantile
 ordinal model with 3 outcomes at the 50th quantile (i.e., \eqn{p = 0.5}).
 The model specifics for generating the data are as follows: \eqn{\beta = (-4, 6, 5)}, X ~ Unif(0, 1), and
 \eqn{\epsilon} ~ AL(\eqn{0, \sigma = 1, p = 0.5}). The cut-points \eqn{(0, 3)} are used to classify the
-continuous values of the dependent variable into 3 categories, which forms the ordinal outcomes.
+continuous values of the dependent variable into 3 categories, which form the ordinal outcomes.
 }
 \references{
-Kozumi, H., and Kobayashi, G. (2011). “Gibbs Sampling Methods for Bayesian Quantile Regression.”
- Journal of Statistical Computation and Simulation, 81(11), 1565–1578. DOI: 10.1080/00949655.2010.496117
+Rahman, M. A. (2016). “Bayesian Quantile Regression for Ordinal Models.”
+Bayesian Analysis, 11(1): 1-24. DOI: 10.1214/15-BA939
 
 Yu, K., and Zhang, J. (2005). “A Three-Parameter Asymmetric
 Laplace Distribution.” Communications in Statistics - Theory and Methods, 34(9-10), 1867-1879. DOI: 10.1080/03610920500199018

@@ -9,7 +9,7 @@ test_that("Testing for quantregORII", {
   n0 <- 5
   d0 <- 8
   output <- quantregOR2(y = y, x = xMat, b0, B0, n0, d0, gamma2 = 3,
-  burn = 10, mcmc = 40, p = 0.25, verbose = FALSE)
+  burn = 10, mcmc = 40, p = 0.25, accutoff = 0.5, verbose = FALSE)
   expect_equal(round(output$logMargLike), -410)
 })
 
@@ -40,7 +40,7 @@ test_that("Testing for drawsigmaOR2", {
   expect_equal(round(output$sigma), 4)
 })
 
-test_that("Testing for devianceOR2", {
+test_that("Testing for dicOR2", {
   set.seed(101)
   data("data25j3")
   y <- data25j3$y
@@ -51,21 +51,20 @@ test_that("Testing for devianceOR2", {
   n0 <- 5
   d0 <- 8
   output <- quantregOR2(y = y, x = xMat, b0, B0, n0, d0, gamma2 = 3,
-  burn = 10, mcmc = 40, p = 0.25, verbose = FALSE)
-  gammaCp <- c(-Inf, 0, 3, Inf)
+  burn = 10, mcmc = 40, p = 0.25, accutoff = 0.5, verbose = FALSE)
+  gammacp <- c(-Inf, 0, 3, Inf)
   betadraws <- output$betadraws
   sigmadraws <- output$sigmadraws
-  gammaCp <- c(-Inf, 0, 3, Inf)
   postMeanbeta <- output$postMeanbeta
   postMeansigma <- output$postMeansigma
   mcmc = 40
   burn <- 10
   nsim <- burn + mcmc
-  deviance <- devianceOR2(y, xMat, betadraws, sigmadraws, gammaCp,
+  dic <- dicOR2(y, xMat, betadraws, sigmadraws, gammacp,
   postMeanbeta, postMeansigma, burn, mcmc, p = 0.25)
-  expect_equal(round(deviance$DIC), 799)
-  expect_equal(round(deviance$pd), 3)
-  expect_equal(round(deviance$devpostmean), 792)
+  expect_equal(round(dic$DIC), 799)
+  expect_equal(round(dic$pd), 3)
+  expect_equal(round(dic$dev), 792)
 })
 
 test_that("Testing for qrnegLogLikeOR2", {
@@ -74,10 +73,10 @@ test_that("Testing for qrnegLogLikeOR2", {
   y <- data25j3$y
   xMat <- data25j3$x
   p <- 0.25
-  gammaCp <- c(-Inf, 0, 3, Inf)
+  gammacp <- c(-Inf, 0, 3, Inf)
   betaOne <- c(1.810504, 1.850332, 6.18116)
   sigmaOne <- 0.9684741
-  expect_equal(round(qrnegLogLikeOR2(y, xMat, gammaCp, betaOne, sigmaOne, p),2), 902.40)
+  expect_equal(round(qrnegLogLikeOR2(y, xMat, gammacp, betaOne, sigmaOne, p),2), 902.40)
 })
 
 test_that("Testing for rndald", {

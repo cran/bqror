@@ -1,5 +1,5 @@
 #' @name  data25j3
-#' @title Simulated data from OR2 model for \eqn{p = 0.25} (i.e., 25th quantile)
+#' @title Simulated data from the OR2 model for \eqn{p = 0.25} (i.e., 25th quantile)
 #'
 #' @details
 #'
@@ -7,7 +7,7 @@
 #' ordinal model with 3 outcomes at the 25th quantile (i.e., \eqn{p = 0.25}).
 #' The model specifics for generating the data are as follows: \eqn{\beta = (-4, 6, 5)}, X ~ Unif(0, 1), and
 #' \eqn{\epsilon} ~ AL(\eqn{0, \sigma = 1, p = 0.25}). The cut-points \eqn{(0, 3)} are used to classify the
-#' continuous values of the dependent variable into 3 categories, which forms the ordinal outcomes.
+#' continuous values of the dependent variable into 3 categories, which form the ordinal outcomes.
 #'
 #' @docType data
 #'
@@ -19,8 +19,8 @@
 #' \item{\code{y}: }{a column vector of ordinal outcomes.}
 #' }
 #'
-#' @references Kozumi, H., and Kobayashi, G. (2011). “Gibbs Sampling Methods for Bayesian Quantile Regression.”
-#'  Journal of Statistical Computation and Simulation, 81(11), 1565–1578. DOI: 10.1080/00949655.2010.496117
+#' @references Rahman, M. A. (2016). “Bayesian Quantile Regression for Ordinal Models.”
+#' Bayesian Analysis, 11(1): 1-24. DOI: 10.1214/15-BA939
 #'
 #' Yu, K., and Zhang, J. (2005). “A Three-Parameter Asymmetric
 #' Laplace Distribution.” Communications in Statistics - Theory and Methods, 34(9-10), 1867-1879. DOI: 10.1080/03610920500199018
@@ -32,7 +32,7 @@
 NULL
 
 #' @name  data50j3
-#' @title Simulated data from OR2 model for \eqn{p = 0.5} (i.e., 50th quantile)
+#' @title Simulated data from the OR2 model for \eqn{p = 0.5} (i.e., 50th quantile)
 #'
 #' @details
 #'
@@ -40,7 +40,7 @@ NULL
 #' ordinal model with 3 outcomes at the 50th quantile (i.e., \eqn{p = 0.5}).
 #' The model specifics for generating the data are as follows: \eqn{\beta = (-4, 6, 5)}, X ~ Unif(0, 1), and
 #' \eqn{\epsilon} ~ AL(\eqn{0, \sigma = 1, p = 0.5}). The cut-points \eqn{(0, 3)} are used to classify the
-#' continuous values of the dependent variable into 3 categories, which forms the ordinal outcomes.
+#' continuous values of the dependent variable into 3 categories, which form the ordinal outcomes.
 #'
 #' @docType data
 #' @usage data(data50j3)
@@ -51,8 +51,8 @@ NULL
 #' \item{\code{y}: }{a column vector of ordinal outcomes.}
 #' }
 #'
-#' @references Kozumi, H., and Kobayashi, G. (2011). “Gibbs Sampling Methods for Bayesian Quantile Regression.”
-#'  Journal of Statistical Computation and Simulation, 81(11), 1565–1578. DOI: 10.1080/00949655.2010.496117
+#' @references Rahman, M. A. (2016). “Bayesian Quantile Regression for Ordinal Models.”
+#' Bayesian Analysis, 11(1): 1-24. DOI: 10.1214/15-BA939
 #'
 #' Yu, K., and Zhang, J. (2005). “A Three-Parameter Asymmetric
 #' Laplace Distribution.” Communications in Statistics - Theory and Methods, 34(9-10), 1867-1879. DOI: 10.1080/03610920500199018
@@ -64,7 +64,7 @@ NULL
 NULL
 
 #' @name  data75j3
-#' @title Simulated data from OR2 model for \eqn{p = 0.75} (i.e., 75th quantile)
+#' @title Simulated data from the OR2 model for \eqn{p = 0.75} (i.e., 75th quantile)
 #'
 #' @details
 #'
@@ -72,7 +72,7 @@ NULL
 #' ordinal model with 3 outcomes at the 75th quantile (i.e., \eqn{p = 0.75}).
 #' The model specifics for generating the data are as follows: \eqn{\beta = (-4, 6, 5)}, X ~ Unif(0, 1), and
 #' \eqn{\epsilon} ~ AL(\eqn{0, \sigma = 1, p = 0.75}). The cut-points \eqn{(0, 3)} are used to classify the
-#' continuous values of the dependent variable into 3 categories, which forms the ordinal outcomes.
+#' continuous values of the dependent variable into 3 categories, which form the ordinal outcomes.
 #'
 #' @docType data
 #' @usage data(data75j3)
@@ -83,8 +83,8 @@ NULL
 #' \item{\code{y}: }{a column vector of ordinal outcomes.}
 #' }
 #'
-#' @references Kozumi, H., and Kobayashi, G. (2011). “Gibbs Sampling Methods for Bayesian Quantile Regression.”
-#'  Journal of Statistical Computation and Simulation, 81(11), 1565–1578. DOI: 10.1080/00949655.2010.496117
+#' @references Rahman, M. A. (2016). “Bayesian Quantile Regression for Ordinal Models.”
+#' Bayesian Analysis, 11(1): 1-24. DOI: 10.1214/15-BA939
 #'
 #' Yu, K., and Zhang, J. (2005). “A Three-Parameter Asymmetric
 #' Laplace Distribution.” Communications in Statistics - Theory and Methods, 34(9-10), 1867-1879. DOI: 10.1080/03610920500199018
@@ -96,7 +96,7 @@ NULL
 NULL
 
 #' @name  data25j4
-#' @title Simulated data from OR1 model for \eqn{p = 0.25} (i.e., 25th quantile)
+#' @title Simulated data from the OR1 model for \eqn{p = 0.25} (i.e., 25th quantile)
 #'
 #' @details
 #'
@@ -104,7 +104,7 @@ NULL
 #' ordinal model with 4 outcomes at the 25th quantile (i.e., \eqn{p = 0.25}).
 #' The model specifics for generating the data are as follows: \eqn{\beta = (-4, 5, 6)}, X ~ Unif(0, 1), and
 #' \eqn{\epsilon} ~ AL(\eqn{0, \sigma = 1, p = 0.25}). The cut-points \eqn{(0, 2, 4)} are used to classify the
-#' continuous values of the dependent variable into 4 categories, which forms the ordinal outcomes.
+#' continuous values of the dependent variable into 4 categories, which form the ordinal outcomes.
 #'
 #' @docType data
 #' @usage data(data25j4)
@@ -115,8 +115,8 @@ NULL
 #' \item{\code{y}: }{a column vector of ordinal outcomes.}
 #' }
 #'
-#' @references Kozumi, H., and Kobayashi, G. (2011). “Gibbs Sampling Methods for Bayesian Quantile Regression.”
-#'  Journal of Statistical Computation and Simulation, 81(11), 1565–1578. DOI: 10.1080/00949655.2010.496117
+#' @references Rahman, M. A. (2016). “Bayesian Quantile Regression for Ordinal Models.”
+#' Bayesian Analysis, 11(1): 1-24. DOI: 10.1214/15-BA939
 #'
 #' Yu, K., and Zhang, J. (2005). “A Three-Parameter Asymmetric
 #' Laplace Distribution.” Communications in Statistics - Theory and Methods, 34(9-10), 1867-1879. DOI: 10.1080/03610920500199018
@@ -128,7 +128,7 @@ NULL
 NULL
 
 #' @name  data50j4
-#' @title Simulated data from OR1 model for \eqn{p = 0.5} (i.e., 50th quantile)
+#' @title Simulated data from the OR1 model for \eqn{p = 0.5} (i.e., 50th quantile)
 #'
 #' @details
 #'
@@ -136,7 +136,7 @@ NULL
 #' ordinal model with 4 outcomes at the 50th quantile (i.e., \eqn{p = 0.5}).
 #' The model specifics for generating the data are as follows: \eqn{\beta = (-4, 5, 6)}, X ~ Unif(0, 1), and
 #' \eqn{\epsilon} ~ AL(\eqn{0, \sigma = 1, p = 0.5}). The cut-points \eqn{(0, 2, 4)} are used to classify the
-#' continuous values of the dependent variable into 4 categories, which forms the ordinal outcomes.
+#' continuous values of the dependent variable into 4 categories, which form the ordinal outcomes.
 #'
 #' @docType data
 #' @usage data(data50j4)
@@ -147,8 +147,8 @@ NULL
 #' \item{\code{y}: }{a column vector of ordinal outcomes.}
 #' }
 #'
-#' @references Kozumi, H., and Kobayashi, G. (2011). “Gibbs Sampling Methods for Bayesian Quantile Regression.”
-#'  Journal of Statistical Computation and Simulation, 81(11), 1565–1578. DOI: 10.1080/00949655.2010.496117
+#' @references Rahman, M. A. (2016). “Bayesian Quantile Regression for Ordinal Models.”
+#' Bayesian Analysis, 11(1): 1-24. DOI: 10.1214/15-BA939
 #'
 #'  Yu, K., and Zhang, J. (2005). “A Three-Parameter Asymmetric
 #'  Laplace Distribution.” Communications in Statistics - Theory and Methods, 34(9-10), 1867-1879. DOI: 10.1080/03610920500199018
@@ -160,7 +160,7 @@ NULL
 NULL
 
 #' @name  data75j4
-#' @title Simulated data from OR1 model for \eqn{p = 0.75} (i.e., 75th quantile)
+#' @title Simulated data from the OR1 model for \eqn{p = 0.75} (i.e., 75th quantile)
 #'
 #' @details
 #'
@@ -168,7 +168,7 @@ NULL
 #' ordinal model with 4 outcomes at the 75th quantile (i.e., \eqn{p = 0.75}).
 #' The model specifics for generating the data are as follows: \eqn{\beta = (-4, 5, 6)}, X ~ Unif(0, 1), and
 #' \eqn{\epsilon} ~ AL(\eqn{0, \sigma = 1, p = 0.75}). The cut-points \eqn{(0, 2, 4)} are used to classify the
-#' continuous values of the dependent variable into 4 categories, which forms the ordinal outcomes.
+#' continuous values of the dependent variable into 4 categories, which form the ordinal outcomes.
 #'
 #' @docType data
 #' @usage data(data75j4)
@@ -179,8 +179,8 @@ NULL
 #' \item{\code{y}: }{a column vector of ordinal outcomes.}
 #' }
 #'
-#' @references Kozumi, H., and Kobayashi, G. (2011). “Gibbs Sampling Methods for Bayesian Quantile Regression.”
-#'  Journal of Statistical Computation and Simulation, 81(11), 1565–1578. DOI: 10.1080/00949655.2010.496117
+#' @references Rahman, M. A. (2016). “Bayesian Quantile Regression for Ordinal Models.”
+#' Bayesian Analysis, 11(1): 1-24. DOI: 10.1214/15-BA939
 #'
 #' Yu, K., and Zhang, J. (2005). “A Three-Parameter Asymmetric
 #' Laplace Distribution.” Communications in Statistics - Theory and Methods, 34(9-10), 1867-1879. DOI: 10.1080/03610920500199018
@@ -200,8 +200,8 @@ NULL
 #' This data is taken from the National Longitudinal Study of Youth (NLSY, 1979)
 #' survey and corresponds to 3,923 individuals. The objective is to study the
 #' effect of family background, individual, and school level variables on the
-#' quantiles of educational attainment. The dependent variable i.e. the educational
-#' degree, has four categories given as less than high school, high school degree,
+#' quantiles of educational attainment conditional on the covariates. The dependent variable
+#' i.e. the educational degree, has four categories given as less than high school, high school degree,
 #' some college or associate's degree, and college or graduate degree. The independent
 #' variables include intercept, square root of family income, mother's education,
 #' father's education, mother's working status, gender, race, and whether the youth
@@ -271,7 +271,7 @@ NULL
 #' @return Returns data with components
 #' \itemize{
 #' \item{\code{Intercept}: }{Column of ones.}
-#' \item{\code{AgeCat}: }{Indicator for age category.}
+#' \item{\code{EmpCat}: }{Indicator for employment status.}
 #' \item{\code{IncomeCat}: }{Indicator for household income > $75,000.}
 #' \item{\code{Bachelors}: }{Individual's highest degree is Bachelors.}
 #' \item{\code{Post.Bachelors}: }{Indicator for highest degree is Masters, Professional or Doctorate.}
@@ -285,10 +285,6 @@ NULL
 #' @references Rahman, M. A. (2016). “Bayesian
 #' Quantile Regression for Ordinal Models.”
 #' Bayesian Analysis, 11(1): 1-24. DOI: 10.1214/15-BA939
-#'
-#' Jeliazkov, I., Graves, J., and Kutzbach, M. (2008). “Fitting and Comparison of Models
-#' for Multivariate Ordinal Outcomes.” Advances in Econometrics: Bayesian Econometrics,
-#' 23: 115–156. DOI: 10.1016/S0731-9053(08)23004-5
 #'
 #' @keywords datasets
 #'

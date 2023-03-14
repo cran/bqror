@@ -2,9 +2,9 @@
 % Please edit documentation in R/ORI.R
 \name{quantregOR1}
 \alias{quantregOR1}
-\title{Bayesian quantile regression for OR1 model}
+\title{Bayesian quantile regression for the OR1 model}
 \usage{
-quantregOR1(y, x, b0, B0, d0, D0, burn, mcmc, p, tune, verbose)
+quantregOR1(y, x, b0, B0, d0, D0, burn, mcmc, p, tune, accutoff, verbose)
 }
 \arguments{
 \item{y}{observed ordinal outcomes, column vector of size \eqn{(n x 1)}.}
@@ -27,6 +27,8 @@ quantregOR1(y, x, b0, B0, d0, D0, burn, mcmc, p, tune, verbose)
 
 \item{tune}{tuning parameter to adjust MH acceptance rate, default is 0.1.}
 
+\item{accutoff}{autocorrelation cut-off to identify the number of lags and form batches to compute the inefficiency factor, default is 0.05.}
+
 \item{verbose}{whether to print the final output and provide additional information or not, default is TRUE.}
 }
 \value{
@@ -37,23 +39,24 @@ Returns a bqrorOR1 object with components:
  \item{\code{postMeandelta}: }{posterior mean of \eqn{\delta} from the complete MCMC run.}
  \item{\code{postStdbeta}: }{posterior standard deviation of \eqn{\beta} from the complete MCMC run.}
  \item{\code{postStddelta}: }{posterior standard deviation of \eqn{\delta} from the complete MCMC run.}
- \item{\code{gamma}: }{vector of cut points including (Inf, -Inf).}
- \item{\code{catt}}
- \item{\code{acceptancerate}: }{Acceptance rate of the proposed draws of \eqn{\delta}.}
- \item{\code{allQuantDIC}: }{All quantities of DIC.}
- \item{\code{logMargLike}: }{An estimate of log marginal likelihood.}
- \item{\code{betadraws}: }{\eqn{\beta} draws from the complete MCMC run, size is \eqn{(k x nsim)}.}
- \item{\code{deltadraws}: }{\eqn{\delta} draws from the complete MCMC run, size is \eqn{((J-2) x nsim)}.}
+ \item{\code{gammacp}: }{vector of cut points including (Inf, -Inf).}
+ \item{\code{catprob}: }{probability for each category, calculated at the posterior mean and the mean of x.}
+ \item{\code{acceptancerate}: }{acceptance rate of the proposed draws of \eqn{\delta}.}
+ \item{\code{dicQuant}: }{all quantities of DIC.}
+ \item{\code{logMargLike}: }{an estimate of the log marginal likelihood.}
+ \item{\code{ineffactor}: }{inefficiency factor for each component of \eqn{\beta} and \eqn{\delta}.}
+ \item{\code{betadraws}: }{dataframe of the \eqn{\beta} draws from the complete MCMC run, size is \eqn{(k x nsim)}.}
+ \item{\code{deltadraws}: }{dataframe of the \eqn{\delta} draws from the complete MCMC run, size is \eqn{((J-2) x nsim)}.}
 }
 }
 \description{
-This function estimates Bayesian quantile regression for OR1 model (ordinal quantile model with 3
-or more outcomes) and reports the posterior mean, posterior standard deviation, and 95
-percent posterior credible intervals of \eqn{(\beta, \delta)}. The output also displays the log of
-marginal likelihood and DIC.
+This function estimates Bayesian quantile regression for the OR1 model (ordinal quantile model with 3
+or more outcomes) and reports the posterior mean, posterior standard deviation, 95
+percent posterior credible intervals, and inefficiency factor of \eqn{(\beta, \delta)}. The output
+also displays the log of marginal likelihood and the DIC.
 }
 \details{
-This function estimates Bayesian quantile regression for
+This function estimates Bayesian quantile regression for the
 OR1 model using a combination of Gibbs sampling
 and Metropolis-Hastings algorithm. The function takes the prior distributions and
 other information as inputs and then iteratively samples \eqn{\beta}, latent weight w,
@@ -77,20 +80,17 @@ better model fit.
  d0 <- array(0, dim = c(J-2, 1))
  D0 <- 0.25*diag(J - 2)
  output <- quantregOR1(y = y, x = xMat, b0 ,B0, d0, D0,
- burn = 10, mcmc = 40, p = 0.25, tune = 1, verbose = TRUE)
+ burn = 10, mcmc = 40, p = 0.25, tune = 1, accutoff = 0.5, verbose = TRUE)
 
-
- # Number of burn-in draws: 10
- # Number of retained draws: 40
  # Summary of MCMC draws:
 
 
- #             Post Mean  Post Std   Upper Credible Lower Credible
- # beta_1       -2.6202   0.3588        -2.0560        -3.3243
- # beta_2        3.1670   0.5894         4.1713         2.1423
- # beta_3        4.2800   0.9141         5.7142         2.8625
- # delta_1       0.2188   0.4043         0.6541        -0.4384
- # delta_2       0.4567   0.3055         0.7518        -0.2234
+ #             Post Mean  Post Std   Upper Credible Lower Credible Inef Factor
+ # beta_1       -2.6202   0.3588        -2.0560        -3.3243       1.1008
+ # beta_2        3.1670   0.5894         4.1713         2.1423       3.0024
+ # beta_3        4.2800   0.9141         5.7142         2.8625       2.8534
+ # delta_1       0.2188   0.4043         0.6541        -0.4384       3.6507
+ # delta_2       0.4567   0.3055         0.7518        -0.2234       3.1784
 
  # MH acceptance rate: 36\%
  # Log of Marginal Likelihood: -554.61
@@ -101,23 +101,6 @@ better model fit.
 Rahman, M. A. (2016). “Bayesian
 Quantile Regression for Ordinal Models.”
 Bayesian Analysis, 11(1): 1-24. DOI: 10.1214/15-BA939
-
-Yu, K., and Moyeed, R. A. (2001). “Bayesian Quantile Regression.” Statistics and
-Probability Letters, 54(4): 437–447. DOI: 10.12691/ajams-6-6-4
-
-Casella, G., and George, E. I. (1992). “Explaining the Gibbs Sampler.”
-The American Statistician, 46(3): 167-174. DOI: 10.1080/00031305.1992.10475878
-
-Geman, S., and Geman, D. (1984). “Stochastic Relaxation,
-Gibbs Distributions, and the Bayesian Restoration of Images.”
-IEEE Transactions an Pattern Analysis and Machine Intelligence,
-6(6): 721-741. DOI:10.1109/TPAMI.1984.4767596
-
-Chib, S., and Greenberg, E. (1995). “Understanding the Metropolis-Hastings
-Algorithm.” The American Statistician, 49(4): 327-335. DOI: 10.2307/2684568
-
-Hastings, W. K. (1970). “Monte Carlo Sampling Methods Using
-Markov Chains and Their Applications.” Biometrika, 57: 1317-1340. DOI: 10.2307/1390766
 }
 \seealso{
 \link[stats]{rnorm}, \link[stats]{qnorm},

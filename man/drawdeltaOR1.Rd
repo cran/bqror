@@ -2,7 +2,7 @@
 % Please edit documentation in R/ORI.R
 \name{drawdeltaOR1}
 \alias{drawdeltaOR1}
-\title{Samples \eqn{\delta} for OR1 model}
+\title{Samples \eqn{\delta} in the OR1 model}
 \usage{
 drawdeltaOR1(y, x, beta, delta0, d0, D0, tune, Dhat, p)
 }
@@ -28,17 +28,17 @@ drawdeltaOR1(y, x, beta, delta0, d0, D0, tune, Dhat, p)
 \value{
 Returns a list with components
 \itemize{
- \item{\code{deltaReturn}: }{\eqn{\delta} values from MH algorithm, a row vector.}
-  \item{\code{accept}: }{indicator for acceptance of proposed value of \eqn{\delta}.}
+ \item{\code{deltaReturn}: }{\eqn{\delta}, a column vector of size \eqn{((J-2) x 1)}, sampled using MH algorithm.}
+  \item{\code{accept}: }{indicator for acceptance of the proposed value of \eqn{\delta}.}
 }
 }
 \description{
 This function samples the cut-point vector \eqn{\delta} using a
-random-walk Metropolis-Hastings algorithm for OR1 model (ordinal
+random-walk Metropolis-Hastings algorithm in the OR1 model (ordinal
 quantile model with 3 or more outcomes).
 }
 \details{
-Samples the \eqn{\delta} using a random-walk Metropolis-Hastings algorithm.
+Samples the cut-point vector \eqn{\delta} using a random-walk Metropolis-Hastings algorithm.
 }
 \examples{
 set.seed(101)
@@ -71,13 +71,6 @@ Bayesian Analysis, 11(1): 1-24. DOI: 10.1214/15-BA939
 
 Chib, S., and Greenberg, E. (1995). “Understanding the Metropolis-Hastings
 Algorithm.” The American Statistician, 49(4): 327-335. DOI: 10.2307/2684568
-
-Hastings, W. K. (1970). “Monte Carlo Sampling Methods Using
-Markov Chains and Their Applications.” Biometrika, 57: 1317-1340. DOI: 10.2307/1390766
-
-Jeliazkov, I., Graves, J., and Kutzbach, M. (2008). “Fitting and Comparison of Models
-for Multivariate Ordinal Outcomes.” Advances in Econometrics: Bayesian Econometrics,
-23: 115–156. DOI: 10.1016/S0731-9053(08)23004-5
 
 Jeliazkov, I., and Rahman, M. A. (2012). “Binary and Ordinal Data Analysis
 in Economics: Modeling and Estimation” in Mathematical Modeling with Multidisciplinary

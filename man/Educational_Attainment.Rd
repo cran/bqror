@@ -34,8 +34,8 @@ Longitudinal Study of Youth (NLSY, 1979) survey.
 This data is taken from the National Longitudinal Study of Youth (NLSY, 1979)
 survey and corresponds to 3,923 individuals. The objective is to study the
 effect of family background, individual, and school level variables on the
-quantiles of educational attainment. The dependent variable i.e. the educational
-degree, has four categories given as less than high school, high school degree,
+quantiles of educational attainment conditional on the covariates. The dependent variable
+i.e. the educational degree, has four categories given as less than high school, high school degree,
 some college or associate's degree, and college or graduate degree. The independent
 variables include intercept, square root of family income, mother's education,
 father's education, mother's working status, gender, race, and whether the youth

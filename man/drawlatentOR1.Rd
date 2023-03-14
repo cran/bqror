@@ -2,7 +2,7 @@
 % Please edit documentation in R/ORI.R
 \name{drawlatentOR1}
 \alias{drawlatentOR1}
-\title{Samples latent variable z for OR1 model}
+\title{Samples latent variable z in the OR1 model}
 \usage{
 drawlatentOR1(y, x, beta, w, theta, tau2, delta)
 }
@@ -13,20 +13,20 @@ drawlatentOR1(y, x, beta, w, theta, tau2, delta)
 
 \item{beta}{Gibbs draw of \eqn{\beta}, a column vector of size \eqn{(k x 1)}.}
 
-\item{w}{latent weights, column vector of size size \eqn{(n x 1)}.}
+\item{w}{latent weights, column vector of size \eqn{(n x 1)}.}
 
 \item{theta}{(1-2p)/(p(1-p)).}
 
 \item{tau2}{2/(p(1-p)).}
 
-\item{delta}{row vector of cutpoints including (-Inf, Inf).}
+\item{delta}{column vector of cutpoints including (-Inf, Inf).}
 }
 \value{
-column vector of latent variable z from a univariate truncated distribution.
+latent variable z of size \eqn{(n x 1)} sampled from a univariate truncated distribution.
 }
 \description{
 This function samples the latent variable z from a univariate truncated
-normal distribution for OR1 model (ordinal quantile model with 3 or more outcomes).
+normal distribution in the OR1 model (ordinal quantile model with 3 or more outcomes).
 }
 \details{
 This function samples the latent variable z from a univariate truncated normal
@@ -57,14 +57,6 @@ output <- drawlatentOR1(y, xMat, beta, w, theta, tau2, delta)
 Albert, J., and Chib, S. (1993). “Bayesian Analysis of Binary and Polychotomous
 Response Data.” Journal of the American Statistical
 Association, 88(422): 669–679. DOI: 10.1080/01621459.1993.10476321
-
-Casella, G., and George, E. I. (1992). “Explaining the Gibbs Sampler.”
-The American Statistician, 46(3): 167-174. DOI: 10.1080/00031305.1992.10475878
-
-Geman, S., and Geman, D. (1984). “Stochastic Relaxation,
-Gibbs Distributions, and the Bayesian Restoration of Images.”
-IEEE Transactions an Pattern Analysis and Machine Intelligence,
-6(6): 721-741. DOI: 10.1109/TPAMI.1984.4767596
 
 Robert, C. P. (1995). “Simulation of truncated normal variables.” Statistics and
 Computing, 5: 121–125. DOI: 10.1007/BF00143942

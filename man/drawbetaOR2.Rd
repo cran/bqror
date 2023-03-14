@@ -2,7 +2,7 @@
 % Please edit documentation in R/ORII.R
 \name{drawbetaOR2}
 \alias{drawbetaOR2}
-\title{Samples \eqn{\beta} for model OR2}
+\title{Samples \eqn{\beta} in the OR2 model}
 \usage{
 drawbetaOR2(z, x, sigma, nu, tau2, theta, invB0, invB0b0)
 }
@@ -26,8 +26,8 @@ drawbetaOR2(z, x, sigma, nu, tau2, theta, invB0, invB0b0)
 \value{
 Returns a list with components
 \itemize{
-\item{\code{beta}: }{column vector of \eqn{\beta}
-from the posterior multivariate normal distribution.}
+\item{\code{beta}: }{\eqn{\beta}, a column vector of size \eqn{(k x 1)}, sampled from its
+condtional posterior distribution.}
 \item{\code{Btilde}: }{variance parameter for the posterior
 multivariate normal distribution.}
 \item{\code{btilde}: }{mean parameter for the
@@ -36,11 +36,12 @@ posterior multivariate normal distribution.}
 }
 \description{
 This function samples \eqn{\beta} from its conditional
-posterior distribution for OR2 model (ordinal quantile model with exactly 3
+posterior distribution in the OR2 model (ordinal quantile model with exactly 3
 outcomes).
 }
 \details{
-This function samples a vector of \eqn{\beta} from posterior multivariate normal distribution.
+This function samples \eqn{\beta}, a vector, from its conditional posterior distribution
+which is an updated multivariate normal distribution.
 }
 \examples{
 set.seed(101)
@@ -80,14 +81,6 @@ output <- drawbetaOR2(z, x, sigma, nu, tau2, theta, invB0, invB0b0)
 Rahman, M. A. (2016). “Bayesian
 Quantile Regression for Ordinal Models.”
 Bayesian Analysis, 11(1): 1-24. DOI: 10.1214/15-BA939
-
-Casella, G., and George, E. I. (1992). “Explaining the Gibbs Sampler.”
-The American Statistician, 46(3): 167-174. DOI: 10.1080/00031305.1992.10475878
-
-Geman, S., and Geman, D. (1984). “Stochastic Relaxation,
-Gibbs Distributions, and the Bayesian Restoration of Images.”
-IEEE Transactions an Pattern Analysis and Machine Intelligence,
-6(6): 721-741. DOI: 10.1109/TPAMI.1984.4767596
 }
 \seealso{
 Gibbs sampling, normal distribution

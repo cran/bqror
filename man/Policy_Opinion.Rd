@@ -14,7 +14,7 @@ data(Policy_Opinion)
 Returns data with components
 \itemize{
 \item{\code{Intercept}: }{Column of ones.}
-\item{\code{AgeCat}: }{Indicator for age category.}
+\item{\code{EmpCat}: }{Indicator for employment status.}
 \item{\code{IncomeCat}: }{Indicator for household income > $75,000.}
 \item{\code{Bachelors}: }{Individual's highest degree is Bachelors.}
 \item{\code{Post.Bachelors}: }{Indicator for highest degree is Masters, Professional or Doctorate.}
@@ -44,10 +44,6 @@ $75,000, bachelor's and post-bachelor's degree, computer ownership, cellphone ow
 Rahman, M. A. (2016). “Bayesian
 Quantile Regression for Ordinal Models.”
 Bayesian Analysis, 11(1): 1-24. DOI: 10.1214/15-BA939
-
-Jeliazkov, I., Graves, J., and Kutzbach, M. (2008). “Fitting and Comparison of Models
-for Multivariate Ordinal Outcomes.” Advances in Econometrics: Bayesian Econometrics,
-23: 115–156. DOI: 10.1016/S0731-9053(08)23004-5
 }
 \seealso{
 \href{https://electionstudies.org/data-center/}{ANES},  \href{https://georgewbush-whitehouse.archives.gov/cea/progrowth.html}{Tax Policy}
