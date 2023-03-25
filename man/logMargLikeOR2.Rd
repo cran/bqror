@@ -5,7 +5,7 @@
 \title{Marginal likelihood in the OR2 model}
 \usage{
 logMargLikeOR2(y, x, b0, B0, n0, d0, postMeanbeta, postMeansigma,
-btildeStore, BtildeStore, gamma2, p, verbose)
+btildeStore, BtildeStore, gammacp2, p, verbose)
 }
 \arguments{
 \item{y}{observed ordinal outcomes, column vector of size \eqn{(n x 1)}.}
@@ -28,7 +28,7 @@ btildeStore, BtildeStore, gamma2, p, verbose)
 
 \item{BtildeStore}{a storage matrix for Btilde from the complete Gibbs run.}
 
-\item{gamma2}{one and only cut-point other than 0.}
+\item{gammacp2}{one and only cut-point other than 0.}
 
 \item{p}{quantile level or skewness parameter, p in (0,1).}
 
@@ -56,7 +56,7 @@ b0 <- array(rep(0, k), dim = c(k, 1))
 B0 <- 10*diag(k)
 n0 <- 5
 d0 <- 8
-output <- quantregOR2(y = y, x = xMat, b0, B0, n0, d0, gamma2 = 3,
+output <- quantregOR2(y = y, x = xMat, b0, B0, n0, d0, gammacp2 = 3,
 burn = 10, mcmc = 40, p = 0.25, accutoff = 0.5, verbose = FALSE)
 # output$logMargLike
 #   -404.57

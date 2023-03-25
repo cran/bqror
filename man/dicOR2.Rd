@@ -56,7 +56,7 @@ b0 <- array(rep(0, k), dim = c(k, 1))
 B0 <- 10*diag(k)
 n0 <- 5
 d0 <- 8
-output <- quantregOR2(y = y, x = xMat, b0, B0, n0, d0, gamma2 = 3,
+output <- quantregOR2(y = y, x = xMat, b0, B0, n0, d0, gammacp2 = 3,
 burn = 10, mcmc = 40, p = 0.25, accutoff = 0.5, verbose = FALSE)
 betadraws <- output$betadraws
 sigmadraws <- output$sigmadraws

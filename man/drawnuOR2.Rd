@@ -4,7 +4,7 @@
 \alias{drawnuOR2}
 \title{Samples scale factor \eqn{\nu} in the OR2 model}
 \usage{
-drawnuOR2(z, x, beta, sigma, tau2, theta, lambda)
+drawnuOR2(z, x, beta, sigma, tau2, theta, indexp)
 }
 \arguments{
 \item{z}{Gibbs draw of continuous latent values, a column vector of size \eqn{(n x 1)}.}
@@ -19,7 +19,7 @@ drawnuOR2(z, x, beta, sigma, tau2, theta, lambda)
 
 \item{theta}{(1-2p)/(p(1-p)).}
 
-\item{lambda}{index parameter of the GIG distribution which is equal to 0.5.}
+\item{indexp}{index parameter of the GIG distribution which is equal to 0.5.}
 }
 \value{
 \eqn{\nu}, a column vector of size \eqn{(n x 1)}, sampled from a GIG distribution.
@@ -52,8 +52,8 @@ beta <- c(-0.74441, 1.364846, 0.7159231)
 sigma <- 3.749524
 tau2 <- 10.6667
 theta <- 2.6667
-lambda <- 0.5
-output <- drawnuOR2(z, x, beta, sigma, tau2, theta, lambda)
+indexp <- 0.5
+output <- drawnuOR2(z, x, beta, sigma, tau2, theta, indexp)
 
 # output
 #   5.177456 4.042261 8.950365

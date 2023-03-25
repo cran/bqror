@@ -1,11 +1,11 @@
-#' Bayesian quantile regression for the OR2 model
+#' Bayesian quantile regression in the OR2 model
 #'
-#' This function estimates Bayesian quantile regression for the OR2 model (ordinal quantile model with
+#' This function estimates Bayesian quantile regression in the OR2 model (ordinal quantile model with
 #' exactly 3 outcomes) and reports the posterior mean, posterior standard deviation, 95
 #' percent posterior credible intervals and inefficiency factor of \eqn{(\beta, \sigma)}. The output also displays the log of
 #' marginal likelihood and the DIC.
 #'
-#' @usage quantregOR2(y, x, b0, B0 , n0, d0, gamma2, burn, mcmc, p, accutoff, verbose)
+#' @usage quantregOR2(y, x, b0, B0 , n0, d0, gammacp2, burn, mcmc, p, accutoff, verbose)
 #'
 #' @param y         observed ordinal outcomes, column vector of size \eqn{(n x 1)}.
 #' @param x         covariate matrix of size \eqn{(n x k)} including a column of ones with or without column names.
@@ -13,7 +13,7 @@
 #' @param B0        prior covariance matrix for \eqn{\beta}.
 #' @param n0        prior shape parameter of the inverse-gamma distribution for \eqn{\sigma}, default is 5.
 #' @param d0        prior scale parameter of the inverse-gamma distribution for \eqn{\sigma}, default is 8.
-#' @param gamma2    one and only cut-point other than 0, default is 3.
+#' @param gammacp2    one and only cut-point other than 0, default is 3.
 #' @param burn      number of burn-in MCMC iterations.
 #' @param mcmc      number of MCMC iterations, post burn-in.
 #' @param p         quantile level or skewness parameter, p in (0,1).
@@ -40,7 +40,7 @@
 #' \item{\code{postStdbeta}: }{posterior standard deviation of \eqn{\beta} from the complete Gibbs run.}
 #'  \item{\code{postStdsigma}: }{posterior standard deviation of \eqn{\sigma} from the complete Gibbs run.}
 #'  \item{\code{dicQuant}: }{all quantities of DIC.}
-#'  \item{\code{logMargLikelihood}: }{an estimate of log marginal likelihood.}
+#'  \item{\code{logMargLike}: }{an estimate of log marginal likelihood.}
 #'  \item{\code{ineffactor}: }{inefficiency factor for each component of \eqn{\beta} and \eqn{\sigma}.}
 #'  \item{\code{betadraws}: }{dataframe of the \eqn{\beta} draws from the complete Gibbs run, size is \eqn{(k x nsim)}.}
 #'  \item{\code{sigmadraws}: }{dataframe of the \eqn{\sigma} draws from the complete Gibbs run, size is \eqn{(1 x nsim)}.}
@@ -66,7 +66,7 @@
 #' B0 <- 10*diag(k)
 #' n0 <- 5
 #' d0 <- 8
-#' output <- quantregOR2(y = y, x = xMat, b0, B0, n0, d0, gamma2 = 3,
+#' output <- quantregOR2(y = y, x = xMat, b0, B0, n0, d0, gammacp2 = 3,
 #' burn = 10, mcmc = 40, p = 0.25, accutoff = 0.5, verbose = TRUE)
 #'
 #' # Summary of MCMC draws :
@@ -81,7 +81,7 @@
 #' # DIC: 801.82
 #'
 #' @export
-quantregOR2 <- function(y, x, b0, B0 , n0 = 5, d0 = 8, gamma2 = 3, burn, mcmc, p, accutoff = 0.5, verbose = TRUE) {
+quantregOR2 <- function(y, x, b0, B0 , n0 = 5, d0 = 8, gammacp2 = 3, burn, mcmc, p, accutoff = 0.5, verbose = TRUE) {
     cols <- colnames(x)
     names(x) <- NULL
     names(y) <- NULL
@@ -105,11 +105,11 @@ quantregOR2 <- function(y, x, b0, B0 , n0 = 5, d0 = 8, gamma2 = 3, burn, mcmc, p
     if ( !is.numeric(burn)){
         stop("parameter burn must be a numeric")
     }
-    if ( length(gamma2) != 1){
-        stop("parameter gamma2 must be scalar")
+    if ( length(gammacp2) != 1){
+        stop("parameter gammacp2 must be scalar")
     }
-    if ( !is.numeric(gamma2)){
-        stop("parameter gamma2 must be a numeric")
+    if ( !is.numeric(gammacp2)){
+        stop("parameter gammacp2 must be a numeric")
     }
     if ( length(p) != 1){
         stop("parameter p must be scalar")
@@ -154,8 +154,8 @@ quantregOR2 <- function(y, x, b0, B0 , n0 = 5, d0 = 8, gamma2 = 3, burn, mcmc, p
     beta[, 1] <- array(rep(0,k), dim = c(k, 1))
     sigma[1] <- 2
     nu <- array(5 * rep(1,n), dim = c(n, 1))
-    gammacp <- array(c(-Inf, 0, gamma2, Inf), dim = c(1, J+1))
-    lambda <- 0.5
+    gammacp <- array(c(-Inf, 0, gammacp2, Inf), dim = c(1, J+1))
+    indexp <- 0.5
     theta <- (1 - 2 * p) / (p * (1 - p))
     tau <- sqrt(2 / (p * (1 - p)))
     tau2 <- tau^2
@@ -175,7 +175,7 @@ quantregOR2 <- function(y, x, b0, B0 , n0 = 5, d0 = 8, gamma2 = 3, burn, mcmc, p
         sigmadraw <- drawsigmaOR2(z, x, beta[, i], nu, tau2, theta, n0, d0)
         sigma[i] <- sigmadraw$sigma
 
-        nu <- drawnuOR2(z, x, beta[, i], sigma[i], tau2, theta, lambda)
+        nu <- drawnuOR2(z, x, beta[, i], sigma[i], tau2, theta, indexp)
 
         z <- drawlatentOR2(y, x, beta[, i], sigma[i], nu, theta, tau2, gammacp)
         if(verbose) {
@@ -194,7 +194,7 @@ quantregOR2 <- function(y, x, b0, B0 , n0 = 5, d0 = 8, gamma2 = 3, burn, mcmc, p
     logMargLike <- logMargLikeOR2(y, x, b0, B0,
                                                 n0, d0, postMeanbeta,
                                                 postMeansigma, btildeStore,
-                                                BtildeStore, gamma2, p, verbose)
+                                                BtildeStore, gammacp2, p, verbose)
 
     ineffactor <- ineffactorOR2(x, beta, sigma, accutoff, FALSE)
 
@@ -607,7 +607,7 @@ drawsigmaOR2 <- function(z, x, beta, nu, tau2, theta, n0, d0) {
 #' This function samples \eqn{\nu} from a generalized inverse Gaussian (GIG)
 #' distribution in the OR2 model (ordinal quantile model with exactly 3 outcomes).
 #'
-#' @usage drawnuOR2(z, x, beta, sigma, tau2, theta, lambda)
+#' @usage drawnuOR2(z, x, beta, sigma, tau2, theta, indexp)
 #'
 #' @param z         Gibbs draw of continuous latent values, a column vector of size \eqn{(n x 1)}.
 #' @param x         covariate matrix of size \eqn{(n x k)} including a column of ones.
@@ -615,7 +615,7 @@ drawsigmaOR2 <- function(z, x, beta, nu, tau2, theta, n0, d0) {
 #' @param sigma     \eqn{\sigma}, a scalar value.
 #' @param tau2      2/(p(1-p)).
 #' @param theta     (1-2p)/(p(1-p)).
-#' @param lambda    index parameter of the GIG distribution which is equal to 0.5.
+#' @param indexp    index parameter of the GIG distribution which is equal to 0.5.
 #'
 #' @details
 #' This function samples \eqn{\nu} from a GIG
@@ -652,8 +652,8 @@ drawsigmaOR2 <- function(z, x, beta, nu, tau2, theta, n0, d0) {
 #' sigma <- 3.749524
 #' tau2 <- 10.6667
 #' theta <- 2.6667
-#' lambda <- 0.5
-#' output <- drawnuOR2(z, x, beta, sigma, tau2, theta, lambda)
+#' indexp <- 0.5
+#' output <- drawnuOR2(z, x, beta, sigma, tau2, theta, indexp)
 #'
 #' # output
 #' #   5.177456 4.042261 8.950365
@@ -662,7 +662,7 @@ drawsigmaOR2 <- function(z, x, beta, nu, tau2, theta, n0, d0) {
 #' #   0.1725333
 #'
 #' @export
-drawnuOR2 <- function(z, x, beta, sigma, tau2, theta, lambda) {
+drawnuOR2 <- function(z, x, beta, sigma, tau2, theta, indexp) {
     if ( !all(is.numeric(z))){
         stop("each entry in z must be numeric")
     }
@@ -687,21 +687,21 @@ drawnuOR2 <- function(z, x, beta, sigma, tau2, theta, lambda) {
     if ( !all(is.numeric(theta))){
         stop("parameter theta must be numeric")
     }
-    if ( length(lambda) != 1){
-        stop("parameter lambda must be scalar")
+    if ( length(indexp) != 1){
+        stop("parameter indexp must be scalar")
     }
-    if ( !all(is.numeric(lambda))){
-        stop("parameter lambda must be numeric")
+    if ( !all(is.numeric(indexp))){
+        stop("parameter indexp must be numeric")
     }
     n <- dim(x)[1]
-    tildegamma2 <- ( (theta ^ 2) / (tau2 * sigma)) + (2 / sigma)
-    tildedelta2 <- array(0, dim = c(n, 1))
+    tildeeta <- ( (theta ^ 2) / (tau2 * sigma)) + (2 / sigma)
+    tildelambda <- array(0, dim = c(n, 1))
     nu <- array(0, dim = c(n, 1))
     for (i in 1:n) {
-        tildedelta2[i, 1] <- ( (z[i] - x[i, ] %*%  beta)^2) / (tau2 * sigma)
-        nu[i, 1] <- rgig(n = 1, lambda = lambda,
-                         chi = tildedelta2[i, 1],
-                         psi = tildegamma2)
+        tildelambda[i, 1] <- ( (z[i] - x[i, ] %*%  beta)^2) / (tau2 * sigma)
+        nu[i, 1] <- rgig(n = 1, lambda = indexp,
+                         chi = tildelambda[i, 1],
+                         psi = tildeeta)
     }
     return(nu)
 }
@@ -756,7 +756,7 @@ drawnuOR2 <- function(z, x, beta, sigma, tau2, theta, lambda) {
 #' B0 <- 10*diag(k)
 #' n0 <- 5
 #' d0 <- 8
-#' output <- quantregOR2(y = y, x = xMat, b0, B0, n0, d0, gamma2 = 3,
+#' output <- quantregOR2(y = y, x = xMat, b0, B0, n0, d0, gammacp2 = 3,
 #' burn = 10, mcmc = 40, p = 0.25, accutoff = 0.5, verbose = FALSE)
 #' betadraws <- output$betadraws
 #' sigmadraws <- output$sigmadraws
@@ -1024,7 +1024,7 @@ rndald <- function(sigma, p, n){
 #' B0 <- 10*diag(k)
 #' n0 <- 5
 #' d0 <- 8
-#' output <- quantregOR2(y = y, x = xMat, b0, B0, n0, d0, gamma2 = 3,
+#' output <- quantregOR2(y = y, x = xMat, b0, B0, n0, d0, gammacp2 = 3,
 #' burn = 10, mcmc = 40, p = 0.25, accutoff = 0.5, verbose = FALSE)
 #' betadraws <- output$betadraws
 #' sigmadraws <- output$sigmadraws
@@ -1115,7 +1115,7 @@ ineffactorOR2 <- function(x, betadraws, sigmadraws, accutoff = 0.05, verbose = T
 #' outcomes of the OR2 model at a specified quantile. The covariate
 #' effects are calculated marginally of the parameters and the remaining covariates.
 #'
-#' @usage covEffectOR2(modelOR2, y, xMat1, xMat2, gamma2, p, verbose)
+#' @usage covEffectOR2(modelOR2, y, xMat1, xMat2, gammacp2, p, verbose)
 #'
 #' @param modelOR2  output from the quantregOR2 function.
 #' @param y         observed ordinal outcomes, column vector of size \eqn{(n x 1)}.
@@ -1127,7 +1127,7 @@ ineffactorOR2 <- function(x, betadraws, sigmadraws, accutoff = 0.05, verbose = T
 #'                  or without column names. If the covariate of interest is continuous, then add the incremental change
 #'                  to each observation in the column for the covariate of interest. If the covariate is an indicator variable,
 #'                  then replace the column for the covariate of interest with a column of ones.
-#' @param gamma2    one and only cut-point other than 0.
+#' @param gammacp2    one and only cut-point other than 0.
 #' @param p         quantile level or skewness parameter, p in (0,1).
 #' @param verbose   whether to print the final output and provide additional information or not, default is TRUE.
 #'
@@ -1166,11 +1166,11 @@ ineffactorOR2 <- function(x, betadraws, sigmadraws, accutoff = 0.05, verbose = T
 #' B0 <- 10*diag(k)
 #' n0 <- 5
 #' d0 <- 8
-#' output <- quantregOR2(y, xMat1, b0, B0, n0, d0, gamma2 = 3,
+#' output <- quantregOR2(y, xMat1, b0, B0, n0, d0, gammacp2 = 3,
 #' burn = 10, mcmc = 40, p = 0.25, accutoff = 0.5, verbose = FALSE)
 #' xMat2 <- xMat1
 #' xMat2[,3] <- xMat2[,3] + 0.02
-#' res <- covEffectOR2(output, y, xMat1, xMat2, gamma2 = 3, p = 0.25, verbose = TRUE)
+#' res <- covEffectOR2(output, y, xMat1, xMat2, gammacp2 = 3, p = 0.25, verbose = TRUE)
 #'
 #' # Summary of Covariate Effect:
 #'
@@ -1180,7 +1180,7 @@ ineffactorOR2 <- function(x, betadraws, sigmadraws, accutoff = 0.05, verbose = T
 #' # Category_3           0.0103
 #'
 #' @export
-covEffectOR2 <- function(modelOR2, y, xMat1, xMat2, gamma2, p, verbose = TRUE) {
+covEffectOR2 <- function(modelOR2, y, xMat1, xMat2, gammacp2, p, verbose = TRUE) {
     cols <- colnames(xMat1)
     cols1 <- colnames(xMat2)
     names(xMat1) <- NULL
@@ -1209,11 +1209,11 @@ covEffectOR2 <- function(modelOR2, y, xMat1, xMat2, gamma2, p, verbose = TRUE) {
     if ( length(p) != 1){
         stop("parameter p must be scalar")
     }
-    if ( length(gamma2) != 1){
-        stop("parameter gamma2 must be scalar")
+    if ( length(gammacp2) != 1){
+        stop("parameter gammacp2 must be scalar")
     }
-    if ( !is.numeric(gamma2)){
-        stop("parameter gamma2 must be a numeric")
+    if ( !is.numeric(gammacp2)){
+        stop("parameter gammacp2 must be a numeric")
     }
     if (any(p < 0 | p > 1)){
         stop("parameter p must be between 0 to 1")
@@ -1228,7 +1228,7 @@ covEffectOR2 <- function(modelOR2, y, xMat1, xMat2, gamma2, p, verbose = TRUE) {
     betaBurnt <- as.matrix(betaBurnt)
     sigmaBurnt <- as.matrix(sigmaBurnt)
     mu <- 0
-    gammacp <- array(c(-Inf, 0, gamma2, Inf), dim = c(1, J))
+    gammacp <- array(c(-Inf, 0, gammacp2, Inf), dim = c(1, J))
     oldProb <- array(0, dim = c(n, m, J))
     newProb <- array(0, dim = c(n, m, J))
     oldComp <- array(0, dim = c(n, m, (J-1)))
@@ -1279,7 +1279,7 @@ covEffectOR2 <- function(modelOR2, y, xMat1, xMat2, gamma2, p, verbose = TRUE) {
 #' complete and reduced runs.
 #'
 #' @usage logMargLikeOR2(y, x, b0, B0, n0, d0, postMeanbeta, postMeansigma,
-#' btildeStore, BtildeStore, gamma2, p, verbose)
+#' btildeStore, BtildeStore, gammacp2, p, verbose)
 #'
 #' @param y                 observed ordinal outcomes, column vector of size \eqn{(n x 1)}.
 #' @param x                 covariate matrix of size \eqn{(n x k)} including a column of ones with or without column names.
@@ -1291,7 +1291,7 @@ covEffectOR2 <- function(modelOR2, y, xMat1, xMat2, gamma2, p, verbose = TRUE) {
 #' @param postMeansigma     posterior mean of \eqn{\delta} from the complete Gibbs run.
 #' @param btildeStore       a storage matrix for btilde from the complete Gibbs run.
 #' @param BtildeStore       a storage matrix for Btilde from the complete Gibbs run.
-#' @param gamma2            one and only cut-point other than 0.
+#' @param gammacp2            one and only cut-point other than 0.
 #' @param p                 quantile level or skewness parameter, p in (0,1).
 #' @param verbose           whether to print the final output and provide additional information or not, default is TRUE.
 #'
@@ -1321,13 +1321,13 @@ covEffectOR2 <- function(modelOR2, y, xMat1, xMat2, gamma2, p, verbose = TRUE) {
 #' B0 <- 10*diag(k)
 #' n0 <- 5
 #' d0 <- 8
-#' output <- quantregOR2(y = y, x = xMat, b0, B0, n0, d0, gamma2 = 3,
+#' output <- quantregOR2(y = y, x = xMat, b0, B0, n0, d0, gammacp2 = 3,
 #' burn = 10, mcmc = 40, p = 0.25, accutoff = 0.5, verbose = FALSE)
 #' # output$logMargLike
 #' #   -404.57
 #'
 #' @export
-logMargLikeOR2 <- function(y, x, b0, B0, n0, d0, postMeanbeta, postMeansigma, btildeStore, BtildeStore, gamma2, p, verbose) {
+logMargLikeOR2 <- function(y, x, b0, B0, n0, d0, postMeanbeta, postMeansigma, btildeStore, BtildeStore, gammacp2, p, verbose) {
     cols <- colnames(x)
     names(x) <- NULL
     names(y) <- NULL
@@ -1375,8 +1375,8 @@ logMargLikeOR2 <- function(y, x, b0, B0, n0, d0, postMeanbeta, postMeansigma, bt
     burn <- (0.25 * nsim) / (1.25)
     nu <- array(5 * rep(1,n), dim = c(n, 1))
     ntilde <- n0 + (3 * n)
-    gammacp <- array(c(-Inf, 0, gamma2, Inf), dim = c(1, J+1))
-    lambda <- 0.5
+    gammacp <- array(c(-Inf, 0, gammacp2, Inf), dim = c(1, J+1))
+    indexp <- 0.5
     theta <- (1 - 2 * p) / (p * (1 - p))
     tau <- sqrt(2 / (p * (1 - p)))
     tau2 <- tau^2
@@ -1397,7 +1397,7 @@ logMargLikeOR2 <- function(y, x, b0, B0, n0, d0, postMeanbeta, postMeansigma, bt
         sigmaRedrun[i] <- sigmaStoreRedrun$sigma
         dtildeStoreRedrun[i] <- sigmaStoreRedrun$dtilde
 
-        nu <- drawnuOR2(z, x, postMeanbeta, sigmaRedrun[i], tau2, theta, lambda)
+        nu <- drawnuOR2(z, x, postMeanbeta, sigmaRedrun[i], tau2, theta, indexp)
 
         z <- drawlatentOR2(y, x, postMeanbeta, sigmaRedrun[i], nu, theta, tau2, gammacp)
         if(verbose) {
@@ -1458,7 +1458,7 @@ logMargLikeOR2 <- function(y, x, b0, B0, n0, d0, postMeanbeta, postMeansigma, bt
 #' B0 <- 10*diag(k)
 #' n0 <- 5
 #' d0 <- 8
-#' output <- quantregOR2(y = y, x = xMat, b0, B0, n0, d0, gamma2 = 3,
+#' output <- quantregOR2(y = y, x = xMat, b0, B0, n0, d0, gammacp2 = 3,
 #' burn = 10, mcmc = 40, p = 0.25, accutoff = 0.5, FALSE)
 #' summary(output, 4)
 #'

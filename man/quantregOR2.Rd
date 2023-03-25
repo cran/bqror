@@ -2,9 +2,9 @@
 % Please edit documentation in R/ORII.R
 \name{quantregOR2}
 \alias{quantregOR2}
-\title{Bayesian quantile regression for the OR2 model}
+\title{Bayesian quantile regression in the OR2 model}
 \usage{
-quantregOR2(y, x, b0, B0 , n0, d0, gamma2, burn, mcmc, p, accutoff, verbose)
+quantregOR2(y, x, b0, B0 , n0, d0, gammacp2, burn, mcmc, p, accutoff, verbose)
 }
 \arguments{
 \item{y}{observed ordinal outcomes, column vector of size \eqn{(n x 1)}.}
@@ -19,7 +19,7 @@ quantregOR2(y, x, b0, B0 , n0, d0, gamma2, burn, mcmc, p, accutoff, verbose)
 
 \item{d0}{prior scale parameter of the inverse-gamma distribution for \eqn{\sigma}, default is 8.}
 
-\item{gamma2}{one and only cut-point other than 0, default is 3.}
+\item{gammacp2}{one and only cut-point other than 0, default is 3.}
 
 \item{burn}{number of burn-in MCMC iterations.}
 
@@ -40,14 +40,14 @@ Returns a bqrorOR2 object with components
 \item{\code{postStdbeta}: }{posterior standard deviation of \eqn{\beta} from the complete Gibbs run.}
  \item{\code{postStdsigma}: }{posterior standard deviation of \eqn{\sigma} from the complete Gibbs run.}
  \item{\code{dicQuant}: }{all quantities of DIC.}
- \item{\code{logMargLikelihood}: }{an estimate of log marginal likelihood.}
+ \item{\code{logMargLike}: }{an estimate of log marginal likelihood.}
  \item{\code{ineffactor}: }{inefficiency factor for each component of \eqn{\beta} and \eqn{\sigma}.}
  \item{\code{betadraws}: }{dataframe of the \eqn{\beta} draws from the complete Gibbs run, size is \eqn{(k x nsim)}.}
  \item{\code{sigmadraws}: }{dataframe of the \eqn{\sigma} draws from the complete Gibbs run, size is \eqn{(1 x nsim)}.}
 }
 }
 \description{
-This function estimates Bayesian quantile regression for the OR2 model (ordinal quantile model with
+This function estimates Bayesian quantile regression in the OR2 model (ordinal quantile model with
 exactly 3 outcomes) and reports the posterior mean, posterior standard deviation, 95
 percent posterior credible intervals and inefficiency factor of \eqn{(\beta, \sigma)}. The output also displays the log of
 marginal likelihood and the DIC.
@@ -74,7 +74,7 @@ b0 <- array(rep(0, k), dim = c(k, 1))
 B0 <- 10*diag(k)
 n0 <- 5
 d0 <- 8
-output <- quantregOR2(y = y, x = xMat, b0, B0, n0, d0, gamma2 = 3,
+output <- quantregOR2(y = y, x = xMat, b0, B0, n0, d0, gammacp2 = 3,
 burn = 10, mcmc = 40, p = 0.25, accutoff = 0.5, verbose = TRUE)
 
 # Summary of MCMC draws :

@@ -4,7 +4,7 @@
 \alias{drawwOR1}
 \title{Samples latent weight w in the OR1 model}
 \usage{
-drawwOR1(z, x, beta, tau2, theta, lambda)
+drawwOR1(z, x, beta, tau2, theta, indexp)
 }
 \arguments{
 \item{z}{continuous latent values, vector of size \eqn{(n x 1)}.}
@@ -17,7 +17,7 @@ drawwOR1(z, x, beta, tau2, theta, lambda)
 
 \item{theta}{(1-2p)/(p(1-p)).}
 
-\item{lambda}{index parameter of GIG distribution which is equal to 0.5}
+\item{indexp}{index parameter of GIG distribution which is equal to 0.5}
 }
 \value{
 w, a column vector of size \eqn{(n x 1)}, sampled from a GIG distribution.
@@ -62,8 +62,8 @@ x <- matrix(c(
 beta <- c(-1.583533, 1.407158, 2.259338)
 tau2 <- 10.66667
 theta <- 2.666667
-lambda <- 0.5
-output <- drawwOR1(z, x, beta, tau2, theta, lambda)
+indexp <- 0.5
+output <- drawwOR1(z, x, beta, tau2, theta, indexp)
 
 # output
 #   0.16135732

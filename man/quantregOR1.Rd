@@ -2,7 +2,7 @@
 % Please edit documentation in R/ORI.R
 \name{quantregOR1}
 \alias{quantregOR1}
-\title{Bayesian quantile regression for the OR1 model}
+\title{Bayesian quantile regression in the OR1 model}
 \usage{
 quantregOR1(y, x, b0, B0, d0, D0, burn, mcmc, p, tune, accutoff, verbose)
 }
@@ -50,7 +50,7 @@ Returns a bqrorOR1 object with components:
 }
 }
 \description{
-This function estimates Bayesian quantile regression for the OR1 model (ordinal quantile model with 3
+This function estimates Bayesian quantile regression in the OR1 model (ordinal quantile model with 3
 or more outcomes) and reports the posterior mean, posterior standard deviation, 95
 percent posterior credible intervals, and inefficiency factor of \eqn{(\beta, \delta)}. The output
 also displays the log of marginal likelihood and the DIC.

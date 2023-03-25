@@ -4,7 +4,7 @@
 \alias{covEffectOR2}
 \title{Covariate effect in the OR2 model}
 \usage{
-covEffectOR2(modelOR2, y, xMat1, xMat2, gamma2, p, verbose)
+covEffectOR2(modelOR2, y, xMat1, xMat2, gammacp2, p, verbose)
 }
 \arguments{
 \item{modelOR2}{output from the quantregOR2 function.}
@@ -21,7 +21,7 @@ or without column names. If the covariate of interest is continuous, then add th
 to each observation in the column for the covariate of interest. If the covariate is an indicator variable,
 then replace the column for the covariate of interest with a column of ones.}
 
-\item{gamma2}{one and only cut-point other than 0.}
+\item{gammacp2}{one and only cut-point other than 0.}
 
 \item{p}{quantile level or skewness parameter, p in (0,1).}
 
@@ -55,11 +55,11 @@ b0 <- array(rep(0, k), dim = c(k, 1))
 B0 <- 10*diag(k)
 n0 <- 5
 d0 <- 8
-output <- quantregOR2(y, xMat1, b0, B0, n0, d0, gamma2 = 3,
+output <- quantregOR2(y, xMat1, b0, B0, n0, d0, gammacp2 = 3,
 burn = 10, mcmc = 40, p = 0.25, accutoff = 0.5, verbose = FALSE)
 xMat2 <- xMat1
 xMat2[,3] <- xMat2[,3] + 0.02
-res <- covEffectOR2(output, y, xMat1, xMat2, gamma2 = 3, p = 0.25, verbose = TRUE)
+res <- covEffectOR2(output, y, xMat1, xMat2, gammacp2 = 3, p = 0.25, verbose = TRUE)
 
 # Summary of Covariate Effect:
 

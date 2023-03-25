@@ -1,6 +1,6 @@
-#' Bayesian quantile regression for the OR1 model
+#' Bayesian quantile regression in the OR1 model
 #'
-#' This function estimates Bayesian quantile regression for the OR1 model (ordinal quantile model with 3
+#' This function estimates Bayesian quantile regression in the OR1 model (ordinal quantile model with 3
 #' or more outcomes) and reports the posterior mean, posterior standard deviation, 95
 #' percent posterior credible intervals, and inefficiency factor of \eqn{(\beta, \delta)}. The output
 #' also displays the log of marginal likelihood and the DIC.
@@ -178,7 +178,7 @@ quantregOR1 <- function(y, x, b0, B0, d0, D0, burn, mcmc, p, tune = 0.1, accutof
     theta <- (1 - (2 * p)) / (p * (1 - p))
     tau <- sqrt(2 / (p * (1 - p)))
     tau2 <- tau ^ 2
-    lambda <- 0.5
+    indexp <- 0.5
     cri0     <- 1;
     cri1     <- 0.001;
     stepsize <- 1;
@@ -201,7 +201,7 @@ quantregOR1 <- function(y, x, b0, B0, d0, D0, burn, mcmc, p, tune = 0.1, accutof
         betadraw <- drawbetaOR1(z, x, w, tau2, theta, invB0, invB0b0)
         beta[, i] <- betadraw$beta
 
-        w <- drawwOR1(z, x, beta[, i], tau2, theta, lambda)
+        w <- drawwOR1(z, x, beta[, i], tau2, theta, indexp)
 
         deltarw <- drawdeltaOR1(y, x, beta[, i], delta[, (i - 1)], d0, D0, tune, Dhat, p)
         delta[, i] <- deltarw$deltareturn
@@ -808,14 +808,14 @@ drawbetaOR1 <- function(z, x, w, tau2, theta, invB0, invB0b0) {
 #' inverse-Gaussian distribution (GIG) in the OR1 model (ordinal quantile model with 3 or more
 #' outcomes).
 #'
-#' @usage drawwOR1(z, x, beta, tau2, theta, lambda)
+#' @usage drawwOR1(z, x, beta, tau2, theta, indexp)
 #'
 #' @param z         continuous latent values, vector of size \eqn{(n x 1)}.
 #' @param x         covariate matrix of size \eqn{(n x k)} including a column of ones with or without column names.
 #' @param beta      Gibbs draw of \eqn{\beta}, a column vector of size \eqn{(k x 1)}.
 #' @param tau2      2/(p(1-p)).
 #' @param theta     (1-2p)/(p(1-p)).
-#' @param lambda    index parameter of GIG distribution which is equal to 0.5
+#' @param indexp    index parameter of GIG distribution which is equal to 0.5
 #'
 #' @details
 #' This function samples a vector of latent weight w from a GIG distribution.
@@ -863,8 +863,8 @@ drawbetaOR1 <- function(z, x, w, tau2, theta, invB0, invB0b0) {
 #' beta <- c(-1.583533, 1.407158, 2.259338)
 #' tau2 <- 10.66667
 #' theta <- 2.666667
-#' lambda <- 0.5
-#' output <- drawwOR1(z, x, beta, tau2, theta, lambda)
+#' indexp <- 0.5
+#' output <- drawwOR1(z, x, beta, tau2, theta, indexp)
 #'
 #' # output
 #' #   0.16135732
@@ -876,7 +876,7 @@ drawbetaOR1 <- function(z, x, w, tau2, theta, invB0, invB0b0) {
 #' #   0.41515947 ... soon
 #'
 #' @export
-drawwOR1 <- function(z, x, beta, tau2, theta, lambda) {
+drawwOR1 <- function(z, x, beta, tau2, theta, indexp) {
     if ( !all(is.numeric(z))){
         stop("each entry in z must be numeric")
     }
@@ -898,21 +898,21 @@ drawwOR1 <- function(z, x, beta, tau2, theta, lambda) {
     if ( !all(is.numeric(theta))){
         stop("parameter theta must be numeric")
     }
-    if ( length(lambda) != 1){
-        stop("parameter lambda must be scalar")
+    if ( length(indexp) != 1){
+        stop("parameter indexp must be scalar")
     }
-    if ( !all(is.numeric(lambda))){
-        stop("parameter lambda must be numeric")
+    if ( !all(is.numeric(indexp))){
+        stop("parameter indexp must be numeric")
     }
     n <- dim(x)[1]
-    tildeeta2 <- ( (theta ^ 2) / (tau2)) + 2
-    tildelambda2 <- array(0, dim = c(n, 1))
+    tildeeta <- ( (theta ^ 2) / (tau2)) + 2
+    tildelambda <- array(0, dim = c(n, 1))
     w <- array(0, dim = c(n, 1))
     for (i in 1:n) {
-        tildelambda2[i, 1] <- ( (z[i] - (x[i, ] %*% beta)) ^ 2) / (tau2)
-        w[i, 1] <- rgig(n = 1, lambda = lambda,
-                        chi = tildelambda2[i, 1],
-                        psi = tildeeta2)
+        tildelambda[i, 1] <- ( (z[i] - (x[i, ] %*% beta)) ^ 2) / (tau2)
+        w[i, 1] <- rgig(n = 1, lambda = indexp,
+                        chi = tildelambda[i, 1],
+                        psi = tildeeta)
     }
     return(w)
 }
@@ -1810,7 +1810,7 @@ logMargLikeOR1 <- function(y, x, b0, B0, d0, D0, postMeanbeta, postMeandelta, be
     nsim <- dim(betadraws)[2]
     burn <- (0.25 * nsim) / (1.25)
 
-    lambda <- 0.5
+    indexp <- 0.5
     theta <- (1 - 2 * p) / (p * (1 - p))
     tau <- sqrt(2 / (p * (1 - p)))
     tau2 <- tau^2
@@ -1840,7 +1840,7 @@ logMargLikeOR1 <- function(y, x, b0, B0, d0, D0, postMeanbeta, postMeandelta, be
         btildeStoreRedrun[, i] <- betadrawRedrun$btilde
         BtildeStoreRedrun[, , i] <- betadrawRedrun$Btilde
 
-        w <- drawwOR1(z, x, betaStoreRedrun[, i], tau2, theta, lambda)
+        w <- drawwOR1(z, x, betaStoreRedrun[, i], tau2, theta, indexp)
 
         z <- drawlatentOR1(y, x, betaStoreRedrun[, i], w, theta, tau2, postMeandelta)
 
