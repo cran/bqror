@@ -1264,7 +1264,7 @@ dicOR1 <- function(y, x, betadraws, deltadraws, postMeanbeta,
     ans <- qrnegLogLikensumOR1(y, x,
                             postMeanbeta, postMeandelta, p)
     dev <- 2 * ans$negsumlogl
-    nsim <- dim(betadraws[, (burn + 1):nsim])[1]
+    nsim <- dim(betadraws[, (burn + 1):nsim])[2]
     Deviance <- array(0, dim = c(nsim, 1))
     for (i in 1:nsim) {
         temp <- qrnegLogLikensumOR1(y, x, betadraws[, (burn + i)],

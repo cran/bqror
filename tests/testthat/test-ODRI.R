@@ -12,7 +12,7 @@ test_that("Testing for quantregOR1", {
     output <- quantregOR1(y = y, x = xMat, b0, B0, d0, D0,
     burn = 10, mcmc = 40, p = 0.25, tune = 1, accutoff = 0.5, verbose = FALSE)
     expect_equal(round(output$acceptancerate), 50)
-    expect_equal(round(output$dicQuant$DIC, 2), 1375.33)
+    expect_equal(round(output$dicQuant$DIC, 2), 1133.11)
     expect_equal(round(output$logMargLike, 2), -554.61)
 })
 
@@ -30,7 +30,7 @@ test_that("Testing for quantregOR1 with J=3", {
   output <- quantregOR1(y = y, x = xMat, b0, B0, d0, D0,
                         burn = 10, mcmc = 40, p = 0.25, tune = 1, accutoff = 0.5, verbose = FALSE)
   expect_equal(round(output$acceptancerate), 45)
-  expect_equal(round(output$dicQuant$DIC, 1), 889.4)
+  expect_equal(round(output$dicQuant$DIC, 1), 818.4)
   expect_equal(round(output$logMargLike), -413)
 })
 
@@ -106,8 +106,8 @@ test_that("Testing for dicORI", {
   postMeandelta <- output$postMeandelta
   dic <- dicOR1(y, xMat, betadraws, deltadraws,
   postMeanbeta, postMeandelta, burn, mcmc, p = 0.25)
-  expect_equal(round(dic$DIC,2),1375.33)
-  expect_equal(round(dic$pd,2),139.18)
+  expect_equal(round(dic$DIC,2),1133.11)
+  expect_equal(round(dic$pd,2),18.07)
   expect_equal(round(dic$dev,2),1096.98)
 })
 
