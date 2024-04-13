@@ -46,8 +46,7 @@ output <- qrnegLogLikeOR2(y, xMat, gammacp, betaOne, sigmaOne, p)
 
 }
 \references{
-Rahman, M. A. (2016). “Bayesian
-Quantile Regression for Ordinal Models.”
+Rahman, M. A. (2016). `"Bayesian Quantile Regression for Ordinal Models."`
 Bayesian Analysis, 11(1): 1-24. DOI: 10.1214/15-BA939
 }
 \seealso{

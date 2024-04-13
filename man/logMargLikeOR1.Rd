@@ -60,17 +60,17 @@ B0 <- 10*diag(k)
 d0 <- array(0, dim = c(J-2, 1))
 D0 <- 0.25*diag(J - 2)
 output <- quantregOR1(y = y, x = xMat, b0, B0, d0, D0,
-burn = 10, mcmc = 40, p = 0.25, tune = 1, accutoff = 0.5, verbose = FALSE)
+burn = 10, mcmc = 40, p = 0.25, tune = 1, accutoff = 0.5, maxlags = 400, verbose = FALSE)
 # output$logMargLike
 #   -554.61
 
 }
 \references{
-Chib, S. (1995). “Marginal likelihood from the Gibbs output.” Journal of the American
-Statistical Association, 90(432):1313–1321, 1995. DOI: 10.1080/01621459.1995.10476635
+Chib, S. (1995). `"Marginal likelihood from the Gibbs output."` Journal of the American
+Statistical Association, 90(432):1313 to 1321, 1995. DOI: 10.1080/01621459.1995.10476635
 
-Chib, S., and Jeliazkov, I. (2001). “Marginal likelihood from the Metropolis-Hastings output.” Journal of the
-American Statistical Association, 96(453):270–281, 2001. DOI: 10.1198/016214501750332848
+Chib, S., and Jeliazkov, I. (2001). `"Marginal likelihood from the Metropolis-Hastings output."` Journal of the
+American Statistical Association, 96(453):270`-`281, 2001. DOI: 10.1198/016214501750332848
 }
 \seealso{
 \link[NPflow]{mvnpdf}, \link[stats]{dnorm},

@@ -14,16 +14,14 @@
 #' @usage data(data25j3)
 #'
 #' @return Returns a list with components
-#' \itemize{
 #' \item{\code{x}: }{a matrix of covariates, including a column of ones.}
 #' \item{\code{y}: }{a column vector of ordinal outcomes.}
-#' }
 #'
-#' @references Rahman, M. A. (2016). “Bayesian Quantile Regression for Ordinal Models.”
+#' @references Rahman, M. A. (2016). `"Bayesian Quantile Regression for Ordinal Models."`
 #' Bayesian Analysis, 11(1): 1-24. DOI: 10.1214/15-BA939
 #'
-#' Yu, K., and Zhang, J. (2005). “A Three-Parameter Asymmetric
-#' Laplace Distribution.” Communications in Statistics - Theory and Methods, 34(9-10), 1867-1879. DOI: 10.1080/03610920500199018
+#' Yu, K., and Zhang, J. (2005). `"A Three-Parameter Asymmetric Laplace Distribution."`
+#' Communications in Statistics - Theory and Methods, 34(9-10), 1867-1879. DOI: 10.1080/03610920500199018
 #'
 #' @keywords datasets
 #'
@@ -46,16 +44,14 @@ NULL
 #' @usage data(data50j3)
 #'
 #' @return Returns a list with components
-#' \itemize{
 #' \item{\code{x}: }{a matrix of covariates, including a column of ones.}
 #' \item{\code{y}: }{a column vector of ordinal outcomes.}
-#' }
 #'
-#' @references Rahman, M. A. (2016). “Bayesian Quantile Regression for Ordinal Models.”
+#' @references Rahman, M. A. (2016). `"Bayesian Quantile Regression for Ordinal Models."`
 #' Bayesian Analysis, 11(1): 1-24. DOI: 10.1214/15-BA939
 #'
-#' Yu, K., and Zhang, J. (2005). “A Three-Parameter Asymmetric
-#' Laplace Distribution.” Communications in Statistics - Theory and Methods, 34(9-10), 1867-1879. DOI: 10.1080/03610920500199018
+#' Yu, K., and Zhang, J. (2005). `"A Three-Parameter Asymmetric Laplace Distribution."`
+#' Communications in Statistics - Theory and Methods, 34(9-10), 1867-1879. DOI: 10.1080/03610920500199018
 #'
 #' @keywords datasets
 #'
@@ -78,16 +74,14 @@ NULL
 #' @usage data(data75j3)
 #'
 #' @return Returns a list with components
-#' \itemize{
 #' \item{\code{x}: }{a matrix of covariates, including a column of ones.}
 #' \item{\code{y}: }{a column vector of ordinal outcomes.}
-#' }
 #'
-#' @references Rahman, M. A. (2016). “Bayesian Quantile Regression for Ordinal Models.”
+#' @references Rahman, M. A. (2016). `"Bayesian Quantile Regression for Ordinal Models."`
 #' Bayesian Analysis, 11(1): 1-24. DOI: 10.1214/15-BA939
 #'
-#' Yu, K., and Zhang, J. (2005). “A Three-Parameter Asymmetric
-#' Laplace Distribution.” Communications in Statistics - Theory and Methods, 34(9-10), 1867-1879. DOI: 10.1080/03610920500199018
+#' Yu, K., and Zhang, J. (2005). `"A Three-Parameter Asymmetric Laplace Distribution."`
+#' Communications in Statistics - Theory and Methods, 34(9-10), 1867-1879. DOI: 10.1080/03610920500199018
 #'
 #' @keywords datasets
 #'
@@ -110,16 +104,14 @@ NULL
 #' @usage data(data25j4)
 #'
 #' @return Returns a list with components
-#' \itemize{
 #' \item{\code{x}: }{a matrix of covariates, including a column of ones.}
 #' \item{\code{y}: }{a column vector of ordinal outcomes.}
-#' }
 #'
-#' @references Rahman, M. A. (2016). “Bayesian Quantile Regression for Ordinal Models.”
+#' @references Rahman, M. A. (2016). `"Bayesian Quantile Regression for Ordinal Models."`
 #' Bayesian Analysis, 11(1): 1-24. DOI: 10.1214/15-BA939
 #'
-#' Yu, K., and Zhang, J. (2005). “A Three-Parameter Asymmetric
-#' Laplace Distribution.” Communications in Statistics - Theory and Methods, 34(9-10), 1867-1879. DOI: 10.1080/03610920500199018
+#' Yu, K., and Zhang, J. (2005). `"A Three-Parameter Asymmetric Laplace Distribution."`
+#' Communications in Statistics - Theory and Methods, 34(9-10), 1867-1879. DOI: 10.1080/03610920500199018
 #'
 #' @keywords datasets
 #'
@@ -142,16 +134,14 @@ NULL
 #' @usage data(data50j4)
 #'
 #' @return Returns a list with components
-#' \itemize{
 #' \item{\code{x}: }{a matrix of covariates, including a column of ones.}
 #' \item{\code{y}: }{a column vector of ordinal outcomes.}
-#' }
 #'
-#' @references Rahman, M. A. (2016). “Bayesian Quantile Regression for Ordinal Models.”
+#' @references Rahman, M. A. (2016). `"Bayesian Quantile Regression for Ordinal Models."`
 #' Bayesian Analysis, 11(1): 1-24. DOI: 10.1214/15-BA939
 #'
-#'  Yu, K., and Zhang, J. (2005). “A Three-Parameter Asymmetric
-#'  Laplace Distribution.” Communications in Statistics - Theory and Methods, 34(9-10), 1867-1879. DOI: 10.1080/03610920500199018
+#'  Yu, K., and Zhang, J. (2005). `"A Three-Parameter Asymmetric Laplace Distribution."`
+#'  Communications in Statistics - Theory and Methods, 34(9-10), 1867-1879. DOI: 10.1080/03610920500199018
 #'
 #' @keywords datasets
 #'
@@ -174,16 +164,14 @@ NULL
 #' @usage data(data75j4)
 #'
 #' @return Returns a list with components
-#' \itemize{
 #' \item{\code{x}: }{a matrix of covariates, including a column of ones.}
 #' \item{\code{y}: }{a column vector of ordinal outcomes.}
-#' }
 #'
-#' @references Rahman, M. A. (2016). “Bayesian Quantile Regression for Ordinal Models.”
+#' @references Rahman, M. A. (2016). `"Bayesian Quantile Regression for Ordinal Models."`
 #' Bayesian Analysis, 11(1): 1-24. DOI: 10.1214/15-BA939
 #'
-#' Yu, K., and Zhang, J. (2005). “A Three-Parameter Asymmetric
-#' Laplace Distribution.” Communications in Statistics - Theory and Methods, 34(9-10), 1867-1879. DOI: 10.1080/03610920500199018
+#' Yu, K., and Zhang, J. (2005). `"A Three-Parameter Asymmetric Laplace Distribution."`
+#' Communications in Statistics - Theory and Methods, 34(9-10), 1867-1879. DOI: 10.1080/03610920500199018
 #'
 #' @keywords datasets
 #'
@@ -191,9 +179,9 @@ NULL
 #'
 NULL
 
+
 #' @name  Educational_Attainment
-#' @title Educational Attainment study based on data from the National
-#' Longitudinal Study of Youth (NLSY, 1979) survey.
+#' @title Educational Attainment study based on data from the National Longitudinal Study of Youth (NLSY, 1979) survey.
 #'
 #' @details
 #'
@@ -213,7 +201,6 @@ NULL
 #' @usage data(Educational_Attainment)
 #'
 #' @return Returns data with components
-#' \itemize{
 #' \item{\code{mother_work}: }{Indicator for working female at the age of 14.}
 #' \item{\code{urban}: }{Indicator for the youth living in urban area at the age of 14.}
 #' \item{\code{south}: }{Indicator for the youth living in South at the age of 14.}
@@ -227,19 +214,16 @@ NULL
 #' \item{\code{age_cohort_4}: }{Indicator variable for age 17.}
 #' \item{\code{dep_edu_level}: }{Four categories of educational attainment: less than high school, high school degree,
 #' some college or associate's degree, and college or graduate degree.}
-#' }
 #'
-#' @references Rahman, M. A. (2016). “Bayesian
-#' Quantile Regression for Ordinal Models.”
+#' @references Rahman, M. A. (2016). `"Bayesian Quantile Regression for Ordinal Models."`
 #' Bayesian Analysis, 11(1): 1-24. DOI: 10.1214/15-BA939
 #'
-#' Jeliazkov, I., Graves, J., and Kutzbach, M. (2008). “Fitting and Comparison of Models
-#' for Multivariate Ordinal Outcomes.” Advances in Econometrics: Bayesian Econometrics,
-#' 23: 115–156. DOI: 10.1016/S0731-9053(08)23004-5
+#' Jeliazkov, I., Graves, J., and Kutzbach, M. (2008). `"Fitting and Comparison of Models for Multivariate Ordinal Outcomes."`
+#' Advances in Econometrics: Bayesian Econometrics, 23: 115`-`156. DOI: 10.1016/S0731-9053(08)23004-5
 #'
-#' Jeliazkov, I., and Rahman, M. A. (2012). “Binary and Ordinal Data Analysis
-#' in Economics: Modeling and Estimation” in Mathematical Modeling with Multidisciplinary
-#' Applications, edited by X.S. Yang, 123-150. John Wiley & Sons Inc, Hoboken, New Jersey. DOI: 10.1002/9781118462706.ch6
+#' Jeliazkov, I., and Rahman, M. A. (2012). `"Binary and Ordinal Data Analysis in Economics: Modeling and Estimation"`
+#' in Mathematical Modeling with Multidisciplinary Applications, edited by X.S. Yang,
+#' 123-150. John Wiley `&` Sons Inc, Hoboken, New Jersey. DOI: 10.1002/9781118462706.ch6
 #'
 #' @keywords datasets
 #'
@@ -248,11 +232,7 @@ NULL
 NULL
 
 #' @name  Policy_Opinion
-#' @title Data contains public opinion on the proposal to raise federal income taxes for couples (individuals)
-#' earning more than $250,000 ($200,000) per year and a host of other covariates. The data is taken
-#' from the 2010-2012 American National Election Studies (ANES) on the Evaluation of
-#' Government and Society Study I (EGSS 1)
-#'
+#' @title Data contains public opinion on the proposal to raise federal income taxes for couples (individuals) earning more than $250,000 ($200,000) per year and a host of other covariates. The data is taken from the 2010-2012 American National Election Studies (ANES) on the Evaluation of Government and Society Study I (EGSS 1)
 #'
 #' @details
 #'
@@ -269,7 +249,6 @@ NULL
 #' @usage data(Policy_Opinion)
 #'
 #' @return Returns data with components
-#' \itemize{
 #' \item{\code{Intercept}: }{Column of ones.}
 #' \item{\code{EmpCat}: }{Indicator for employment status.}
 #' \item{\code{IncomeCat}: }{Indicator for household income > $75,000.}
@@ -280,10 +259,8 @@ NULL
 #' \item{\code{White}: }{Indicator for White race.}
 #' \item{\code{y}: }{Public opinion on the proposal to raise federal income taxes. The three categories are: oppose, neither
 #' favor nor oppose, or favor the tax increase.}
-#' }
 #'
-#' @references Rahman, M. A. (2016). “Bayesian
-#' Quantile Regression for Ordinal Models.”
+#' @references Rahman, M. A. (2016). `"Bayesian Quantile Regression for Ordinal Models."`
 #' Bayesian Analysis, 11(1): 1-24. DOI: 10.1214/15-BA939
 #'
 #' @keywords datasets

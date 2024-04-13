@@ -56,12 +56,11 @@ theta, tau2, gammacp)
 
 }
 \references{
-Albert, J., and Chib, S. (1993). “Bayesian Analysis of Binary and Polychotomous
-Response Data.” Journal of the American Statistical
-Association, 88(422): 669–679. DOI: 10.1080/01621459.1993.10476321
+Albert, J., and Chib, S. (1993). `"Bayesian Analysis of Binary and Polychotomous Response Data."`
+Journal of the American Statistical Association, 88(422): 669`-`679. DOI: 10.1080/01621459.1993.10476321
 
-Devroye, L. (2014). “Random variate generation for the generalized inverse Gaussian
-distribution.” Statistics and Computing, 24(2): 239–246. DOI: 10.1007/s11222-012-9367-z
+Devroye, L. (2014). `"Random variate generation for the generalized inverse Gaussian distribution."`
+Statistics and Computing, 24(2): 239`-`246. DOI: 10.1007/s11222-012-9367-z
 }
 \seealso{
 Gibbs sampling, truncated normal distribution,

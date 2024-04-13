@@ -57,14 +57,14 @@ B0 <- 10*diag(k)
 n0 <- 5
 d0 <- 8
 output <- quantregOR2(y = y, x = xMat, b0, B0, n0, d0, gammacp2 = 3,
-burn = 10, mcmc = 40, p = 0.25, accutoff = 0.5, verbose = FALSE)
+burn = 10, mcmc = 40, p = 0.25, accutoff = 0.5, maxlags = 400, verbose = FALSE)
 # output$logMargLike
 #   -404.57
 
 }
 \references{
-Chib, S. (1995). “Marginal likelihood from the Gibbs output.” Journal of the American
-Statistical Association, 90(432):1313–1321, 1995. DOI: 10.1080/01621459.1995.10476635
+Chib, S. (1995). `"Marginal likelihood from the Gibbs output."` Journal of the American
+Statistical Association, 90(432):1313`-`1321, 1995. DOI: 10.1080/01621459.1995.10476635
 }
 \seealso{
 \link[invgamma]{dinvgamma}, \link[NPflow]{mvnpdf}, \link[stats]{dnorm},

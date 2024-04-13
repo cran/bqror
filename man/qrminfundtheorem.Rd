@@ -35,14 +35,12 @@ for second derivaties.}
 }
 \value{
 Returns a list with components
-\itemize{
 \item{\code{deltamin}: }{cutpoint vector that minimizes the log-likelihood function.}
 \item{\code{negsum}: }{negative sum of log-likelihood.}
 \item{\code{logl}: }{log-likelihood values.}
 \item{\code{G}: }{gradient vector, \eqn{(n x k)} matrix with i-th row as the score
 for the i-th unit.}
 \item{\code{H}: }{Hessian matrix.}
-}
 }
 \description{
 This function minimizes the negative of log-likelihood in the OR1 model

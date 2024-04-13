@@ -27,10 +27,8 @@ then replace the column for the covariate of interest with a column of ones.}
 }
 \value{
 Returns a list with components:
-\itemize{
 \item{\code{avgDiffProb}: }{vector with change in predicted
 probability for each outcome category.}
-}
 }
 \description{
 This function computes the average covariate effect for different
@@ -55,7 +53,7 @@ B0 <- 10*diag(k)
 d0 <- array(0, dim = c(J-2, 1))
 D0 <- 0.25*diag(J - 2)
 modelOR1 <- quantregOR1(y = y, x = xMat1, b0, B0, d0, D0,
-burn = 10, mcmc = 40, p = 0.25, tune = 1, accutoff = 0.5, verbose = FALSE)
+burn = 10, mcmc = 40, p = 0.25, tune = 1, accutoff = 0.5, maxlags = 400, verbose = FALSE)
 xMat2 <- xMat1
 xMat2[,3] <- xMat2[,3] + 0.02
 res <- covEffectOR1(modelOR1, y, xMat1, xMat2, p = 0.25, verbose = TRUE)
@@ -70,15 +68,13 @@ res <- covEffectOR1(modelOR1, y, xMat1, xMat2, p = 0.25, verbose = TRUE)
 
 }
 \references{
-Rahman, M. A. (2016). “Bayesian
-Quantile Regression for Ordinal Models.”
+Rahman, M. A. (2016). `"Bayesian Quantile Regression for Ordinal Models."`
 Bayesian Analysis, 11(1): 1-24. DOI: 10.1214/15-BA939
 
-Jeliazkov, I., Graves, J., and Kutzbach, M. (2008). “Fitting and Comparison of Models
-for Multivariate Ordinal Outcomes.” Advances in Econometrics: Bayesian Econometrics,
-23: 115–156. DOI: 10.1016/S0731-9053(08)23004-5
+Jeliazkov, I., Graves, J., and Kutzbach, M. (2008). `"Fitting and Comparison of Models for Multivariate Ordinal Outcomes."`
+Advances in Econometrics: Bayesian Econometrics, 23: 115`-`156. DOI: 10.1016/S0731-9053(08)23004-5
 
-Jeliazkov, I. and Rahman, M. A. (2012). “Binary and Ordinal Data Analysis
-in Economics: Modeling and Estimation” in Mathematical Modeling with Multidisciplinary
-Applications, edited by X.S. Yang, 123-150. John Wiley & Sons Inc, Hoboken, New Jersey. DOI: 10.1002/9781118462706.ch6
+Jeliazkov, I. and Rahman, M. A. (2012). `"Binary and Ordinal Data Analysis in Economics: Modeling and Estimation"`
+in Mathematical Modeling with Multidisciplinary
+Applications, edited by X.S. Yang, 123-150. John Wiley `&` Sons Inc, Hoboken, New Jersey. DOI: 10.1002/9781118462706.ch6
 }

@@ -3,14 +3,12 @@
 \docType{data}
 \name{Educational_Attainment}
 \alias{Educational_Attainment}
-\title{Educational Attainment study based on data from the National
-Longitudinal Study of Youth (NLSY, 1979) survey.}
+\title{Educational Attainment study based on data from the National Longitudinal Study of Youth (NLSY, 1979) survey.}
 \usage{
 data(Educational_Attainment)
 }
 \value{
 Returns data with components
-\itemize{
 \item{\code{mother_work}: }{Indicator for working female at the age of 14.}
 \item{\code{urban}: }{Indicator for the youth living in urban area at the age of 14.}
 \item{\code{south}: }{Indicator for the youth living in South at the age of 14.}
@@ -25,10 +23,8 @@ Returns data with components
 \item{\code{dep_edu_level}: }{Four categories of educational attainment: less than high school, high school degree,
 some college or associate's degree, and college or graduate degree.}
 }
-}
 \description{
-Educational Attainment study based on data from the National
-Longitudinal Study of Youth (NLSY, 1979) survey.
+Educational Attainment study based on data from the National Longitudinal Study of Youth (NLSY, 1979) survey.
 }
 \details{
 This data is taken from the National Longitudinal Study of Youth (NLSY, 1979)
@@ -43,17 +39,15 @@ lived in an urban area at the age of 14, and indicator variables to control for 
 effects.
 }
 \references{
-Rahman, M. A. (2016). “Bayesian
-Quantile Regression for Ordinal Models.”
+Rahman, M. A. (2016). `"Bayesian Quantile Regression for Ordinal Models."`
 Bayesian Analysis, 11(1): 1-24. DOI: 10.1214/15-BA939
 
-Jeliazkov, I., Graves, J., and Kutzbach, M. (2008). “Fitting and Comparison of Models
-for Multivariate Ordinal Outcomes.” Advances in Econometrics: Bayesian Econometrics,
-23: 115–156. DOI: 10.1016/S0731-9053(08)23004-5
+Jeliazkov, I., Graves, J., and Kutzbach, M. (2008). `"Fitting and Comparison of Models for Multivariate Ordinal Outcomes."`
+Advances in Econometrics: Bayesian Econometrics, 23: 115`-`156. DOI: 10.1016/S0731-9053(08)23004-5
 
-Jeliazkov, I., and Rahman, M. A. (2012). “Binary and Ordinal Data Analysis
-in Economics: Modeling and Estimation” in Mathematical Modeling with Multidisciplinary
-Applications, edited by X.S. Yang, 123-150. John Wiley & Sons Inc, Hoboken, New Jersey. DOI: 10.1002/9781118462706.ch6
+Jeliazkov, I., and Rahman, M. A. (2012). `"Binary and Ordinal Data Analysis in Economics: Modeling and Estimation"`
+in Mathematical Modeling with Multidisciplinary Applications, edited by X.S. Yang,
+123-150. John Wiley `&` Sons Inc, Hoboken, New Jersey. DOI: 10.1002/9781118462706.ch6
 }
 \seealso{
 \href{https://www.bls.gov/nls/nlsy97.htm}{Survey Process}.

@@ -4,7 +4,7 @@
 \alias{quantregOR2}
 \title{Bayesian quantile regression in the OR2 model}
 \usage{
-quantregOR2(y, x, b0, B0 , n0, d0, gammacp2, burn, mcmc, p, accutoff, verbose)
+quantregOR2(y, x, b0, B0 , n0, d0, gammacp2, burn, mcmc, p, accutoff, maxlags, verbose)
 }
 \arguments{
 \item{y}{observed ordinal outcomes, column vector of size \eqn{(n x 1)}.}
@@ -29,11 +29,12 @@ quantregOR2(y, x, b0, B0 , n0, d0, gammacp2, burn, mcmc, p, accutoff, verbose)
 
 \item{accutoff}{autocorrelation cut-off to identify the number of lags and form batches to compute the inefficiency factor, default is 0.05.}
 
+\item{maxlags}{maximum lag at which to calculate the acf in inefficiency factor calculation, default is 400.}
+
 \item{verbose}{whether to print the final output and provide additional information or not, default is TRUE.}
 }
 \value{
 Returns a bqrorOR2 object with components
-\itemize{
 \item{\code{summary}: }{summary of the MCMC draws.}
 \item{\code{postMeanbeta}: }{posterior mean of \eqn{\beta} from the complete Gibbs run.}
 \item{\code{postMeansigma}: }{posterior mean of \eqn{\sigma} from the complete Gibbs run.}
@@ -44,7 +45,6 @@ Returns a bqrorOR2 object with components
  \item{\code{ineffactor}: }{inefficiency factor for each component of \eqn{\beta} and \eqn{\sigma}.}
  \item{\code{betadraws}: }{dataframe of the \eqn{\beta} draws from the complete Gibbs run, size is \eqn{(k x nsim)}.}
  \item{\code{sigmadraws}: }{dataframe of the \eqn{\sigma} draws from the complete Gibbs run, size is \eqn{(1 x nsim)}.}
-}
 }
 \description{
 This function estimates Bayesian quantile regression in the OR2 model (ordinal quantile model with
@@ -75,7 +75,7 @@ B0 <- 10*diag(k)
 n0 <- 5
 d0 <- 8
 output <- quantregOR2(y = y, x = xMat, b0, B0, n0, d0, gammacp2 = 3,
-burn = 10, mcmc = 40, p = 0.25, accutoff = 0.5, verbose = TRUE)
+burn = 10, mcmc = 40, p = 0.25, accutoff = 0.5, maxlags = 400, verbose = TRUE)
 
 # Summary of MCMC draws :
 
@@ -90,8 +90,7 @@ burn = 10, mcmc = 40, p = 0.25, accutoff = 0.5, verbose = TRUE)
 
 }
 \references{
-Rahman, M. A. (2016). “Bayesian
-Quantile Regression for Ordinal Models.”
+Rahman, M. A. (2016). `"Bayesian Quantile Regression for Ordinal Models."`
 Bayesian Analysis, 11(1): 1-24.  DOI: 10.1214/15-BA939
 }
 \seealso{

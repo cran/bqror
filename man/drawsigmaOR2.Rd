@@ -25,11 +25,9 @@ drawsigmaOR2(z, x, beta, nu, tau2, theta, n0, d0)
 }
 \value{
 Returns a list with components
-\itemize{
 \item{\code{sigma}: }{\eqn{\sigma}, a scalar, sampled
 from an inverse gamma distribution.}
 \item{\code{dtilde}: }{scale parameter of the inverse-gamma distribution.}
-}
 }
 \description{
 This function samples \eqn{\sigma} from an inverse-gamma distribution
@@ -68,12 +66,11 @@ output <- drawsigmaOR2(z, x, beta, nu, tau2, theta, n0, d0)
 
 }
 \references{
-Rahman, M. A. (2016). “Bayesian
-Quantile Regression for Ordinal Models.”
+Rahman, M. A. (2016). `"Bayesian Quantile Regression for Ordinal Models."`
 Bayesian Analysis, 11(1): 1-24.  DOI: 10.1214/15-BA939
 
-Devroye, L. (2014). “Random variate generation for the generalized inverse Gaussian
-distribution.” Statistics and Computing, 24(2): 239–246. DOI: 10.1007/s11222-012-9367-z
+Devroye, L. (2014). `"Random variate generation for the generalized inverse Gaussian distribution."`
+Statistics and Computing, 24(2): 239`-`246. DOI: 10.1007/s11222-012-9367-z
 }
 \seealso{
 \link[stats]{rgamma}, Gibbs sampling

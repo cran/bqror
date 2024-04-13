@@ -9,10 +9,8 @@ data(data75j3)
 }
 \value{
 Returns a list with components
-\itemize{
 \item{\code{x}: }{a matrix of covariates, including a column of ones.}
 \item{\code{y}: }{a column vector of ordinal outcomes.}
-}
 }
 \description{
 Simulated data from the OR2 model for \eqn{p = 0.75} (i.e., 75th quantile)
@@ -25,11 +23,11 @@ The model specifics for generating the data are as follows: \eqn{\beta = (-4, 6,
 continuous values of the dependent variable into 3 categories, which form the ordinal outcomes.
 }
 \references{
-Rahman, M. A. (2016). “Bayesian Quantile Regression for Ordinal Models.”
+Rahman, M. A. (2016). `"Bayesian Quantile Regression for Ordinal Models."`
 Bayesian Analysis, 11(1): 1-24. DOI: 10.1214/15-BA939
 
-Yu, K., and Zhang, J. (2005). “A Three-Parameter Asymmetric
-Laplace Distribution.” Communications in Statistics - Theory and Methods, 34(9-10), 1867-1879. DOI: 10.1080/03610920500199018
+Yu, K., and Zhang, J. (2005). `"A Three-Parameter Asymmetric Laplace Distribution."`
+Communications in Statistics - Theory and Methods, 34(9-10), 1867-1879. DOI: 10.1080/03610920500199018
 }
 \seealso{
 \link[MASS]{mvrnorm}, Asymmetric Laplace Distribution

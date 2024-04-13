@@ -9,8 +9,8 @@ test_that("Testing for quantregORII", {
   n0 <- 5
   d0 <- 8
   output <- quantregOR2(y = y, x = xMat, b0, B0, n0, d0, gammacp2 = 3,
-  burn = 10, mcmc = 40, p = 0.25, accutoff = 0.5, verbose = FALSE)
-  expect_equal(round(output$logMargLike), -410)
+  burn = 10, mcmc = 40, p = 0.25, accutoff = 0.5, maxlags = 400, verbose = FALSE)
+  expect_equal(round(output$logMargLike), -408)
 })
 
 test_that("Testing for drawsigmaOR2", {
@@ -51,7 +51,7 @@ test_that("Testing for dicOR2", {
   n0 <- 5
   d0 <- 8
   output <- quantregOR2(y = y, x = xMat, b0, B0, n0, d0, gammacp2 = 3,
-  burn = 10, mcmc = 40, p = 0.25, accutoff = 0.5, verbose = FALSE)
+  burn = 10, mcmc = 40, p = 0.25, accutoff = 0.5, maxlags = 400, verbose = FALSE)
   gammacp <- c(-Inf, 0, 3, Inf)
   betadraws <- output$betadraws
   sigmadraws <- output$sigmadraws

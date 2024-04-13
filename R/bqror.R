@@ -7,7 +7,7 @@
 #' a combination of Gibbs sampling and Metropolis-Hastings (MH) algorithm. Whereas an ordinal model
 #' with exactly 3 outcomes (labeled OR2 model) is estimated using a Gibbs sampling algorithm.
 #' The summary output presents the posterior mean, posterior standard deviation, 95\% credible
-#' intervals, and the inefficiency factors along with the two model comparison measures – logarithm of
+#' intervals, and the inefficiency factors along with the two model comparison measures logarithm of
 #' marginal likelihood and the deviance information criterion (DIC). The package also provides
 #' functions for computing the covariate effects and other functions that aids either the estimation
 #' or inference in quantile ordinal models.
@@ -15,7 +15,7 @@
 #' @details
 #' \deqn{Package: bqror}
 #' \deqn{Type: Package}
-#' \deqn{Version: 1.5.0}
+#' \deqn{Version: 1.7.0}
 #' \deqn{License: GPL (>=2)}
 #'
 #' Package \strong{bqror} provides the following functions:
@@ -52,17 +52,16 @@
 #' Prajual Maheshwari <prajual1391@gmail.com>
 #'
 #' @references
-#' Rahman, M. A. (2016). “Bayesian
-#' Quantile Regression for Ordinal Models.”
+#' Rahman, M. A. (2016). `"Bayesian Quantile Regression for Ordinal Models."`
 #' Bayesian Analysis, 11(1): 1-24. DOI: 10.1214/15-BA939
 #'
-#' Yu, K., and Moyeed, R. A. (2001). “Bayesian Quantile Regression.” Statistics and
-#' Probability Letters, 54(4): 437–447. DOI: 10.1016/S0167-7152(01)00124-9
+#' Yu, K., and Moyeed, R. A. (2001). `"Bayesian Quantile Regression."` Statistics and
+#' Probability Letters, 54(4): 437 - 447. DOI:10.1016/S0167-7152(01)00124-9
 #'
-#' Koenker, R., and Bassett, G. (1978).“Regression Quantiles.” Econometrica,
+#' Koenker, R., and Bassett, G. (1978).`"Regression Quantiles."` Econometrica,
 #' 46(1): 33-50. DOI: 10.2307/1913643
 #'
-#' Greenberg, E. (2012). “Introduction to Bayesian Econometrics.”
+#' Greenberg, E. (2012). `"Introduction to Bayesian Econometrics."`
 #' Cambridge University Press. Cambridge, DOI: 10.1017/CBO9781139058414
 #'
 #' @seealso \link[GIGrvg]{rgig}, \link[MASS]{mvrnorm}, \link[MASS]{ginv},
@@ -76,6 +75,7 @@
 #'
 #' @docType package
 #' @name bqror
-NULL
+#' @docType package
+"_PACKAGE"
 
 

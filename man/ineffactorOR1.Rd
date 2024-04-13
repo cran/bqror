@@ -4,7 +4,7 @@
 \alias{ineffactorOR1}
 \title{Inefficiency factor in the OR1 model}
 \usage{
-ineffactorOR1(x, betadraws, deltadraws, accutoff, verbose)
+ineffactorOR1(x, betadraws, deltadraws, accutoff, maxlags, verbose)
 }
 \arguments{
 \item{x}{covariate matrix of size \eqn{(n x k)} including a column of ones with or without column names.
@@ -15,6 +15,8 @@ This input is used to extract column names, if available, but not used in calcul
 \item{deltadraws}{dataframe of the MCMC draws of \eqn{\delta}, size \eqn{((J-2) x nsim)}.}
 
 \item{accutoff}{cut-off to identify the number of lags and form batches, default is 0.05.}
+
+\item{maxlags}{maximum lag at which to calculate the acf, default is 400.}
 
 \item{verbose}{whether to print the final output and provide additional information or not, default is TRUE.}
 }
@@ -44,10 +46,10 @@ B0 <- 10*diag(k)
 d0 <- array(0, dim = c(J-2, 1))
 D0 <- 0.25*diag(J - 2)
 output <- quantregOR1(y = y, x = xMat, b0, B0, d0, D0,
-burn = 10, mcmc = 40, p = 0.25, tune = 1, accutoff = 0.5, verbose = FALSE)
+burn = 10, mcmc = 40, p = 0.25, tune = 1, accutoff = 0.5, maxlags = 400, verbose = FALSE)
 betadraws <- output$betadraws
 deltadraws <- output$deltadraws
-inefficiency <- ineffactorOR1(xMat, betadraws, deltadraws, 0.5, TRUE)
+inefficiency <- ineffactorOR1(xMat, betadraws, deltadraws, 0.5, 400, TRUE)
 
 # Summary of Inefficiency Factor:
 
@@ -60,11 +62,11 @@ inefficiency <- ineffactorOR1(xMat, betadraws, deltadraws, 0.5, TRUE)
 
 }
 \references{
-Greenberg, E. (2012). “Introduction to Bayesian Econometrics.” Cambridge University
+Greenberg, E. (2012). `"Introduction to Bayesian Econometrics."` Cambridge University
 Press, Cambridge. DOI: 10.1017/CBO9780511808920
 
-Chib, S. (2012), "Introduction to simulation and MCMC methods." In Geweke J., Koop G., and Dijk, H.V.,
-editors, "The Oxford Handbook of Bayesian Econometrics", pages 183--218. Oxford University Press,
+Chib, S. (2012), `"Introduction to simulation and MCMC methods."` In Geweke J., Koop G., and Dijk, H.V.,
+editors, `"The Oxford Handbook of Bayesian Econometrics"`, pages 183--218. Oxford University Press,
 Oxford. DOI: 10.1093/oxfordhb/9780199559084.013.0006
 }
 \seealso{

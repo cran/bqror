@@ -4,7 +4,7 @@
 \alias{ineffactorOR2}
 \title{Inefficiency factor in the OR2 model}
 \usage{
-ineffactorOR2(x, betadraws, sigmadraws, accutoff, verbose)
+ineffactorOR2(x, betadraws, sigmadraws, accutoff, maxlags, verbose)
 }
 \arguments{
 \item{x}{covariate matrix of size \eqn{(n x k)} including a column of ones with or without column names.
@@ -15,6 +15,8 @@ This input is used to extract column names, if available, but not used in calcul
 \item{sigmadraws}{dataframe of the Gibbs draws of \eqn{\sigma}, size \eqn{(1 x nsim)}.}
 
 \item{accutoff}{cut-off to identify the number of lags and form batches, default is 0.05.}
+
+\item{maxlags}{maximum lag at which to calculate the acf, default is 400.}
 
 \item{verbose}{whether to print the final output and provide additional information or not, default is TRUE.}
 }
@@ -43,11 +45,11 @@ B0 <- 10*diag(k)
 n0 <- 5
 d0 <- 8
 output <- quantregOR2(y = y, x = xMat, b0, B0, n0, d0, gammacp2 = 3,
-burn = 10, mcmc = 40, p = 0.25, accutoff = 0.5, verbose = FALSE)
+burn = 10, mcmc = 40, p = 0.25, accutoff = 0.5, maxlags = 400, verbose = FALSE)
 betadraws <- output$betadraws
 sigmadraws <- output$sigmadraws
 
-inefficiency <- ineffactorOR2(xMat, betadraws, sigmadraws, 0.5, TRUE)
+inefficiency <- ineffactorOR2(xMat, betadraws, sigmadraws, 0.5, 400, TRUE)
 
 # Summary of Inefficiency Factor:
 #            Inef Factor
@@ -58,11 +60,11 @@ inefficiency <- ineffactorOR2(xMat, betadraws, sigmadraws, 0.5, TRUE)
 
 }
 \references{
-Greenberg, E. (2012). “Introduction to Bayesian Econometrics.” Cambridge University
+Greenberg, E. (2012). `"Introduction to Bayesian Econometrics."` Cambridge University
 Press, Cambridge. DOI: 10.1017/CBO9780511808920
 
-Chib, S. (2012), "Introduction to simulation and MCMC methods." In Geweke J., Koop G., and Dijk, H.V.,
-editors, "The Oxford Handbook of Bayesian Econometrics", pages 183--218. Oxford University Press,
+Chib, S. (2012), `"Introduction to simulation and MCMC methods."` In Geweke J., Koop G., and Dijk, H.V.,
+editors, `"The Oxford Handbook of Bayesian Econometrics"`, pages 183--218. Oxford University Press,
 Oxford. DOI: 10.1093/oxfordhb/9780199559084.013.0006
 }
 \seealso{

@@ -27,10 +27,8 @@ drawdeltaOR1(y, x, beta, delta0, d0, D0, tune, Dhat, p)
 }
 \value{
 Returns a list with components
-\itemize{
  \item{\code{deltaReturn}: }{\eqn{\delta}, a column vector of size \eqn{((J-2) x 1)}, sampled using MH algorithm.}
   \item{\code{accept}: }{indicator for acceptance of the proposed value of \eqn{\delta}.}
-}
 }
 \description{
 This function samples the cut-point vector \eqn{\delta} using a
@@ -65,15 +63,14 @@ output <- drawdeltaOR1(y, xMat, beta, delta0, d0, D0, tune, Dhat, p)
 
 }
 \references{
-Rahman, M. A. (2016). “Bayesian
-Quantile Regression for Ordinal Models.”
+Rahman, M. A. (2016). `"Bayesian Quantile Regression for Ordinal Models."`
 Bayesian Analysis, 11(1): 1-24. DOI: 10.1214/15-BA939
 
-Chib, S., and Greenberg, E. (1995). “Understanding the Metropolis-Hastings
-Algorithm.” The American Statistician, 49(4): 327-335. DOI: 10.2307/2684568
+Chib, S., and Greenberg, E. (1995). `"Understanding the Metropolis-Hastings Algorithm."`
+The American Statistician, 49(4): 327-335. DOI: 10.2307/2684568
 
-Jeliazkov, I., and Rahman, M. A. (2012). “Binary and Ordinal Data Analysis
-in Economics: Modeling and Estimation” in Mathematical Modeling with Multidisciplinary
+Jeliazkov, I., and Rahman, M. A. (2012). `"Binary and Ordinal Data Analysis in Economics: Modeling and Estimation"`
+in Mathematical Modeling with Multidisciplinary
 Applications, edited by X.S. Yang, 123-150. John Wiley & Sons Inc, Hoboken, New Jersey. DOI: 10.1002/9781118462706.ch6
 }
 \seealso{

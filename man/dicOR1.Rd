@@ -55,7 +55,7 @@ B0 <- 10*diag(k)
 d0 <- array(0, dim = c(J-2, 1))
 D0 <- 0.25*diag(J - 2)
 output <- quantregOR1(y = y, x = xMat, b0, B0, d0, D0,
-burn = 10, mcmc = 40, p = 0.25, tune = 1, accutoff = 0.5, verbose = FALSE)
+burn = 10, mcmc = 40, p = 0.25, tune = 1, accutoff = 0.5, maxlags = 400, verbose = FALSE)
 mcmc <- 40
 deltadraws <- output$deltadraws
 betadraws <- output$betadraws
@@ -76,11 +76,11 @@ postMeanbeta, postMeandelta, burn, mcmc, p = 0.25)
 }
 \references{
 Spiegelhalter, D. J., Best, N. G., Carlin, B. P. and Linde, A. (2002).
-“Bayesian Measures of Model Complexity and Fit.” Journal of the
+`"Bayesian Measures of Model Complexity and Fit."` Journal of the
 Royal Statistical Society B, Part 4: 583-639. DOI: 10.1111/1467-9868.00353
 
 Gelman, A., Carlin, J. B., Stern, H. S., and Rubin, D. B.
-“Bayesian Data Analysis.” 2nd Edition, Chapman and Hall. DOI: 10.1002/sim.1856
+`"Bayesian Data Analysis."` 2nd Edition, Chapman and Hall. DOI: 10.1002/sim.1856
 }
 \seealso{
 decision criteria

@@ -3,16 +3,12 @@
 \docType{data}
 \name{Policy_Opinion}
 \alias{Policy_Opinion}
-\title{Data contains public opinion on the proposal to raise federal income taxes for couples (individuals)
-earning more than $250,000 ($200,000) per year and a host of other covariates. The data is taken
-from the 2010-2012 American National Election Studies (ANES) on the Evaluation of
-Government and Society Study I (EGSS 1)}
+\title{Data contains public opinion on the proposal to raise federal income taxes for couples (individuals) earning more than $250,000 ($200,000) per year and a host of other covariates. The data is taken from the 2010-2012 American National Election Studies (ANES) on the Evaluation of Government and Society Study I (EGSS 1)}
 \usage{
 data(Policy_Opinion)
 }
 \value{
 Returns data with components
-\itemize{
 \item{\code{Intercept}: }{Column of ones.}
 \item{\code{EmpCat}: }{Indicator for employment status.}
 \item{\code{IncomeCat}: }{Indicator for household income > $75,000.}
@@ -24,12 +20,8 @@ Returns data with components
 \item{\code{y}: }{Public opinion on the proposal to raise federal income taxes. The three categories are: oppose, neither
 favor nor oppose, or favor the tax increase.}
 }
-}
 \description{
-Data contains public opinion on the proposal to raise federal income taxes for couples (individuals)
-earning more than $250,000 ($200,000) per year and a host of other covariates. The data is taken
-from the 2010-2012 American National Election Studies (ANES) on the Evaluation of
-Government and Society Study I (EGSS 1)
+Data contains public opinion on the proposal to raise federal income taxes for couples (individuals) earning more than $250,000 ($200,000) per year and a host of other covariates. The data is taken from the 2010-2012 American National Election Studies (ANES) on the Evaluation of Government and Society Study I (EGSS 1)
 }
 \details{
 The data consists of 1,164 observations taken from the 2010-2012 American National Election
@@ -41,8 +33,7 @@ independent variables include indicator variables (or dummy) for employment, inc
 $75,000, bachelor's and post-bachelor's degree, computer ownership, cellphone ownership, and white race.
 }
 \references{
-Rahman, M. A. (2016). “Bayesian
-Quantile Regression for Ordinal Models.”
+Rahman, M. A. (2016). `"Bayesian Quantile Regression for Ordinal Models."`
 Bayesian Analysis, 11(1): 1-24. DOI: 10.1214/15-BA939
 }
 \seealso{

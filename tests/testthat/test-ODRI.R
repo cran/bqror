@@ -10,7 +10,7 @@ test_that("Testing for quantregOR1", {
     d0 <- array(0, dim = c(J-2, 1))
     D0 <- 0.25*diag(J - 2)
     output <- quantregOR1(y = y, x = xMat, b0, B0, d0, D0,
-    burn = 10, mcmc = 40, p = 0.25, tune = 1, accutoff = 0.5, verbose = FALSE)
+    burn = 10, mcmc = 40, p = 0.25, tune = 1, accutoff = 0.5, maxlags = 400, verbose = FALSE)
     expect_equal(round(output$acceptancerate), 50)
     expect_equal(round(output$dicQuant$DIC, 2), 1133.11)
     expect_equal(round(output$logMargLike, 2), -554.61)
@@ -28,7 +28,7 @@ test_that("Testing for quantregOR1 with J=3", {
   d0 <- array(0, dim = c(J-2, 1))
   D0 <- 0.25*diag(J - 2)
   output <- quantregOR1(y = y, x = xMat, b0, B0, d0, D0,
-                        burn = 10, mcmc = 40, p = 0.25, tune = 1, accutoff = 0.5, verbose = FALSE)
+                        burn = 10, mcmc = 40, p = 0.25, tune = 1, accutoff = 0.5, maxlags = 400, verbose = FALSE)
   expect_equal(round(output$acceptancerate), 45)
   expect_equal(round(output$dicQuant$DIC, 1), 818.4)
   expect_equal(round(output$logMargLike), -413)

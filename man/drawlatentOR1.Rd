@@ -54,12 +54,11 @@ output <- drawlatentOR1(y, xMat, beta, w, theta, tau2, delta)
 
 }
 \references{
-Albert, J., and Chib, S. (1993). “Bayesian Analysis of Binary and Polychotomous
-Response Data.” Journal of the American Statistical
-Association, 88(422): 669–679. DOI: 10.1080/01621459.1993.10476321
+Albert, J., and Chib, S. (1993). `"Bayesian Analysis of Binary and Polychotomous Response Data."`
+Journal of the American Statistical Association, 88(422): 669`-`679. DOI: 10.1080/01621459.1993.10476321
 
-Robert, C. P. (1995). “Simulation of truncated normal variables.” Statistics and
-Computing, 5: 121–125. DOI: 10.1007/BF00143942
+Robert, C. P. (1995). `"Simulation of truncated normal variables."` Statistics and
+Computing, 5: 121`-`125. DOI: 10.1007/BF00143942
 }
 \seealso{
 Gibbs sampling, truncated normal distribution,

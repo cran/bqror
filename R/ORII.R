@@ -5,7 +5,7 @@
 #' percent posterior credible intervals and inefficiency factor of \eqn{(\beta, \sigma)}. The output also displays the log of
 #' marginal likelihood and the DIC.
 #'
-#' @usage quantregOR2(y, x, b0, B0 , n0, d0, gammacp2, burn, mcmc, p, accutoff, verbose)
+#' @usage quantregOR2(y, x, b0, B0 , n0, d0, gammacp2, burn, mcmc, p, accutoff, maxlags, verbose)
 #'
 #' @param y         observed ordinal outcomes, column vector of size \eqn{(n x 1)}.
 #' @param x         covariate matrix of size \eqn{(n x k)} including a column of ones with or without column names.
@@ -13,11 +13,12 @@
 #' @param B0        prior covariance matrix for \eqn{\beta}.
 #' @param n0        prior shape parameter of the inverse-gamma distribution for \eqn{\sigma}, default is 5.
 #' @param d0        prior scale parameter of the inverse-gamma distribution for \eqn{\sigma}, default is 8.
-#' @param gammacp2    one and only cut-point other than 0, default is 3.
+#' @param gammacp2  one and only cut-point other than 0, default is 3.
 #' @param burn      number of burn-in MCMC iterations.
 #' @param mcmc      number of MCMC iterations, post burn-in.
 #' @param p         quantile level or skewness parameter, p in (0,1).
 #' @param accutoff  autocorrelation cut-off to identify the number of lags and form batches to compute the inefficiency factor, default is 0.05.
+#' @param maxlags   maximum lag at which to calculate the acf in inefficiency factor calculation, default is 400.
 #' @param verbose   whether to print the final output and provide additional information or not, default is TRUE.
 #'
 #' @details
@@ -33,7 +34,6 @@
 #' better model fit.
 #'
 #' @return Returns a bqrorOR2 object with components
-#' \itemize{
 #' \item{\code{summary}: }{summary of the MCMC draws.}
 #' \item{\code{postMeanbeta}: }{posterior mean of \eqn{\beta} from the complete Gibbs run.}
 #' \item{\code{postMeansigma}: }{posterior mean of \eqn{\sigma} from the complete Gibbs run.}
@@ -44,10 +44,8 @@
 #'  \item{\code{ineffactor}: }{inefficiency factor for each component of \eqn{\beta} and \eqn{\sigma}.}
 #'  \item{\code{betadraws}: }{dataframe of the \eqn{\beta} draws from the complete Gibbs run, size is \eqn{(k x nsim)}.}
 #'  \item{\code{sigmadraws}: }{dataframe of the \eqn{\sigma} draws from the complete Gibbs run, size is \eqn{(1 x nsim)}.}
-#' }
 #'
-#' @references Rahman, M. A. (2016). “Bayesian
-#' Quantile Regression for Ordinal Models.”
+#' @references Rahman, M. A. (2016). `"Bayesian Quantile Regression for Ordinal Models."`
 #' Bayesian Analysis, 11(1): 1-24.  DOI: 10.1214/15-BA939
 #'
 #' @importFrom "stats" "sd"
@@ -67,7 +65,7 @@
 #' n0 <- 5
 #' d0 <- 8
 #' output <- quantregOR2(y = y, x = xMat, b0, B0, n0, d0, gammacp2 = 3,
-#' burn = 10, mcmc = 40, p = 0.25, accutoff = 0.5, verbose = TRUE)
+#' burn = 10, mcmc = 40, p = 0.25, accutoff = 0.5, maxlags = 400, verbose = TRUE)
 #'
 #' # Summary of MCMC draws :
 #'
@@ -81,7 +79,7 @@
 #' # DIC: 801.82
 #'
 #' @export
-quantregOR2 <- function(y, x, b0, B0 , n0 = 5, d0 = 8, gammacp2 = 3, burn, mcmc, p, accutoff = 0.5, verbose = TRUE) {
+quantregOR2 <- function(y, x, b0, B0 , n0 = 5, d0 = 8, gammacp2 = 3, burn, mcmc, p, accutoff = 0.5, maxlags = 400, verbose = TRUE) {
     cols <- colnames(x)
     names(x) <- NULL
     names(y) <- NULL
@@ -196,7 +194,7 @@ quantregOR2 <- function(y, x, b0, B0 , n0 = 5, d0 = 8, gammacp2 = 3, burn, mcmc,
                                                 postMeansigma, btildeStore,
                                                 BtildeStore, gammacp2, p, verbose)
 
-    ineffactor <- ineffactorOR2(x, beta, sigma, accutoff, FALSE)
+    ineffactor <- ineffactorOR2(x, beta, sigma, accutoff, maxlags, FALSE)
 
     postMeanbeta <- array(postMeanbeta, dim = c(k, 1))
     postStdbeta <- array(postStdbeta, dim = c(k, 1))
@@ -286,12 +284,11 @@ quantregOR2 <- function(y, x, b0, B0 , n0 = 5, d0 = 8, gammacp2 = 3, burn, mcmc,
 #'
 #' @return latent variable z of size \eqn{(n x 1)} from a univariate truncated distribution.
 #'
-#' @references Albert, J., and Chib, S. (1993). “Bayesian Analysis of Binary and Polychotomous
-#' Response Data.” Journal of the American Statistical
-#' Association, 88(422): 669–679. DOI: 10.1080/01621459.1993.10476321
+#' @references Albert, J., and Chib, S. (1993). `"Bayesian Analysis of Binary and Polychotomous Response Data."`
+#' Journal of the American Statistical Association, 88(422): 669`-`679. DOI: 10.1080/01621459.1993.10476321
 #'
-#' Devroye, L. (2014). “Random variate generation for the generalized inverse Gaussian
-#' distribution.” Statistics and Computing, 24(2): 239–246. DOI: 10.1007/s11222-012-9367-z
+#' Devroye, L. (2014). `"Random variate generation for the generalized inverse Gaussian distribution."`
+#' Statistics and Computing, 24(2): 239`-`246. DOI: 10.1007/s11222-012-9367-z
 #'
 #' @seealso Gibbs sampling, truncated normal distribution,
 #' \link[truncnorm]{rtruncnorm}
@@ -383,17 +380,14 @@ drawlatentOR2 <- function(y, x, beta, sigma, nu, theta, tau2, gammacp) {
 #' which is an updated multivariate normal distribution.
 #'
 #' @return Returns a list with components
-#' \itemize{
 #' \item{\code{beta}: }{\eqn{\beta}, a column vector of size \eqn{(k x 1)}, sampled from its
 #' condtional posterior distribution.}
 #' \item{\code{Btilde}: }{variance parameter for the posterior
 #' multivariate normal distribution.}
 #' \item{\code{btilde}: }{mean parameter for the
 #' posterior multivariate normal distribution.}
-#' }
 #'
-#' @references Rahman, M. A. (2016). “Bayesian
-#' Quantile Regression for Ordinal Models.”
+#' @references Rahman, M. A. (2016). `"Bayesian Quantile Regression for Ordinal Models."`
 #' Bayesian Analysis, 11(1): 1-24. DOI: 10.1214/15-BA939
 #'
 #' @importFrom "MASS" "mvrnorm"
@@ -506,20 +500,17 @@ drawbetaOR2 <- function(z, x, sigma, nu, tau2, theta, invB0, invB0b0) {
 #' This function samples \eqn{\sigma} from an inverse-gamma distribution.
 #'
 #' @return Returns a list with components
-#' \itemize{
 #' \item{\code{sigma}: }{\eqn{\sigma}, a scalar, sampled
 #' from an inverse gamma distribution.}
 #' \item{\code{dtilde}: }{scale parameter of the inverse-gamma distribution.}
-#' }
 #'
 #' @importFrom "stats" "rgamma"
 #'
-#' @references Rahman, M. A. (2016). “Bayesian
-#' Quantile Regression for Ordinal Models.”
+#' @references Rahman, M. A. (2016). `"Bayesian Quantile Regression for Ordinal Models."`
 #' Bayesian Analysis, 11(1): 1-24.  DOI: 10.1214/15-BA939
 #'
-#' Devroye, L. (2014). “Random variate generation for the generalized inverse Gaussian
-#' distribution.” Statistics and Computing, 24(2): 239–246. DOI: 10.1007/s11222-012-9367-z
+#' Devroye, L. (2014). `"Random variate generation for the generalized inverse Gaussian distribution."`
+#' Statistics and Computing, 24(2): 239`-`246. DOI: 10.1007/s11222-012-9367-z
 #'
 #' @seealso \link[stats]{rgamma}, Gibbs sampling
 #' @examples
@@ -623,12 +614,11 @@ drawsigmaOR2 <- function(z, x, beta, nu, tau2, theta, n0, d0) {
 #'
 #' @return \eqn{\nu}, a column vector of size \eqn{(n x 1)}, sampled from a GIG distribution.
 #'
-#' @references  Rahman, M. A. (2016), “Bayesian
-#' Quantile Regression for Ordinal Models.”
+#' @references  Rahman, M. A. (2016), `"Bayesian Quantile Regression for Ordinal Models."`
 #' Bayesian Analysis, 11(1), 1-24. DOI: 10.1214/15-BA939
 #'
-#' Devroye, L. (2014). “Random variate generation for the generalized inverse Gaussian
-#' distribution.” Statistics and Computing, 24(2): 239–246. DOI: 10.1007/s11222-012-9367-z
+#' Devroye, L. (2014). `"Random variate generation for the generalized inverse Gaussian distribution."`
+#' Statistics and Computing, 24(2): 239`-`246. DOI: 10.1007/s11222-012-9367-z
 #'
 #' @importFrom "GIGrvg" "rgig"
 #' @seealso GIGrvg, Gibbs sampling, \link[GIGrvg]{rgig}
@@ -739,11 +729,11 @@ drawnuOR2 <- function(z, x, beta, sigma, tau2, theta, indexp) {
 #' \deqn{dev = -2*(logLikelihood)}.
 #'
 #' @references Spiegelhalter, D. J., Best, N. G., Carlin, B. P. and Linde, A. (2002).
-#' “Bayesian Measures of Model Complexity and Fit.” Journal of the
+#' `"Bayesian Measures of Model Complexity and Fit."` Journal of the
 #' Royal Statistical Society B, Part 4: 583-639. DOI: 10.1111/1467-9868.00353
 #'
 #' Gelman, A., Carlin, J. B., Stern, H. S., and Rubin, D. B.
-#' “Bayesian Data Analysis.” 2nd Edition, Chapman and Hall. DOI: 10.1002/sim.1856
+#' `"Bayesian Data Analysis."` 2nd Edition, Chapman and Hall. DOI: 10.1002/sim.1856
 #'
 #' @seealso  decision criteria
 #' @examples
@@ -757,7 +747,7 @@ drawnuOR2 <- function(z, x, beta, sigma, tau2, theta, indexp) {
 #' n0 <- 5
 #' d0 <- 8
 #' output <- quantregOR2(y = y, x = xMat, b0, B0, n0, d0, gammacp2 = 3,
-#' burn = 10, mcmc = 40, p = 0.25, accutoff = 0.5, verbose = FALSE)
+#' burn = 10, mcmc = 40, p = 0.25, accutoff = 0.5, maxlags = 400, verbose = FALSE)
 #' betadraws <- output$betadraws
 #' sigmadraws <- output$sigmadraws
 #' gammacp <- c(-Inf, 0, 3, Inf)
@@ -860,8 +850,7 @@ dicOR2 <- function(y, x, betadraws, sigmadraws, gammacp, postMeanbeta,
 #'
 #' @return Returns the negative sum of log-likelihood.
 #'
-#' @references Rahman, M. A. (2016). “Bayesian
-#' Quantile Regression for Ordinal Models.”
+#' @references Rahman, M. A. (2016). `"Bayesian Quantile Regression for Ordinal Models."`
 #' Bayesian Analysis, 11(1): 1-24. DOI: 10.1214/15-BA939
 #'
 #' @seealso likelihood maximization
@@ -925,8 +914,10 @@ qrnegLogLikeOR2 <- function(y, x, gammacp, betaOne, sigmaOne, p) {
     negsuminpdf <- -sum(lnpdf)
     return(negsuminpdf)
 }
+
 #' Generates random numbers from an AL distribution
 #'
+#' @description
 #' This function generates a vector of random numbers from an AL
 #' distribution at quantile p.
 #'
@@ -938,16 +929,16 @@ qrnegLogLikeOR2 <- function(y, x, gammacp, betaOne, sigmaOne, p) {
 #'
 #' @details
 #' Generates a vector of random numbers from an AL distribution
-#' as a mixture of normal–exponential distributions.
+#' as a mixture of normal`–`exponential distributions.
 #'
 #' @return Returns a vector \eqn{(n x 1)} of random numbers from an AL(0, \eqn{\sigma}, p)
 #'
 #' @references
-#' Kozumi, H., and Kobayashi, G. (2011). “Gibbs Sampling Methods for Bayesian Quantile Regression.”
-#' Journal of Statistical Computation and Simulation, 81(11): 1565–1578. DOI: 10.1080/00949655.2010.496117
+#' Kozumi, H., and Kobayashi, G. (2011). `"Gibbs Sampling Methods for Bayesian Quantile Regression."`
+#' Journal of Statistical Computation and Simulation, 81(11): 1565`-`1578. DOI: 10.1080/00949655.2010.496117
 #'
-#' Yu, K., and Zhang, J. (2005). “A Three-Parameter Asymmetric
-#' Laplace Distribution.” Communications in Statistics - Theory and Methods, 34(9-10), 1867-1879. DOI: 10.1080/03610920500199018
+#' Yu, K., and Zhang, J. (2005). `"A Three-Parameter Asymmetric Laplace Distribution."`
+#' Communications in Statistics - Theory and Methods, 34(9-10), 1867`-`1879. DOI: 10.1080/03610920500199018
 #'
 #' @importFrom "stats" "rnorm" "rexp"
 #' @seealso asymmetric Laplace distribution
@@ -986,13 +977,14 @@ rndald <- function(sigma, p, n){
 #' of \eqn{(\beta, \sigma)} in the OR2 model (ordinal quantile model with exactly 3 outcomes). The
 #' inefficiency factor is calculated using the batch-means method.
 #'
-#' @usage ineffactorOR2(x, betadraws, sigmadraws, accutoff, verbose)
+#' @usage ineffactorOR2(x, betadraws, sigmadraws, accutoff, maxlags, verbose)
 #'
 #' @param x                         covariate matrix of size \eqn{(n x k)} including a column of ones with or without column names.
 #'                                  This input is used to extract column names, if available, but not used in calculation.
 #' @param betadraws                 dataframe of the Gibbs draws of \eqn{\beta}, size \eqn{(k x nsim)}.
 #' @param sigmadraws                dataframe of the Gibbs draws of \eqn{\sigma}, size \eqn{(1 x nsim)}.
 #' @param accutoff                  cut-off to identify the number of lags and form batches, default is 0.05.
+#' @param maxlags                   maximum lag at which to calculate the acf, default is 400.
 #' @param verbose                   whether to print the final output and provide additional information or not, default is TRUE.
 #'
 #' @details
@@ -1006,11 +998,11 @@ rndald <- function(sigma, p, n){
 #' @importFrom "pracma" "Reshape" "std"
 #' @importFrom "stats" "acf"
 #'
-#' @references Greenberg, E. (2012). “Introduction to Bayesian Econometrics.” Cambridge University
+#' @references Greenberg, E. (2012). `"Introduction to Bayesian Econometrics."` Cambridge University
 #' Press, Cambridge. DOI: 10.1017/CBO9780511808920
 #'
-#' Chib, S. (2012), "Introduction to simulation and MCMC methods." In Geweke J., Koop G., and Dijk, H.V.,
-#' editors, "The Oxford Handbook of Bayesian Econometrics", pages 183--218. Oxford University Press,
+#' Chib, S. (2012), `"Introduction to simulation and MCMC methods."` In Geweke J., Koop G., and Dijk, H.V.,
+#' editors, `"The Oxford Handbook of Bayesian Econometrics"`, pages 183--218. Oxford University Press,
 #' Oxford. DOI: 10.1093/oxfordhb/9780199559084.013.0006
 #'
 #' @seealso pracma, \link[stats]{acf}
@@ -1025,11 +1017,11 @@ rndald <- function(sigma, p, n){
 #' n0 <- 5
 #' d0 <- 8
 #' output <- quantregOR2(y = y, x = xMat, b0, B0, n0, d0, gammacp2 = 3,
-#' burn = 10, mcmc = 40, p = 0.25, accutoff = 0.5, verbose = FALSE)
+#' burn = 10, mcmc = 40, p = 0.25, accutoff = 0.5, maxlags = 400, verbose = FALSE)
 #' betadraws <- output$betadraws
 #' sigmadraws <- output$sigmadraws
 #'
-#' inefficiency <- ineffactorOR2(xMat, betadraws, sigmadraws, 0.5, TRUE)
+#' inefficiency <- ineffactorOR2(xMat, betadraws, sigmadraws, 0.5, 400, TRUE)
 #'
 #' # Summary of Inefficiency Factor:
 #' #            Inef Factor
@@ -1039,7 +1031,7 @@ rndald <- function(sigma, p, n){
 #' # sigma        2.4228
 #'
 #' @export
-ineffactorOR2 <- function(x, betadraws, sigmadraws, accutoff = 0.05, verbose = TRUE) {
+ineffactorOR2 <- function(x, betadraws, sigmadraws, accutoff = 0.05, maxlags = 400, verbose = TRUE) {
     cols <- colnames(x)
     names(x) <- NULL
     x <- as.matrix(x)
@@ -1052,8 +1044,9 @@ ineffactorOR2 <- function(x, betadraws, sigmadraws, accutoff = 0.05, verbose = T
     k <- dim(betadraws)[1]
     inefficiencyBeta <- array(0, dim = c(k, 1))
     for (i in 1:k) {
-        autocorrelation <- acf(betadraws[i,], plot = FALSE)
-        nlags <- min(which(autocorrelation$acf <= accutoff))
+        autocorrelation <- acf(betadraws[i,], lag.max = maxlags, plot = FALSE)
+        nlags <- tryCatch(min(which(autocorrelation$acf <= accutoff)), warning = function(w){
+            message("Increase either the maxlags or accutoff \n", w)})
         nbatch <- floor(n / nlags)
         nuse <- nbatch * nlags
         b <- betadraws[i, 1:nuse]
@@ -1069,8 +1062,9 @@ ineffactorOR2 <- function(x, betadraws, sigmadraws, accutoff = 0.05, verbose = T
         stop("each entry in sigmadraws must be numeric")
     }
     inefficiencySigma <- array(0, dim = c(1))
-    autocorrelation <- acf(c(sigmadraws), plot = FALSE)
-    nlags <- min(which(autocorrelation$acf <= accutoff))
+    autocorrelation <- acf(c(sigmadraws), lag.max = maxlags, plot = FALSE)
+    nlags <- tryCatch(min(which(autocorrelation$acf <= accutoff)), warning = function(w){
+        message("Increase either the maxlags or accutoff \n", w)})
     nbatch2 <- floor(n / nlags)
     nuse2 <- nbatch2 * nlags
     b2 <- sigmadraws[1:nuse2]
@@ -1138,22 +1132,18 @@ ineffactorOR2 <- function(x, betadraws, sigmadraws, accutoff = 0.05, verbose = T
 #' and the remaining covariates.
 #'
 #' @return Returns a list with components:
-#' \itemize{
 #' \item{\code{avgDiffProb}: }{vector with change in predicted
 #' probability for each outcome category.}
-#' }
 #'
-#' @references Rahman, M. A. (2016). “Bayesian
-#' Quantile Regression for Ordinal Models.”
+#' @references Rahman, M. A. (2016). `"Bayesian Quantile Regression for Ordinal Models."`
 #' Bayesian Analysis, 11(1): 1-24. DOI: 10.1214/15-BA939
 #'
-#' Jeliazkov, I., Graves, J., and Kutzbach, M. (2008). “Fitting and Comparison of Models
-#' for Multivariate Ordinal Outcomes.” Advances in Econometrics: Bayesian Econometrics,
-#' 23: 115–156. DOI: 10.1016/S0731-9053(08)23004-5
+#' Jeliazkov, I., Graves, J., and Kutzbach, M. (2008). `"Fitting and Comparison of Models for Multivariate Ordinal Outcomes."`
+#' Advances in Econometrics: Bayesian Econometrics, 23: 115`-`156. DOI: 10.1016/S0731-9053(08)23004-5
 #'
-#' Jeliazkov, I., and Rahman, M. A. (2012). “Binary and Ordinal Data Analysis
-#' in Economics: Modeling and Estimation” in Mathematical Modeling with Multidisciplinary
-#' Applications, edited by X.S. Yang, 123-150. John Wiley & Sons Inc, Hoboken, New Jersey. DOI: 10.1002/9781118462706.ch6
+#' Jeliazkov, I., and Rahman, M. A. (2012). `"Binary and Ordinal Data Analysis in Economics: Modeling and Estimation"`
+#' in Mathematical Modeling with Multidisciplinary
+#' Applications, edited by X.S. Yang, 123-150. John Wiley `&` Sons Inc, Hoboken, New Jersey. DOI: 10.1002/9781118462706.ch6
 #'
 #' @importFrom "stats" "sd"
 #' @examples
@@ -1167,7 +1157,7 @@ ineffactorOR2 <- function(x, betadraws, sigmadraws, accutoff = 0.05, verbose = T
 #' n0 <- 5
 #' d0 <- 8
 #' output <- quantregOR2(y, xMat1, b0, B0, n0, d0, gammacp2 = 3,
-#' burn = 10, mcmc = 40, p = 0.25, accutoff = 0.5, verbose = FALSE)
+#' burn = 10, mcmc = 40, p = 0.25, accutoff = 0.5, maxlags = 400, verbose = FALSE)
 #' xMat2 <- xMat1
 #' xMat2[,3] <- xMat2[,3] + 0.02
 #' res <- covEffectOR2(output, y, xMat1, xMat2, gammacp2 = 3, p = 0.25, verbose = TRUE)
@@ -1233,6 +1223,12 @@ covEffectOR2 <- function(modelOR2, y, xMat1, xMat2, gammacp2, p, verbose = TRUE)
     newProb <- array(0, dim = c(n, m, J))
     oldComp <- array(0, dim = c(n, m, (J-1)))
     newComp <- array(0, dim = c(n, m, (J-1)))
+
+    if(verbose) {
+        pb <- progress_bar$new(" Computation of CE in Progress [:bar] :percent",
+                               total = (J-1)*(m)*(n), clear = FALSE, width = 100)
+    }
+
     for (j in 1:(J-1)) {
         for (b in 1:m) {
             for (i in 1:n) {
@@ -1301,8 +1297,8 @@ covEffectOR2 <- function(modelOR2, y, xMat1, xMat2, gammacp2, p, verbose = TRUE)
 #'
 #' @return Returns an estimate of log marginal likelihood
 #'
-#' @references Chib, S. (1995). “Marginal likelihood from the Gibbs output.” Journal of the American
-#' Statistical Association, 90(432):1313–1321, 1995. DOI: 10.1080/01621459.1995.10476635
+#' @references Chib, S. (1995). `"Marginal likelihood from the Gibbs output."` Journal of the American
+#' Statistical Association, 90(432):1313`-`1321, 1995. DOI: 10.1080/01621459.1995.10476635
 #'
 #' @importFrom "stats" "sd" "dnorm"
 #' @importFrom "invgamma" "dinvgamma"
@@ -1322,7 +1318,7 @@ covEffectOR2 <- function(modelOR2, y, xMat1, xMat2, gammacp2, p, verbose = TRUE)
 #' n0 <- 5
 #' d0 <- 8
 #' output <- quantregOR2(y = y, x = xMat, b0, B0, n0, d0, gammacp2 = 3,
-#' burn = 10, mcmc = 40, p = 0.25, accutoff = 0.5, verbose = FALSE)
+#' burn = 10, mcmc = 40, p = 0.25, accutoff = 0.5, maxlags = 400, verbose = FALSE)
 #' # output$logMargLike
 #' #   -404.57
 #'
@@ -1405,7 +1401,7 @@ logMargLikeOR2 <- function(y, x, b0, B0, n0, d0, postMeanbeta, postMeansigma, bt
         }
     }
 
-    sigmaStar <- mean(sigmaRedrun[(burn + 1):nsim])
+    sigmaStar <- postMeansigma
     if(verbose) {
         pb <- progress_bar$new(" Calculating Marginal Likelihood [:bar] :percent",
                            total = (nsim-burn), clear = FALSE, width = 100)
@@ -1459,7 +1455,7 @@ logMargLikeOR2 <- function(y, x, b0, B0, n0, d0, postMeanbeta, postMeansigma, bt
 #' n0 <- 5
 #' d0 <- 8
 #' output <- quantregOR2(y = y, x = xMat, b0, B0, n0, d0, gammacp2 = 3,
-#' burn = 10, mcmc = 40, p = 0.25, accutoff = 0.5, FALSE)
+#' burn = 10, mcmc = 40, p = 0.25, accutoff = 0.5, maxlags = 400, FALSE)
 #' summary(output, 4)
 #'
 #' #            Post Mean Post Std Upper Credible Lower Credible Inef Factor

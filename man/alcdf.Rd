@@ -17,7 +17,7 @@ alcdf(x, mu, sigma, p)
 }
 \value{
 Returns the cumulative probability value at
-point “x”.
+point `"x"`.
 }
 \description{
 This function computes the cumulative distribution function (cdf) of
@@ -42,12 +42,11 @@ output <- alcdf(x, mu, sigma, p)
 
 }
 \references{
-Rahman, M. A. (2016). “Bayesian
-Quantile Regression for Ordinal Models.”
+Rahman, M. A. (2016). `"Bayesian Quantile Regression for Ordinal Models."`
 Bayesian Analysis, 11(1): 1-24. DOI: 10.1214/15-BA939
 
-Yu, K., and Zhang, J. (2005). “A Three-Parameter Asymmetric
-Laplace Distribution.” Communications in Statistics - Theory and Methods, 34(9-10), 1867-1879. DOI: 10.1080/03610920500199018
+Yu, K., and Zhang, J. (2005). `"A Three-Parameter Asymmetric Laplace Distribution."`
+Communications in Statistics - Theory and Methods, 34(9-10), 1867-1879. DOI: 10.1080/03610920500199018
 }
 \seealso{
 cumulative distribution function, asymmetric Laplace distribution

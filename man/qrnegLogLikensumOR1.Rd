@@ -19,10 +19,8 @@ qrnegLogLikensumOR1(y, x, betaOne, deltaOne, p)
 }
 \value{
 Returns a list with components
-\itemize{
 \item{\code{nlogl}: }{vector of negative log-likelihood values.}
 \item{\code{negsumlogl}: }{negative sum of log-likelihood.}
-}
 }
 \description{
 This function computes the negative of log-likelihood for each individual and
@@ -63,8 +61,7 @@ output <- qrnegLogLikensumOR1(y, xMat, betaOne, deltaOne, p)
 
 }
 \references{
-Rahman, M. A. (2016). “Bayesian
-Quantile Regression for Ordinal Models.”
+Rahman, M. A. (2016). `"Bayesian Quantile Regression for Ordinal Models."`
 Bayesian Analysis, 11(1): 1-24. DOI: 10.1214/15-BA939
 }
 \seealso{

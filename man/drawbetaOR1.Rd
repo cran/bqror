@@ -23,14 +23,12 @@ drawbetaOR1(z, x, w, tau2, theta, invB0, invB0b0)
 }
 \value{
 Returns a list with components
-\itemize{
 \item{\code{beta}: }{\eqn{\beta}, a column vector of size \eqn{(k x 1)}, sampled from its
 condtional posterior distribution.}
 \item{\code{Btilde}: }{variance parameter for the posterior multivariate normal
  distribution.}
 \item{\code{btilde}: }{mean parameter for the
 posterior multivariate normal distribution.}
-}
 }
 \description{
 This function samples \eqn{\beta} from its conditional
@@ -66,8 +64,7 @@ output <- drawbetaOR1(z, xMat, w, tau2, theta, invB0, invB0b0)
 #   -0.2481837 0.7837995 -3.4680418
 }
 \references{
-Rahman, M. A. (2016). “Bayesian
-Quantile Regression for Ordinal Models.”
+Rahman, M. A. (2016). `"Bayesian Quantile Regression for Ordinal Models."`
 Bayesian Analysis, 11(1): 1-24. DOI: 10.1214/15-BA939
 }
 \seealso{

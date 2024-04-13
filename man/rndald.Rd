@@ -22,7 +22,7 @@ distribution at quantile p.
 }
 \details{
 Generates a vector of random numbers from an AL distribution
-as a mixture of normal–exponential distributions.
+as a mixture of normal`–`exponential distributions.
 }
 \examples{
 set.seed(101)
@@ -36,11 +36,11 @@ output <- rndald(sigma, p, n)
 
 }
 \references{
-Kozumi, H., and Kobayashi, G. (2011). “Gibbs Sampling Methods for Bayesian Quantile Regression.”
-Journal of Statistical Computation and Simulation, 81(11): 1565–1578. DOI: 10.1080/00949655.2010.496117
+Kozumi, H., and Kobayashi, G. (2011). `"Gibbs Sampling Methods for Bayesian Quantile Regression."`
+Journal of Statistical Computation and Simulation, 81(11): 1565`-`1578. DOI: 10.1080/00949655.2010.496117
 
-Yu, K., and Zhang, J. (2005). “A Three-Parameter Asymmetric
-Laplace Distribution.” Communications in Statistics - Theory and Methods, 34(9-10), 1867-1879. DOI: 10.1080/03610920500199018
+Yu, K., and Zhang, J. (2005). `"A Three-Parameter Asymmetric Laplace Distribution."`
+Communications in Statistics - Theory and Methods, 34(9-10), 1867`-`1879. DOI: 10.1080/03610920500199018
 }
 \seealso{
 asymmetric Laplace distribution

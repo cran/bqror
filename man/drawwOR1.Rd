@@ -76,12 +76,11 @@ output <- drawwOR1(z, x, beta, tau2, theta, indexp)
 
 }
 \references{
-Rahman, M. A. (2016). “Bayesian
-Quantile Regression for Ordinal Models.”
+Rahman, M. A. (2016). `"Bayesian Quantile Regression for Ordinal Models."`
 Bayesian Analysis, 11(1): 1-24.  DOI: 10.1214/15-BA939
 
-Devroye, L. (2014). “Random variate generation for the generalized inverse Gaussian
-distribution.” Statistics and Computing, 24(2): 239–246. DOI: 10.1007/s11222-012-9367-z
+Devroye, L. (2014). `"Random variate generation for the generalized inverse Gaussian distribution."`
+Statistics and Computing, 24(2): 239`-`246. DOI: 10.1007/s11222-012-9367-z
 }
 \seealso{
 GIGrvg, Gibbs sampling, \link[GIGrvg]{rgig}
