@@ -82,9 +82,9 @@
 #'  # delta_1       0.2188   0.4043         0.6541        -0.4384       3.6507
 #'  # delta_2       0.4567   0.3055         0.7518        -0.2234       3.1784
 #'
-#'  # MH acceptance rate: 36%
-#'  # Log of Marginal Likelihood: -554.61
-#'  # DIC: 1375.33
+#'  # MH acceptance rate: 50%
+#'  # Log of Marginal Likelihood: -559.73
+#'  # DIC: 1133.11
 #'
 #' @export
 quantregOR1 <- function(y, x, b0, B0, d0, D0, burn, mcmc, p, tune = 0.1, accutoff = 0.05, maxlags = 400, verbose = TRUE) {
@@ -1741,7 +1741,7 @@ covEffectOR1 <- function(modelOR1, y, xMat1, xMat2, p, verbose = TRUE) {
 #' output <- quantregOR1(y = y, x = xMat, b0, B0, d0, D0,
 #' burn = 10, mcmc = 40, p = 0.25, tune = 1, accutoff = 0.5, maxlags = 400, verbose = FALSE)
 #' # output$logMargLike
-#' #   -554.61
+#' #   -559.73
 #'
 #' @export
 logMargLikeOR1 <- function(y, x, b0, B0, d0, D0, postMeanbeta, postMeandelta, betadraws, deltadraws, tune, Dhat, p, verbose) {
@@ -1833,8 +1833,9 @@ logMargLikeOR1 <- function(y, x, b0, B0, d0, D0, postMeanbeta, postMeandelta, be
 
         z <- drawlatentOR1(y, x, betaStoreRedrun[, i], w, theta, tau2, postMeandelta)
 
-        deltarw <- drawdeltaOR1(y, x, betaStoreRedrun[, i], postMeandelta, d0, D0, tune, Dhat, p)
-        deltaStoreRedrun[, i] <- deltarw$deltareturn
+        #deltarw <- drawdeltaOR1(y, x, betaStoreRedrun[, i], postMeandelta, d0, D0, tune, Dhat, p)
+        deltaStoreRedrun[, i] <- mvnpdf(x = matrix(deltadraws[, i]), mean  = matrix(postMeandelta), varcovM = (tune^2)*Dhat, Log = FALSE)
+        #deltaStoreRedrun[, i] <- deltarw$deltareturn
         if(verbose) {
             pb$tick()
         }

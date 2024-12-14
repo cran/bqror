@@ -62,7 +62,7 @@ D0 <- 0.25*diag(J - 2)
 output <- quantregOR1(y = y, x = xMat, b0, B0, d0, D0,
 burn = 10, mcmc = 40, p = 0.25, tune = 1, accutoff = 0.5, maxlags = 400, verbose = FALSE)
 # output$logMargLike
-#   -554.61
+#   -559.73
 
 }
 \references{

@@ -13,7 +13,7 @@ test_that("Testing for quantregOR1", {
     burn = 10, mcmc = 40, p = 0.25, tune = 1, accutoff = 0.5, maxlags = 400, verbose = FALSE)
     expect_equal(round(output$acceptancerate), 50)
     expect_equal(round(output$dicQuant$DIC, 2), 1133.11)
-    expect_equal(round(output$logMargLike, 2), -554.61)
+    expect_equal(round(output$logMargLike, 2), -559.73)
 })
 
 test_that("Testing for quantregOR1 with J=3", {
@@ -31,7 +31,7 @@ test_that("Testing for quantregOR1 with J=3", {
                         burn = 10, mcmc = 40, p = 0.25, tune = 1, accutoff = 0.5, maxlags = 400, verbose = FALSE)
   expect_equal(round(output$acceptancerate), 45)
   expect_equal(round(output$dicQuant$DIC, 1), 818.4)
-  expect_equal(round(output$logMargLike), -413)
+  expect_equal(round(output$logMargLike), -416)
 })
 
 test_that("Testing for qrminfundtheorem", {

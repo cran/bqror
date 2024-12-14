@@ -92,9 +92,9 @@ better model fit.
  # delta_1       0.2188   0.4043         0.6541        -0.4384       3.6507
  # delta_2       0.4567   0.3055         0.7518        -0.2234       3.1784
 
- # MH acceptance rate: 36\%
- # Log of Marginal Likelihood: -554.61
- # DIC: 1375.33
+ # MH acceptance rate: 50\%
+ # Log of Marginal Likelihood: -559.73
+ # DIC: 1133.11
 
 }
 \references{
